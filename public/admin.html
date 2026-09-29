@@ -1,1 +1,701 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>VRILZ Admin Panel</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#070a12;
+    color:#fff;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:800;
+}
+
+.card{
+    background:#101522;
+    border:1px solid #20293b;
+    border-radius:17px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+input,
+select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #293348;
+    background:#080c15;
+    color:#fff;
+    margin-bottom:10px;
+    outline:none;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:12px 15px;
+    color:white;
+    background:#6366f1;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.danger{
+    background:#dc2626;
+}
+
+.muted{
+    color:#8993a8;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+th,
+td{
+    padding:13px 10px;
+    text-align:left;
+    border-bottom:1px solid #20293b;
+    font-size:13px;
+}
+
+th{
+    color:#8993a8;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.active{
+    background:#12351f;
+    color:#4ade80;
+}
+
+.inactive{
+    background:#351414;
+    color:#f87171;
+}
+
+.premium{
+    color:#a5b4fc;
+}
+
+.free{
+    color:#94a3b8;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+    <div class="logo">
+        VRILZ ADMIN
+    </div>
+
+    <button onclick="loadKeys()">
+        Refresh
+    </button>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+    Admin Authentication
+</h2>
+
+<p class="muted">
+    Masukkan Admin Token Cloudflare.
+</p>
+
+<input
+    id="token"
+    type="password"
+    placeholder="ADMIN_TOKEN"
+>
+
+<button onclick="saveToken()">
+    SAVE TOKEN
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+    Generate Premium Key
+</h2>
+
+<select id="duration">
+
+    <option value="1">
+        1 Hari
+    </option>
+
+    <option value="3">
+        3 Hari
+    </option>
+
+    <option value="7" selected>
+        7 Hari
+    </option>
+
+    <option value="30">
+        30 Hari
+    </option>
+
+    <option value="90">
+        90 Hari
+    </option>
+
+    <option value="365">
+        365 Hari
+    </option>
+
+</select>
+
+<button onclick="createKey()">
+    GENERATE PREMIUM KEY
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+    Key Database
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>KEY</th>
+<th>TYPE</th>
+<th>USER</th>
+<th>STATUS</th>
+<th>EXPIRED</th>
+<th>ACTION</th>
+
+</tr>
+
+</thead>
+
+<tbody id="keys">
+
+<tr>
+
+<td colspan="7">
+    Loading...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let adminToken =
+    localStorage.getItem(
+        "vrilz_admin_token"
+    ) || "";
+
+
+document
+.getElementById("token")
+.value =
+    adminToken;
+
+
+function saveToken(){
+
+    const token =
+        document
+        .getElementById("token")
+        .value
+        .trim();
+
+
+    if(!token){
+
+        alert(
+            "Token wajib diisi."
+        );
+
+        return;
+    }
+
+
+    adminToken =
+        token;
+
+
+    localStorage.setItem(
+        "vrilz_admin_token",
+        token
+    );
+
+
+    alert(
+        "Admin token tersimpan di browser."
+    );
+
+
+    loadKeys();
+
+}
+
+
+function headers(){
+
+    return {
+
+        "Content-Type":
+            "application/json",
+
+        "Authorization":
+            "Bearer " + adminToken
+
+    };
+
+}
+
+
+async function createKey(){
+
+    if(!adminToken){
+
+        alert(
+            "Masukkan Admin Token dahulu."
+        );
+
+        return;
+    }
+
+
+    const duration =
+        Number(
+            document
+            .getElementById(
+                "duration"
+            )
+            .value
+        );
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/admin/create",
+                {
+                    method:"POST",
+
+                    headers:
+                        headers(),
+
+                    body:JSON.stringify({
+                        duration_days:
+                            duration
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Gagal membuat key."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "PREMIUM KEY:\n\n" +
+            data.key
+        );
+
+
+        loadKeys();
+
+
+    }catch(error){
+
+        alert(
+            "Server tidak dapat dihubungi."
+        );
+
+    }
+
+}
+
+
+async function loadKeys(){
+
+    if(!adminToken){
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/admin/keys",
+                {
+                    headers:
+                        headers()
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Gagal mengambil data."
+            );
+
+            return;
+        }
+
+
+        const tbody =
+            document
+            .getElementById(
+                "keys"
+            );
+
+
+        tbody.innerHTML = "";
+
+
+        if(!data.keys.length){
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7">
+                        Belum ada key.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        data.keys.forEach(
+            key => {
+
+                const tr =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const status =
+                    Number(key.active) === 1
+                    ? "ACTIVE"
+                    : "INACTIVE";
+
+
+                const statusClass =
+                    Number(key.active) === 1
+                    ? "active"
+                    : "inactive";
+
+
+                let expired =
+                    "-";
+
+
+                if(key.expires_at){
+
+                    expired =
+                        new Date(
+                            Number(
+                                key.expires_at
+                            )
+                        )
+                        .toLocaleString(
+                            "id-ID"
+                        );
+
+                }
+
+
+                tr.innerHTML = `
+
+                    <td>
+                        ${key.id}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(
+                                key.key
+                            )}
+                        </strong>
+                    </td>
+
+                    <td class="${
+                        key.type === "PREMIUM"
+                        ? "premium"
+                        : "free"
+                    }">
+                        ${key.type}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(
+                            key.username ||
+                            "-"
+                        )}
+                    </td>
+
+                    <td>
+                        <span
+                            class="badge ${statusClass}"
+                        >
+                            ${status}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${expired}
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="danger"
+                                onclick="revokeKey(
+                                    ${key.id}
+                                )"
+                            >
+                                REVOKE
+                            </button>
+
+                            <button
+                                class="danger"
+                                onclick="deleteKey(
+                                    ${key.id}
+                                )"
+                            >
+                                DELETE
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tbody.appendChild(
+                    tr
+                );
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+async function revokeKey(id){
+
+    if(
+        !confirm(
+            "Revoke key ini?"
+        )
+    ){
+
+        return;
+    }
+
+
+    const response =
+        await fetch(
+            "/api/admin/revoke",
+            {
+                method:"POST",
+
+                headers:
+                    headers(),
+
+                body:JSON.stringify({
+                    id
+                })
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    alert(
+        data.message
+    );
+
+
+    loadKeys();
+
+}
+
+
+async function deleteKey(id){
+
+    if(
+        !confirm(
+            "Hapus key secara permanen?"
+        )
+    ){
+
+        return;
+    }
+
+
+    const response =
+        await fetch(
+            "/api/admin/delete",
+            {
+                method:"POST",
+
+                headers:
+                    headers(),
+
+                body:JSON.stringify({
+                    id
+                })
+            }
+        );
+
+
+    const data =
+        await response.json();
+
+
+    alert(
+        data.message
+    );
+
+
+    loadKeys();
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+loadKeys();
+
+</script>
+
+</body>
+
+</html>
