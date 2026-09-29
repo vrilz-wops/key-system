@@ -9,4 +9,4 @@ binding = "ASSETS"
 [[d1_databases]]
 binding = "DB"
 database_name = "vrilz-key-db"
-database_id = "GANTI_DENGAN_DATABASE_ID_D1"
+database_id = "1f12915e-806c-4ad6-adad-3b73d111804d"
