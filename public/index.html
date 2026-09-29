@@ -1,69 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VRILZ — Premium Lua Key</title>
-<meta name="description" content="VRILZ Premium Lua Key System">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VRILZ Store — Premium Lua Access</title>
+<meta name="description" content="VRILZ Store — premium Lua access, key system and support.">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;background:#faf9fc;color:#17131f}
-a{text-decoration:none;color:inherit}.top{height:34px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#7c3aed,#db2777);color:white;font-size:11px;font-weight:700}
-nav{height:72px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid #eeeaf3;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,7%);position:sticky;top:0;z-index:50}
-.logo{font-size:23px;font-weight:800;letter-spacing:-1.2px}.logo i{font-style:normal;background:linear-gradient(90deg,#7c3aed,#ec4899);-webkit-background-clip:text;color:transparent}
-.links{display:flex;gap:28px;color:#6f687a;font-size:12px;font-weight:600}.links a:hover{color:#7c3aed}
-.navbtn{padding:11px 16px;border-radius:11px;background:#f2ebff;color:#6d28d9;font-size:11px;font-weight:800}
-.hero{padding:75px 20px 62px;text-align:center;background:radial-gradient(circle at 50% 0,#eadcff 0,rgba(234,220,255,.55) 19%,transparent 52%)}
-.eyebrow{display:inline-flex;align-items:center;gap:7px;border:1px solid #e8ddf8;background:#fff;padding:8px 13px;border-radius:999px;color:#7c3aed;font-size:10px;font-weight:800;box-shadow:0 8px 30px #6d28d90b}
-.dot{width:7px;height:7px;background:#22c55e;border-radius:50%}
-.hero h1{font-size:clamp(42px,7vw,72px);line-height:1.02;letter-spacing:-4px;margin:20px auto 15px;max-width:850px}
-.grad{background:linear-gradient(90deg,#6d28d9,#db2777);-webkit-background-clip:text;color:transparent}
-.hero p{max-width:600px;margin:auto;color:#777080;font-size:14px;line-height:1.75}
-.cta{margin-top:28px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:14px 22px;font-size:12px;font-weight:800;cursor:pointer}
-.mainbtn{color:#fff;background:linear-gradient(135deg,#7c3aed,#ec4899);box-shadow:0 12px 28px #7c3aed2b}.ghost{background:#fff;border:1px solid #e9e4ee;color:#4e4858}
-.wrap{width:min(1080px,calc(100% - 36px));margin:auto}.section{padding:62px 0}.head{text-align:center;margin-bottom:27px}.head h2{font-size:28px;margin:0 0 8px;letter-spacing:-1px}.head p{font-size:12px;color:#8a8490;margin:0}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:white;border:1px solid #ebe7f1;border-radius:22px;padding:24px;box-shadow:0 14px 45px rgba(39,22,61,.055);position:relative}
-.card.pop{border:2px solid #a78bfa;box-shadow:0 18px 55px #7c3aed1b}.tag{position:absolute;right:17px;top:17px;background:#f3e8ff;color:#7c3aed;border-radius:8px;padding:6px 9px;font-size:9px;font-weight:800}
-.ico{width:45px;height:45px;border-radius:14px;background:#f5efff;display:grid;place-items:center;font-size:20px}.card h3{font-size:18px;margin:18px 0 7px}.price{font-size:32px;font-weight:800;letter-spacing:-1.5px}.price small{font-size:11px;color:#9b95a1;font-weight:500}
-.desc{font-size:12px;line-height:1.6;color:#898391;min-height:38px}.list{border-top:1px solid #f0edf4;margin-top:17px;padding-top:12px}.list div{font-size:11px;color:#5d5765;margin:10px 0}.check{color:#8b5cf6;font-weight:800;margin-right:7px}.buy{display:block;text-align:center;margin-top:18px;width:100%;padding:12px;border-radius:11px;background:#19151f;color:#fff;font-size:11px;font-weight:800}.buy:hover{background:#7c3aed}
-.free{margin-top:18px;background:linear-gradient(135deg,#fff,#faf5ff);border:1px solid #eadff8;border-radius:22px;padding:25px;display:flex;align-items:center;justify-content:space-between;gap:20px}.free h3{margin:0 0 6px;font-size:18px}.free p{margin:0;color:#85808d;font-size:12px}.get{white-space:nowrap;padding:13px 20px;border-radius:11px;color:#fff;background:linear-gradient(135deg,#7c3aed,#ec4899);font-size:11px;font-weight:800}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.step{background:#fff;border:1px solid #ebe7f1;border-radius:18px;padding:21px}.num{font-size:11px;font-weight:800;color:#8b5cf6}.step h3{font-size:14px;margin:10px 0 6px}.step p{font-size:11px;line-height:1.6;color:#898391;margin:0}
-.support{margin:5px 0 65px;border-radius:24px;padding:34px;text-align:center;background:linear-gradient(135deg,#f2eaff,#fff0f7);border:1px solid #e8ddf5}.support h2{margin:0 0 8px;font-size:25px}.support p{margin:0 0 20px;color:#7d7685;font-size:12px}
-footer{border-top:1px solid #ebe7f1;text-align:center;padding:28px 20px;color:#938c9c;font-size:10px}
-@media(max-width:760px){.links{display:none}.hero{padding-top:55px}.hero h1{letter-spacing:-2.5px}.cards,.steps{grid-template-columns:1fr}.card.pop{order:-1}.free{display:block}.get{display:inline-block;margin-top:17px}.navbtn{padding:10px 12px}}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap');
+:root{--bg:#f7f6fb;--card:#fff;--ink:#171522;--muted:#777286;--line:#ebe8f1;--purple:#7957e8;--purple2:#a178ff;--pink:#e45b9d;--soft:#f1edff;--shadow:0 18px 55px rgba(49,30,87,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",Arial,sans-serif}a{text-decoration:none;color:inherit}button{font:inherit}
+.top{background:#171522;color:#fff;text-align:center;padding:8px 16px;font-size:11px;font-weight:600}.top b{color:#c7a9ff}
+.nav{height:76px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,6.5%);position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:10px;font-family:Manrope;font-size:21px;font-weight:800;letter-spacing:-.7px}.brandmark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#7350df,#c26dff);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px #7957e82e}.navlinks{display:flex;gap:26px;color:#6d6878;font-size:12px;font-weight:600}.navlinks a:hover{color:var(--purple)}.navright{display:flex;align-items:center;gap:10px}.lang{font-size:11px;font-weight:700;color:#77717f}.discord{padding:11px 16px;border-radius:11px;background:#f0ebff;color:#6743ce;font-size:11px;font-weight:800}
+.hero{position:relative;overflow:hidden;padding:72px 20px 78px;background:radial-gradient(circle at 50% -10%,#e9ddff 0,transparent 45%),linear-gradient(180deg,#fff,#f7f6fb)}.orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.35}.o1{width:240px;height:240px;background:#d9c7ff;left:-90px;top:60px}.o2{width:190px;height:190px;background:#ffc9e4;right:-60px;top:130px}
+.heroInner{max-width:980px;margin:auto;text-align:center;position:relative}.eyebrow{display:inline-flex;gap:8px;align-items:center;background:#fff;border:1px solid #e8e0f8;color:#7048d9;padding:8px 13px;border-radius:999px;font-size:10px;font-weight:800;box-shadow:0 8px 25px #6d3dd10c}.spark{color:#e45b9d}.hero h1{font-family:Manrope;font-size:clamp(42px,7vw,72px);line-height:1.01;letter-spacing:-4px;margin:19px auto 17px;max-width:850px}.gradient{background:linear-gradient(100deg,#6840d1,#9c65ee 45%,#dc5b9b);-webkit-background-clip:text;color:transparent}.hero p{max-width:650px;margin:auto;color:#777181;font-size:14px;line-height:1.75}.heroBtns{display:flex;justify-content:center;gap:11px;margin-top:28px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 21px;border-radius:12px;font-size:12px;font-weight:800}.primary{color:#fff;background:linear-gradient(135deg,#7048da,#a468ed);box-shadow:0 13px 30px #7957e82c}.secondary{background:#fff;border:1px solid var(--line);color:#4f495a}
+.stats{max-width:930px;margin:-25px auto 0;padding:0 20px;position:relative;z-index:5}.statsBox{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(3,1fr);padding:19px}.stat{text-align:center;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat strong{display:block;font-family:Manrope;font-size:17px}.stat span{font-size:10px;color:#908a98}
+.container{width:min(1080px,calc(100% - 36px));margin:auto}.section{padding:78px 0}.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px;gap:20px}.kicker{font-size:10px;color:#8055df;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}.sectionHead h2{font-family:Manrope;font-size:31px;letter-spacing:-1.4px;margin:6px 0}.sectionHead p{font-size:12px;color:#8a8492;margin:0;max-width:480px;line-height:1.65}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.plan{background:#fff;border:1px solid var(--line);border-radius:21px;padding:25px;box-shadow:0 10px 35px rgba(45,25,75,.045);position:relative}.plan.featured{border:1.5px solid #9d7bed;box-shadow:0 20px 55px #7650d91b;transform:translateY(-7px)}.popular{position:absolute;right:16px;top:16px;background:#eee7ff;color:#7048d9;padding:6px 9px;border-radius:7px;font-size:9px;font-weight:800}.planIcon{width:45px;height:45px;border-radius:13px;background:linear-gradient(145deg,#f2ebff,#fff0f7);display:grid;place-items:center;font-size:19px}.plan h3{font-family:Manrope;margin:18px 0 6px;font-size:18px}.price{font-family:Manrope;font-size:33px;letter-spacing:-1.5px}.price small{font-family:"DM Sans";font-size:10px;color:#98919f;font-weight:500}.planDesc{font-size:11px;color:#88818f;line-height:1.55;min-height:36px;margin-top:5px}.features{border-top:1px solid #f0edf4;margin-top:17px;padding-top:12px}.features div{font-size:11px;color:#5e5867;margin:9px 0}.check{color:#8157df;font-weight:900;margin-right:7px}.order{display:block;text-align:center;background:#181520;color:#fff;padding:12px;border-radius:10px;font-size:11px;font-weight:800;margin-top:18px}.featured .order{background:linear-gradient(135deg,#7048da,#a968ee)}.order:hover{opacity:.9}
+.freeBox{margin-top:18px;padding:22px 24px;border-radius:18px;background:linear-gradient(100deg,#f0eaff,#fff1f8);border:1px solid #e7dcf4;display:flex;justify-content:space-between;align-items:center;gap:18px}.freeBox h3{font-family:Manrope;margin:0 0 5px;font-size:16px}.freeBox p{margin:0;color:#80798a;font-size:11px}.freeBtn{background:#fff;color:#7048d9;border:1px solid #dfd2f5;border-radius:10px;padding:12px 18px;font-size:11px;font-weight:800;white-space:nowrap}
+.howGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.how{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.num{font-family:Manrope;color:#9a76eb;font-size:11px}.how h3{font-family:Manrope;font-size:15px;margin:11px 0 6px}.how p{font-size:11px;color:#85808d;line-height:1.65;margin:0}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:18px}.guide{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px}.guideTop{display:flex;align-items:center;gap:11px;margin-bottom:18px}.guideIcon{width:39px;height:39px;border-radius:11px;background:#f1ebff;color:#7249d6;display:grid;place-items:center}.guide h3{margin:0;font-family:Manrope;font-size:17px}.guideTop small{display:block;color:#9a94a0;font-size:9px;margin-top:2px}.guide ol{margin:0;padding-left:20px}.guide li{font-size:11px;color:#625c6b;line-height:1.75;margin:8px 0}.guide li b{color:#312c39}.notice{margin-top:14px;background:#faf8ff;border:1px dashed #d9c8f5;border-radius:11px;padding:11px;font-size:10px;color:#81798e;line-height:1.55}
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}.faqItem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px}.faqItem h3{font-size:12px;margin:0 0 7px}.faqItem p{font-size:10px;color:#85808e;line-height:1.6;margin:0}
+.support{margin:0 0 72px;border-radius:23px;padding:38px 25px;text-align:center;background:linear-gradient(135deg,#eee7ff,#fff0f7);border:1px solid #e6d9f2}.support h2{font-family:Manrope;font-size:28px;margin:0 0 8px}.support p{font-size:11px;color:#7e7787;margin:0 0 20px}
+footer{border-top:1px solid var(--line);background:#fff;text-align:center;padding:28px 20px;color:#9992a0;font-size:10px}.footerBrand{font-family:Manrope;font-size:15px;color:#292431;margin-bottom:7px}
+@media(max-width:800px){.navlinks{display:none}.hero{padding-top:55px}.hero h1{letter-spacing:-2.5px}.statsBox{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line);padding:10px}.stat:last-child{border-bottom:0}.cards,.howGrid,.dual,.faq{grid-template-columns:1fr}.plan.featured{transform:none}.sectionHead{display:block}.sectionHead p{margin-top:8px}.freeBox{display:block}.freeBtn{display:inline-block;margin-top:15px}.nav{padding:0 18px}}
 </style>
 </head>
 <body>
-<div class="top">✨ VRILZ PREMIUM KEY SYSTEM — Instant access • Secure • Simple</div>
-<nav>
-  <div class="logo">VRILZ<i>.</i></div>
-  <div class="links"><a href="#plans">Premium</a><a href="#how">How it works</a><a href="https://discord.gg/sWGKFdPdR" target="_blank">Support</a></div>
-  <a class="navbtn" href="https://discord.gg/sWGKFdPdR" target="_blank">Discord ↗</a>
+<div class="top">✨ <b>VRILZ PREMIUM</b> — Fast access, clean experience & dedicated Discord support</div>
+
+<nav class="nav">
+  <a class="brand" href="#"><span class="brandmark">V</span>VRILZ</a>
+  <div class="navlinks"><a href="#premium">Premium</a><a href="#guide">Guides</a><a href="#faq">FAQ</a><a href="https://discord.gg/sWGKFdPdR" target="_blank">Discord</a></div>
+  <div class="navright"><span class="lang">ID / EN</span><a class="discord" href="https://discord.gg/sWGKFdPdR" target="_blank">Join Discord ↗</a></div>
 </nav>
 
 <section class="hero">
-  <div class="eyebrow"><span class="dot"></span> Premium Lua access</div>
-  <h1>Unlock your <span class="grad">VRILZ</span> experience.</h1>
-  <p>Get your Lua key quickly and choose a premium plan that fits you. Clean, simple, and ready to use with the VRILZ script.</p>
-  <div class="cta"><a class="btn mainbtn" href="#plans">View Premium Plans</a><a class="btn ghost" href="#free">Get Free Key</a></div>
+<div class="orb o1"></div><div class="orb o2"></div>
+<div class="heroInner">
+  <div class="eyebrow"><span class="spark">✦</span> Official VRILZ Key Store</div>
+  <h1>Premium access,<br><span class="gradient">made simple.</span></h1>
+  <p>Get your VRILZ Lua key and choose premium access that matches your needs. Order through Discord, receive your access, then use your key directly inside the script.</p>
+  <div class="heroBtns"><a class="btn primary" href="#premium">Explore Premium</a><a class="btn secondary" href="#free">Get Free Key</a></div>
+</div>
 </section>
 
-<section class="section" id="plans"><div class="wrap">
-<div class="head"><h2>Premium Plans</h2><p>Choose your access period. Payment and premium delivery are handled through our Discord.</p></div>
+<div class="stats"><div class="statsBox">
+<div class="stat"><strong>Instant</strong><span>Key delivery flow</span></div>
+<div class="stat"><strong>24/7</strong><span>Discord support</span></div>
+<div class="stat"><strong>ID / EN</strong><span>Easy bilingual guides</span></div>
+</div></div>
+
+<section class="section" id="premium"><div class="container">
+<div class="sectionHead"><div><div class="kicker">Premium Store</div><h2>Choose your access</h2></div><p>All premium orders are handled through our Discord. Click the plan you want and contact the VRILZ team to complete your order.</p></div>
 <div class="cards">
-  <div class="card"><div class="ico">⚡</div><h3>30 Days</h3><div class="price">$2 <small>/ 30 days</small></div><div class="desc">Premium access for one month.</div><div class="list"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>30 days validity</div><div><span class="check">✓</span>Discord support</div></div><a class="buy" href="https://discord.gg/sWGKFdPdR" target="_blank">GET PREMIUM</a></div>
-  <div class="card pop"><span class="tag">MOST POPULAR</span><div class="ico">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="desc">More time, better value for regular users.</div><div class="list"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2 months validity</div><div><span class="check">✓</span>Discord support</div></div><a class="buy" href="https://discord.gg/sWGKFdPdR" target="_blank">GET PREMIUM</a></div>
-  <div class="card"><div class="ico">♛</div><h3>Permanent</h3><div class="price">$100 <small>/ lifetime</small></div><div class="desc">One-time purchase for permanent premium access.</div><div class="list"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="buy" href="https://discord.gg/sWGKFdPdR" target="_blank">GET PREMIUM</a></div>
+<div class="plan"><div class="planIcon">⚡</div><h3>30 Days</h3><div class="price">$2 <small>/ 30 days</small></div><div class="planDesc">A simple monthly option for short-term access.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>30-day validity</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank">ORDER NOW</a></div>
+<div class="plan featured"><span class="popular">MOST POPULAR</span><div class="planIcon">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="planDesc">A longer option for regular VRILZ users.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2-month validity</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank">ORDER NOW</a></div>
+<div class="plan"><div class="planIcon">♛</div><h3>Permanent</h3><div class="price">$100 <small>/ lifetime</small></div><div class="planDesc">One-time premium access with no expiry.</div><div class="features"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank">ORDER NOW</a></div>
 </div>
-<div class="free" id="free"><div><h3>Free Key</h3><p>Need a free key? Get your key and copy it for use inside the Lua script.</p></div><a class="get" href="/api/claim">GET FREE KEY</a></div>
+<div class="freeBox" id="free"><div><h3>Free Key</h3><p>ID: Ambil key gratis lalu gunakan langsung di script Lua. &nbsp; EN: Get a free key and use it directly in the Lua script.</p></div><a class="freeBtn" href="/api/claim">GET FREE KEY →</a></div>
 </div></section>
 
-<section class="section" id="how"><div class="wrap">
-<div class="head"><h2>How it works</h2><p>The website is only for getting your key. Key validation happens inside the Lua script.</p></div>
-<div class="steps"><div class="step"><div class="num">01</div><h3>Get your key</h3><p>Choose Free Key or purchase Premium through Discord.</p></div><div class="step"><div class="num">02</div><h3>Copy the key</h3><p>Copy the key you receive and keep it private.</p></div><div class="step"><div class="num">03</div><h3>Use in Lua</h3><p>Paste the key into the VRILZ script. The script handles validation.</p></div></div>
+<section class="section" id="guide"><div class="container">
+<div class="sectionHead"><div><div class="kicker">How To</div><h2>Simple guides</h2></div><p>Ikuti panduan di bawah ini. / Follow the guides below.</p></div>
+<div class="howGrid">
+<div class="how"><div class="num">01 / FREE KEY</div><h3>Ambil Free Key / Get a Free Key</h3><p>ID: Klik “GET FREE KEY”, tunggu key diberikan, lalu copy key tersebut. EN: Click “GET FREE KEY”, receive your key, then copy it.</p></div>
+<div class="how"><div class="num">02 / LUA SCRIPT</div><h3>Cara Memakai Key / How to Use</h3><p>ID: Masukkan key ke bagian key system di script Lua VRILZ. EN: Paste your key into the key system inside the VRILZ Lua script.</p></div>
+<div class="how"><div class="num">03 / VALIDATION</div><h3>Validasi di Script / Script Validation</h3><p>ID: Validasi key dilakukan oleh script Lua. EN: Key validation is handled by the Lua script, not by this website.</p></div>
+</div>
+
+<div class="dual" style="margin-top:18px">
+<div class="guide"><div class="guideTop"><div class="guideIcon">🛒</div><div><h3>Cara Order Premium</h3><small>How to order premium</small></div></div>
+<ol><li>Pilih paket <b>$2 / 30 Days</b>, <b>$5 / 2 Months</b>, atau <b>$100 / Permanent</b>.</li><li>Klik <b>ORDER NOW</b> untuk membuka Discord VRILZ.</li><li>Kirim paket yang ingin dibeli kepada staff.</li><li>Ikuti instruksi pembayaran yang diberikan staff.</li><li>Setelah pembayaran dikonfirmasi, ikuti instruksi staff untuk menerima premium key/access.</li></ol>
+<div class="notice">EN: Choose a plan → open Discord → contact staff → follow the payment instructions → receive your premium access.</div>
+</div>
+<div class="guide"><div class="guideTop"><div class="guideIcon">💬</div><div><h3>Cara Join Discord</h3><small>How to join Discord</small></div></div>
+<ol><li>Klik tombol <b>Join Discord</b> di website.</li><li>Pastikan aplikasi/browser Discord terbuka.</li><li>Klik <b>Accept Invite / Terima Undangan</b>.</li><li>Masuk ke channel yang diarahkan oleh server.</li><li>Untuk pembelian, hubungi staff sesuai instruksi server.</li></ol>
+<div class="notice">Discord: <b>discord.gg/sWGKFdPdR</b> — EN: Join the official community for purchases and support.</div>
+</div>
+</div>
 </div></section>
 
-<div class="wrap"><div class="support"><h2>Need Premium?</h2><p>Join our Discord to purchase premium access or get support.</p><a class="btn mainbtn" href="https://discord.gg/sWGKFdPdR" target="_blank">Join VRILZ Discord ↗</a></div></div>
-<footer>© 2026 VRILZ. Premium Lua Key System.</footer>
+<section class="section" id="faq"><div class="container">
+<div class="sectionHead"><div><div class="kicker">FAQ</div><h2>Questions, answered.</h2></div></div>
+<div class="faq">
+<div class="faqItem"><h3>Apakah website ini memvalidasi key?</h3><p>Tidak. Website ini hanya menyediakan/mengambil key. Validasi dilakukan oleh script Lua.</p></div>
+<div class="faqItem"><h3>Does the website validate my key?</h3><p>No. This website is for getting a key. Validation is handled by the Lua script.</p></div>
+<div class="faqItem"><h3>Berapa lama premium aktif?</h3><p>$2 berlaku 30 hari, $5 berlaku 2 bulan, dan $100 adalah permanent sesuai paket yang dipesan.</p></div>
+<div class="faqItem"><h3>Where do I order Premium?</h3><p>Premium orders are handled through the VRILZ Discord. Use the ORDER NOW buttons above.</p></div>
+</div></div></section>
+
+<div class="container"><div class="support"><h2>Ready to go Premium?</h2><p>Join VRILZ Discord for premium orders, support and community updates.</p><a class="btn primary" href="https://discord.gg/sWGKFdPdR" target="_blank">Join VRILZ Discord ↗</a></div></div>
+
+<footer><div class="footerBrand">VRILZ</div>Premium Lua Key Store · ID / EN · Discord Support<br><span>© 2026 VRILZ. All rights reserved.</span></footer>
 </body>
 </html>
