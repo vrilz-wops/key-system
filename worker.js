@@ -1196,17 +1196,16 @@ export default {
         */
 
         if (
-            url.pathname === "/"
+            url.pathname === "/" &&
+            env.ASSETS
         ) {
 
-            return json({
-
-                success: true,
-
-                message:
-                    "VRILZ Key System API aktif."
-
-            });
+            return env.ASSETS.fetch(
+                new Request(
+                    new URL("/index.html", request.url),
+                    request
+                )
+            );
 
         }
 
