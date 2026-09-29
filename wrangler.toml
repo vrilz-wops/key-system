@@ -1,1 +1,12 @@
+name = "vrilz-key-system"
+main = "src/worker.js"
+compatibility_date = "2026-09-29"
 
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "vrilz-key-db"
+database_id = "GANTI_DENGAN_DATABASE_ID_D1"
