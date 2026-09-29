@@ -1,53 +1,38 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>VRILZ Key System</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
-:root{
-    --bg:#070a12;
-    --card:#101522;
-    --card2:#0c111d;
-    --border:#20293b;
-    --text:#f5f7ff;
-    --muted:#8993a8;
-    --primary:#6366f1;
-    --primary2:#818cf8;
-    --green:#22c55e;
-}
-
 body{
     margin:0;
-    background:
-        radial-gradient(circle at 50% -10%,rgba(99,102,241,.22),transparent 35%),
-        var(--bg);
-    color:var(--text);
+    background:#070a12;
+    color:#fff;
     font-family:Arial,sans-serif;
 }
 
-button,
-input{
-    font:inherit;
-}
-
 .container{
-    width:100%;
     max-width:1050px;
     margin:auto;
     padding:20px;
 }
 
-/* NAVBAR */
-
 .nav{
-    height:64px;
+    height:65px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -58,30 +43,29 @@ input{
     align-items:center;
     gap:10px;
     font-weight:800;
-    font-size:19px;
 }
 
 .logo-icon{
-    width:38px;
-    height:38px;
-    border-radius:11px;
+    width:40px;
+    height:40px;
+    border-radius:12px;
     display:grid;
     place-items:center;
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    box-shadow:0 8px 30px rgba(99,102,241,.3);
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
 }
 
 .discord{
     text-decoration:none;
-    color:white;
+    color:#fff;
     background:#5865f2;
-    padding:10px 15px;
+    padding:11px 16px;
     border-radius:10px;
-    font-size:14px;
     font-weight:700;
 }
-
-/* HERO */
 
 .hero{
     text-align:center;
@@ -89,42 +73,42 @@ input{
 }
 
 .badge{
-    display:inline-flex;
-    padding:7px 12px;
+    display:inline-block;
+    padding:8px 13px;
     border:1px solid #30395a;
     border-radius:999px;
-    color:#aeb6ff;
-    background:rgba(99,102,241,.08);
+    color:#a5b4fc;
+    background:#11152a;
     font-size:12px;
     font-weight:700;
-    margin-bottom:18px;
 }
 
 .hero h1{
-    margin:0;
-    font-size:clamp(35px,7vw,62px);
+    margin:20px 0 12px;
+    font-size:clamp(38px,7vw,65px);
     line-height:1.05;
-    letter-spacing:-2px;
 }
 
 .gradient{
-    background:linear-gradient(90deg,#818cf8,#a78bfa);
+    background:linear-gradient(
+        90deg,
+        #818cf8,
+        #a78bfa
+    );
+
     -webkit-background-clip:text;
     color:transparent;
 }
 
 .hero p{
-    max-width:620px;
-    margin:18px auto 0;
-    color:var(--muted);
+    max-width:650px;
+    margin:auto;
+    color:#8d97aa;
     line-height:1.7;
 }
 
-/* CARDS */
-
-.section-title{
+.title{
     margin:35px 0 15px;
-    font-size:20px;
 }
 
 .plans{
@@ -133,117 +117,74 @@ input{
     gap:15px;
 }
 
-.plan{
-    position:relative;
-    background:linear-gradient(180deg,#111827,#0d121e);
-    border:1px solid var(--border);
+.card{
+    background:#101522;
+    border:1px solid #20293b;
     border-radius:18px;
     padding:22px;
 }
 
-.plan.premium{
+.premium{
     border-color:#4f46e5;
-    box-shadow:0 0 35px rgba(79,70,229,.12);
 }
 
-.plan-label{
-    color:#9ca3af;
-    font-size:13px;
+.label{
+    color:#929cb0;
+    font-size:12px;
     font-weight:700;
 }
 
-.plan h2{
-    margin:8px 0;
+.card h2{
+    margin:9px 0;
 }
 
 .price{
-    font-size:27px;
+    font-size:28px;
     font-weight:800;
-    margin:12px 0 20px;
-}
-
-.price small{
-    color:var(--muted);
-    font-size:13px;
-    font-weight:400;
+    margin:15px 0;
 }
 
 .features{
     padding:0;
-    margin:0 0 20px;
     list-style:none;
-    color:#aeb7ca;
+    color:#a5aec0;
     line-height:2;
     font-size:14px;
 }
 
 .features li::before{
     content:"✓";
-    color:#6366f1;
+    color:#818cf8;
     margin-right:8px;
-    font-weight:bold;
 }
 
 .btn{
     width:100%;
     border:0;
+    padding:14px;
     border-radius:11px;
-    padding:13px;
-    color:white;
+    background:#242c3e;
+    color:#fff;
     font-weight:800;
     cursor:pointer;
-    background:#20283a;
 }
 
-.btn.primary{
-    background:linear-gradient(135deg,#6366f1,#7c3aed);
-}
-
-/* CLAIM */
-
-.claim{
-    margin-top:15px;
-    background:linear-gradient(180deg,#111827,#0d121e);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:24px;
-}
-
-.claim-head{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    margin-bottom:20px;
-}
-
-.claim-icon{
-    width:43px;
-    height:43px;
-    display:grid;
-    place-items:center;
-    border-radius:12px;
-    background:rgba(99,102,241,.14);
-}
-
-.claim h2{
-    margin:0;
-    font-size:18px;
-}
-
-.claim p{
-    margin:5px 0 0;
-    color:var(--muted);
-    font-size:13px;
+.primary{
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #7c3aed
+    );
 }
 
 .input{
     width:100%;
     padding:14px;
-    background:#080c15;
-    border:1px solid #293348;
-    color:white;
-    outline:none;
     border-radius:11px;
+    border:1px solid #293348;
+    background:#080c15;
+    color:#fff;
+    outline:none;
     margin-bottom:10px;
 }
 
@@ -251,7 +192,7 @@ input{
     border-color:#6366f1;
 }
 
-.key-result{
+.result{
     display:none;
     margin-top:15px;
     padding:16px;
@@ -260,14 +201,12 @@ input{
     border:1px solid #293348;
 }
 
-.key-text{
+.key{
     margin-top:7px;
     color:#a5b4fc;
     font-weight:800;
     word-break:break-all;
 }
-
-/* STEPS */
 
 .steps{
     display:grid;
@@ -276,8 +215,8 @@ input{
 }
 
 .step{
-    background:var(--card);
-    border:1px solid var(--border);
+    background:#101522;
+    border:1px solid #20293b;
     border-radius:15px;
     padding:18px;
 }
@@ -288,80 +227,50 @@ input{
 }
 
 .step h3{
-    font-size:15px;
     margin:10px 0 6px;
 }
 
 .step p{
-    color:var(--muted);
+    color:#8993a8;
     font-size:13px;
-    line-height:1.5;
-    margin:0;
+    line-height:1.6;
 }
 
-/* TERMS */
-
 .terms{
-    background:var(--card);
-    border:1px solid var(--border);
+    background:#101522;
+    border:1px solid #20293b;
     border-radius:18px;
     padding:22px;
 }
 
-.terms ul{
-    margin:0;
-    padding-left:20px;
-    color:var(--muted);
+.terms li{
+    color:#8993a8;
     line-height:2;
     font-size:14px;
 }
 
-/* DISCORD */
-
-.discord-card{
+.discord-box{
     margin-top:15px;
-    padding:25px;
-    border-radius:18px;
+    background:#101522;
     border:1px solid #30395a;
-    background:
-        linear-gradient(135deg,rgba(88,101,242,.16),rgba(99,102,241,.03)),
-        var(--card);
+    border-radius:18px;
+    padding:25px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     gap:20px;
 }
 
-.discord-card h2{
-    margin:0 0 7px;
+.discord-box p{
+    color:#8993a8;
 }
-
-.discord-card p{
-    margin:0;
-    color:var(--muted);
-    font-size:13px;
-}
-
-.discord-btn{
-    white-space:nowrap;
-    text-decoration:none;
-    color:white;
-    background:#5865f2;
-    padding:13px 18px;
-    border-radius:11px;
-    font-weight:800;
-}
-
-/* FOOTER */
 
 footer{
     text-align:center;
-    color:#596276;
-    font-size:12px;
+    color:#555e70;
     padding:35px 0 20px;
+    font-size:12px;
 }
-
-/* MOBILE */
 
 @media(max-width:650px){
 
@@ -378,290 +287,381 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .discord-card{
+    .discord-box{
         flex-direction:column;
         align-items:flex-start;
     }
 
-    .discord-btn{
-        width:100%;
-        text-align:center;
-    }
-
-    .hero h1{
-        letter-spacing:-1px;
-    }
 }
+
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <nav class="nav">
+<nav class="nav">
 
-        <div class="logo">
-            <div class="logo-icon">V</div>
-            VRILZ KEY
+    <div class="logo">
+
+        <div class="logo-icon">
+            V
         </div>
 
-        <a
-            class="discord"
-            href="#"
-            target="_blank"
-        >
-            Discord ↗
-        </a>
+        VRILZ KEY
 
-    </nav>
+    </div>
+
+    <a
+        class="discord"
+        href="#"
+        target="_blank"
+    >
+        Discord ↗
+    </a>
+
+</nav>
 
 
-    <section class="hero">
+<section class="hero">
 
-        <div class="badge">
-            ⚡ FAST & SECURE KEY SYSTEM
+    <div class="badge">
+        ⚡ FAST & SECURE KEY SYSTEM
+    </div>
+
+    <h1>
+        Your Access.<br>
+        <span class="gradient">
+            Your Key.
+        </span>
+    </h1>
+
+    <p>
+        Dapatkan key dengan cepat dan gunakan
+        sesuai masa aktif yang tersedia.
+    </p>
+
+</section>
+
+
+<h2 class="title">
+    Pilih Paket
+</h2>
+
+
+<section class="plans">
+
+    <div class="card">
+
+        <div class="label">
+            FREE ACCESS
         </div>
 
-        <h1>
-            Your Access.<br>
-            <span class="gradient">Your Key.</span>
-        </h1>
+        <h2>
+            Free Key
+        </h2>
 
-        <p>
-            Dapatkan key dengan cepat, gunakan sesuai masa aktif,
-            dan kelola aksesmu dengan sistem yang simpel.
-        </p>
-
-    </section>
-
-
-    <h2 class="section-title">
-        Pilih Paket
-    </h2>
-
-    <section class="plans">
-
-        <div class="plan">
-
-            <div class="plan-label">
-                FREE ACCESS
-            </div>
-
-            <h2>Free Key</h2>
-
-            <div class="price">
-                Rp 0
-                <small>/ key</small>
-            </div>
-
-            <ul class="features">
-                <li>1 key setiap 24 jam</li>
-                <li>Waktu redeem 10 menit</li>
-                <li>Aktif 24 jam setelah redeem</li>
-            </ul>
-
-            <button
-                class="btn primary"
-                onclick="document.getElementById('username').focus()"
-            >
-                GET FREE KEY
-            </button>
-
+        <div class="price">
+            Rp 0
         </div>
 
+        <ul class="features">
 
-        <div class="plan premium">
+            <li>
+                1 key setiap 24 jam
+            </li>
 
-            <div class="plan-label">
-                PREMIUM
-            </div>
+            <li>
+                10 menit untuk redeem
+            </li>
 
-            <h2>Premium Key</h2>
+            <li>
+                Aktif 24 jam setelah redeem
+            </li>
 
-            <div class="price">
-                Rp 10.000
-                <small>/ 7 days</small>
-            </div>
-
-            <ul class="features">
-                <li>Masa aktif lebih panjang</li>
-                <li>Premium access</li>
-                <li>Support prioritas</li>
-            </ul>
-
-            <button
-                class="btn"
-                onclick="alert('Pembelian Premium akan segera tersedia.')"
-            >
-                BUY PREMIUM
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <section class="claim">
-
-        <div class="claim-head">
-
-            <div class="claim-icon">
-                🎁
-            </div>
-
-            <div>
-                <h2>Claim Free Key</h2>
-
-                <p>
-                    Satu username hanya dapat claim
-                    satu key setiap 24 jam.
-                </p>
-            </div>
-
-        </div>
-
-
-        <input
-            class="input"
-            id="username"
-            type="text"
-            placeholder="Masukkan username"
-            autocomplete="off"
-        >
+        </ul>
 
         <button
             class="btn primary"
-            id="claimBtn"
-            onclick="claimKey()"
+            onclick="
+                document
+                .getElementById('username')
+                .focus()
+            "
         >
             GET FREE KEY
         </button>
 
+    </div>
 
-        <div
-            class="key-result"
-            id="keyResult"
-        >
 
-            <div>
-                Key kamu:
-            </div>
+    <div class="card premium">
 
-            <div
-                class="key-text"
-                id="keyText"
-            ></div>
-
-            <div
-                style="margin-top:8px;color:#8993a8;font-size:12px"
-            >
-                ⚠️ Gunakan key dalam 10 menit.
-            </div>
-
+        <div class="label">
+            PREMIUM
         </div>
 
-    </section>
+        <h2>
+            Premium Key
+        </h2>
 
-
-    <h2 class="section-title">
-        Cara Kerja
-    </h2>
-
-    <section class="steps">
-
-        <div class="step">
-            <div class="number">01</div>
-            <h3>Claim</h3>
-            <p>
-                Masukkan username dan ambil free key.
-            </p>
+        <div class="price">
+            Rp 10.000
         </div>
 
-        <div class="step">
-            <div class="number">02</div>
-            <h3>Redeem</h3>
-            <p>
-                Gunakan key sebelum batas 10 menit.
-            </p>
-        </div>
+        <ul class="features">
 
-        <div class="step">
-            <div class="number">03</div>
-            <h3>Active</h3>
-            <p>
-                Setelah redeem, key aktif selama 24 jam.
-            </p>
-        </div>
-
-    </section>
-
-
-    <h2 class="section-title">
-        Syarat & Ketentuan
-    </h2>
-
-    <section class="terms">
-
-        <ul>
             <li>
-                Satu username hanya dapat mengambil
-                satu free key dalam periode 24 jam.
+                Premium access
             </li>
 
             <li>
-                Key yang sudah di-claim tetapi tidak
-                digunakan akan otomatis expired setelah 10 menit.
+                Durasi sesuai paket
             </li>
 
             <li>
-                Masa aktif 24 jam dimulai ketika key
-                berhasil digunakan atau di-redeem.
+                Support
             </li>
 
-            <li>
-                Key yang sudah expired atau revoked
-                tidak dapat digunakan kembali.
-            </li>
-
-            <li>
-                Jangan membagikan key kepada orang lain.
-            </li>
-
-            <li>
-                Premium key mengikuti masa berlaku
-                yang ditentukan ketika pembelian.
-            </li>
         </ul>
 
-    </section>
+        <button
+            class="btn"
+            onclick="
+                alert(
+                    'Pembelian Premium segera tersedia.'
+                )
+            "
+        >
+            BUY PREMIUM
+        </button>
+
+    </div>
+
+</section>
 
 
-    <section class="discord-card">
+<h2 class="title">
+    Claim Free Key
+</h2>
+
+
+<section class="card">
+
+    <input
+        class="input"
+        id="username"
+        placeholder="Masukkan username"
+        maxlength="50"
+        autocomplete="off"
+    >
+
+    <button
+        class="btn primary"
+        id="claimBtn"
+        onclick="claimKey()"
+    >
+        GET FREE KEY
+    </button>
+
+
+    <div
+        class="result"
+        id="claimResult"
+    >
 
         <div>
-            <h2>Butuh bantuan?</h2>
-
-            <p>
-                Bergabung ke Discord untuk mendapatkan
-                informasi dan bantuan.
-            </p>
+            Key kamu:
         </div>
 
-        <a
-            href="#"
-            class="discord-btn"
-            target="_blank"
+        <div
+            class="key"
+            id="generatedKey"
+        ></div>
+
+        <div
+            style="
+                margin-top:8px;
+                color:#8993a8;
+                font-size:12px;
+            "
         >
-            Join Discord
-        </a>
+            ⚠️ Redeem dalam 10 menit.
+        </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <footer>
-        © 2026 VRILZ KEY SYSTEM · All rights reserved.
-    </footer>
+<h2 class="title">
+    Redeem Key
+</h2>
+
+
+<section class="card">
+
+    <input
+        class="input"
+        id="redeemUsername"
+        placeholder="Username"
+        maxlength="50"
+    >
+
+    <input
+        class="input"
+        id="redeemKey"
+        placeholder="VRILZ-XXXXX-XXXXX-XXXXX"
+        maxlength="30"
+    >
+
+    <button
+        class="btn primary"
+        onclick="redeemKey()"
+    >
+        REDEEM KEY
+    </button>
+
+</section>
+
+
+<h2 class="title">
+    Cara Kerja
+</h2>
+
+
+<section class="steps">
+
+    <div class="step">
+
+        <div class="number">
+            01
+        </div>
+
+        <h3>
+            Claim
+        </h3>
+
+        <p>
+            Masukkan username lalu ambil
+            free key.
+        </p>
+
+    </div>
+
+
+    <div class="step">
+
+        <div class="number">
+            02
+        </div>
+
+        <h3>
+            Redeem
+        </h3>
+
+        <p>
+            Gunakan key dalam waktu
+            maksimal 10 menit.
+        </p>
+
+    </div>
+
+
+    <div class="step">
+
+        <div class="number">
+            03
+        </div>
+
+        <h3>
+            Active
+        </h3>
+
+        <p>
+            Setelah redeem, key aktif
+            sesuai durasi.
+        </p>
+
+    </div>
+
+</section>
+
+
+<h2 class="title">
+    Syarat & Ketentuan
+</h2>
+
+
+<section class="terms">
+
+<ul>
+
+<li>
+    Satu username hanya dapat claim
+    satu free key setiap 24 jam.
+</li>
+
+<li>
+    Free key yang tidak digunakan dalam
+    10 menit otomatis expired.
+</li>
+
+<li>
+    Masa aktif free key dimulai ketika
+    key berhasil di-redeem.
+</li>
+
+<li>
+    Key yang sudah expired tidak dapat
+    digunakan kembali.
+</li>
+
+<li>
+    Premium key memiliki durasi sesuai
+    paket yang dibuat admin.
+</li>
+
+<li>
+    Jangan membagikan key kepada orang lain.
+</li>
+
+</ul>
+
+</section>
+
+
+<section class="discord-box">
+
+<div>
+
+<h2>
+    Butuh bantuan?
+</h2>
+
+<p>
+    Bergabung dengan Discord untuk
+    mendapatkan informasi terbaru.
+</p>
+
+</div>
+
+<a
+    href="#"
+    target="_blank"
+    class="discord"
+>
+    Join Discord
+</a>
+
+</section>
+
+
+<footer>
+    © 2026 VRILZ KEY SYSTEM
+</footer>
 
 </div>
 
@@ -671,68 +671,201 @@ footer{
 async function claimKey(){
 
     const username =
-        document.getElementById("username").value.trim();
+        document
+        .getElementById("username")
+        .value
+        .trim();
 
     const button =
-        document.getElementById("claimBtn");
+        document
+        .getElementById("claimBtn");
 
-    const result =
-        document.getElementById("keyResult");
-
-    const keyText =
-        document.getElementById("keyText");
 
     if(!username){
 
-        alert("Masukkan username terlebih dahulu.");
-        return;
+        alert(
+            "Masukkan username terlebih dahulu."
+        );
 
+        return;
     }
+
 
     button.disabled = true;
     button.textContent = "PROCESSING...";
 
+
     try{
 
-        const response = await fetch(
-            "/api/claim",
-            {
-                method:"POST",
+        const response =
+            await fetch(
+                "/api/claim",
+                {
+                    method:"POST",
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
 
-                body:JSON.stringify({
-                    username:username
-                })
-            }
-        );
+                    body:JSON.stringify({
+                        username
+                    })
+                }
+            );
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if(!data.success){
 
-            alert(data.message || "Gagal mengambil key.");
+            alert(
+                data.message ||
+                "Gagal mengambil key."
+            );
 
             button.disabled = false;
-            button.textContent = "GET FREE KEY";
+            button.textContent =
+                "GET FREE KEY";
 
             return;
         }
 
-        keyText.textContent = data.key;
 
-        result.style.display = "block";
+        document
+        .getElementById(
+            "generatedKey"
+        )
+        .textContent =
+            data.key;
 
-        button.textContent = "KEY CLAIMED";
+
+        document
+        .getElementById(
+            "claimResult"
+        )
+        .style.display =
+            "block";
+
+
+        document
+        .getElementById(
+            "redeemUsername"
+        )
+        .value =
+            username;
+
+
+        button.textContent =
+            "KEY CLAIMED";
+
 
     }catch(error){
 
-        alert("Tidak dapat terhubung ke server.");
+        alert(
+            "Tidak dapat terhubung ke server."
+        );
 
         button.disabled = false;
-        button.textContent = "GET FREE KEY";
+        button.textContent =
+            "GET FREE KEY";
+
+    }
+
+}
+
+
+async function redeemKey(){
+
+    const username =
+        document
+        .getElementById(
+            "redeemUsername"
+        )
+        .value
+        .trim();
+
+
+    const key =
+        document
+        .getElementById(
+            "redeemKey"
+        )
+        .value
+        .trim();
+
+
+    if(!username || !key){
+
+        alert(
+            "Username dan key wajib diisi."
+        );
+
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/redeem",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+                        username,
+                        key
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Redeem gagal."
+            );
+
+            return;
+        }
+
+
+        const date =
+            new Date(
+                data.expires_at
+            );
+
+
+        alert(
+            "Key berhasil diredeem!\n\n" +
+            "Tipe: " +
+            data.type +
+            "\n" +
+            "Aktif sampai: " +
+            date.toLocaleString(
+                "id-ID"
+            )
+        );
+
+
+    }catch(error){
+
+        alert(
+            "Tidak dapat terhubung ke server."
+        );
 
     }
 
