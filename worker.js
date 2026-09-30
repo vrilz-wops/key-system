@@ -1135,6 +1135,79 @@ export default {
         }
 
 
+/* =========================================
+   VERIFY REDEEMED KEY
+========================================= */
+
+async function verifyKey(request, env) {
+    try {
+        const body = await request.json();
+        const username = String(body.username || "").trim();
+        const key = String(body.key || "").trim().toUpperCase();
+
+        if (!username || !key) {
+            return json({ success: false, message: "Username dan key wajib diisi." }, 400);
+        }
+
+        await cleanupExpired(env);
+        const now = Date.now();
+
+        const row = await env.DB.prepare(`
+            SELECT id, key, type, username, redeemed_at, expires_at, active
+            FROM keys
+            WHERE key = ?
+            LIMIT 1
+        `).bind(key).first();
+
+        if (!row) {
+            return json({ success: false, message: "Key tidak ditemukan." }, 404);
+        }
+
+        if (row.type === "FREE" && row.username !== username) {
+            return json({
+                success: false,
+                message: "Key ini terikat dengan username lain."
+            }, 403);
+        }
+
+        if (!row.redeemed_at) {
+            return json({
+                success: false,
+                message: "Key belum pernah digunakan."
+            }, 409);
+        }
+
+        const expiresAt = Number(row.expires_at || 0);
+        if (Number(row.active) !== 1 || !expiresAt || now >= expiresAt) {
+            await env.DB.prepare(`UPDATE keys SET active = 0 WHERE id = ?`)
+                .bind(row.id).run();
+
+            return json({
+                success: false,
+                message: "Key sudah expired.",
+                expired: true,
+                type: row.type,
+                expires_at: expiresAt
+            });
+        }
+
+        return json({
+            success: true,
+            message: "Key masih aktif.",
+            key: row.key,
+            type: row.type,
+            redeemed_at: Number(row.redeemed_at),
+            expires_at: expiresAt
+        });
+    } catch (error) {
+        return json({
+            success: false,
+            message: "Terjadi kesalahan server."
+        }, 500);
+    }
+}
+
+
         /*
         =====================================
         API ROUTES
@@ -1162,6 +1235,24 @@ export default {
                 env
             );
 
+        }
+
+
+        if (
+            url.pathname === "/api/verify"
+        ) {
+
+            if (request.method !== "POST") {
+                return json({
+                    success: false,
+                    message: "Method not allowed."
+                }, 405);
+            }
+
+            return verifyKey(
+                request,
+                env
+            );
         }
 
 
