@@ -1,701 +1,135 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>VRILZ Admin Panel</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VRILZ • Admin</title>
 <style>
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    background:#070a12;
-    color:#fff;
-    font-family:Arial,sans-serif;
-}
-
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:20px;
-}
-
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.logo{
-    font-size:20px;
-    font-weight:800;
-}
-
-.card{
-    background:#101522;
-    border:1px solid #20293b;
-    border-radius:17px;
-    padding:20px;
-    margin-bottom:15px;
-}
-
-input,
-select{
-    width:100%;
-    padding:13px;
-    border-radius:10px;
-    border:1px solid #293348;
-    background:#080c15;
-    color:#fff;
-    margin-bottom:10px;
-    outline:none;
-}
-
-button{
-    border:0;
-    border-radius:10px;
-    padding:12px 15px;
-    color:white;
-    background:#6366f1;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.danger{
-    background:#dc2626;
-}
-
-.muted{
-    color:#8993a8;
-}
-
-.table-wrap{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:800px;
-}
-
-th,
-td{
-    padding:13px 10px;
-    text-align:left;
-    border-bottom:1px solid #20293b;
-    font-size:13px;
-}
-
-th{
-    color:#8993a8;
-}
-
-.badge{
-    display:inline-block;
-    padding:5px 8px;
-    border-radius:7px;
-    font-size:11px;
-    font-weight:800;
-}
-
-.active{
-    background:#12351f;
-    color:#4ade80;
-}
-
-.inactive{
-    background:#351414;
-    color:#f87171;
-}
-
-.premium{
-    color:#a5b4fc;
-}
-
-.free{
-    color:#94a3b8;
-}
-
-.actions{
-    display:flex;
-    gap:7px;
-}
-
+*{box-sizing:border-box}
+:root{--orange:#ff7a00;--orange2:#ffb000;--red:#ff2b2b;--bg:#050507;--card:#0d0d12;--line:#27212a;--muted:#92909b}
+body{margin:0;background:radial-gradient(circle at 50% -10%,#321300 0,#09070a 32%,#030304 72%);color:#fff;font-family:Arial,Helvetica,sans-serif;min-height:100vh;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:0;opacity:.22;filter:blur(.2px)}
+body:before{width:2px;height:250px;left:12%;top:0;background:linear-gradient(150deg,transparent 0 25%,var(--orange) 26% 28%,transparent 29% 45%,var(--red) 46% 48%,transparent 49%);transform:skewX(-18deg) rotate(12deg)}
+body:after{width:2px;height:300px;right:15%;top:5%;background:linear-gradient(30deg,transparent 0 20%,var(--orange2) 21% 23%,transparent 24% 50%,var(--red) 51% 53%,transparent 54%);transform:skewX(18deg) rotate(-10deg)}
+.container{position:relative;z-index:1;max-width:1120px;margin:auto;padding:24px 16px 50px}
+.hidden{display:none!important}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;letter-spacing:1px}.mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--orange2),var(--orange),#ff2b00);box-shadow:0 0 28px #ff730055, inset 0 1px #fff5;color:#090909;font-size:25px;font-style:italic;font-weight:1000;transform:skew(-4deg)}
+.brand small{display:block;color:#8f8a92;font-size:10px;letter-spacing:2px;margin-top:2px}
+.card{background:linear-gradient(180deg,#111116ee,#09090cee);border:1px solid #2a2024;border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 14px 50px #0008,0 0 35px #ff69000b;backdrop-filter:blur(10px)}
+.login{max-width:430px;margin:13vh auto 0;text-align:center}.login h1{margin:18px 0 7px;font-size:27px}.login p,.muted{color:var(--muted);font-size:13px;line-height:1.5}
+input,select{width:100%;padding:14px 15px;border-radius:11px;border:1px solid #322a30;background:#050507;color:#fff;margin:7px 0;outline:none}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0018}
+button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:linear-gradient(135deg,var(--orange2),var(--orange));font-weight:900;cursor:pointer;box-shadow:0 8px 25px #ff730022}button:hover{filter:brightness(1.08)}button:disabled{opacity:.55;cursor:not-allowed}.danger{background:linear-gradient(135deg,#ff4545,#c81414);color:#fff}.ghost{background:#171319;color:#fff;border:1px solid #342a31;box-shadow:none}
+.login button{width:100%;margin-top:9px}.error{color:#ff7474;min-height:20px;margin-top:10px;font-size:13px}.success{color:#65f28b}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.title{margin:0;font-size:21px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.wide{grid-column:1/-1}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #211b21;font-size:12px}th{color:#8d8790;font-size:10px;letter-spacing:1px}td strong{color:#fff}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:10px;font-weight:900}.active{background:#10351c;color:#61f18a}.inactive{background:#391313;color:#ff7777}.premium{color:#ffb43d}.free{color:#aaa4ac}.key{font-family:monospace;letter-spacing:.5px}
+.notice{border:1px solid #4a2c0c;background:#1b1005;color:#ffc16a;padding:11px 13px;border-radius:11px;font-size:12px;margin-top:12px}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.status{font-size:11px;color:#8d8790}.status b{color:#67f08a}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start;flex-direction:column}.login{margin-top:8vh}}
 </style>
-
 </head>
-
 <body>
-
 <div class="container">
+  <section id="loginView" class="card login">
+    <div class="brand" style="justify-content:center"><div class="mark">V</div><div>VRILZ<small>SECURE ADMIN</small></div></div>
+    <h1>Admin Login</h1>
+    <p>Panel ini hanya dapat digunakan setelah login admin yang divalidasi oleh Cloudflare Worker.</p>
+    <input id="username" autocomplete="username" placeholder="Admin username">
+    <input id="password" type="password" autocomplete="current-password" placeholder="Admin password">
+    <button id="loginBtn" onclick="login()">LOGIN ADMIN</button>
+    <div id="loginError" class="error"></div>
+  </section>
 
-<div class="header">
-
-    <div class="logo">
-        VRILZ ADMIN
+  <section id="adminView" class="hidden">
+    <div class="brandbar">
+      <div class="brand"><div class="mark">V</div><div>VRILZ<small>KEY SYSTEM ADMIN</small></div></div>
+      <div class="actions"><button class="ghost" onclick="loadKeys()">REFRESH</button><button class="danger" onclick="logout()">LOGOUT</button></div>
     </div>
 
-    <button onclick="loadKeys()">
-        Refresh
-    </button>
-
+    <div class="grid">
+      <div class="card">
+        <h2 class="title">Generate Premium Key</h2>
+        <p class="sub">Buat key premium dari server, bukan dari browser.</p>
+        <select id="duration">
+          <option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option>
+        </select>
+        <button onclick="createKey()">GENERATE PREMIUM KEY</button>
+        <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
+      </div>
+      <div class="card">
+        <h2 class="title">Admin Status</h2>
+        <p class="sub">Session admin berlaku sementara dan token tidak disimpan sebagai credential permanen.</p>
+        <div class="status" style="margin-top:16px">STATUS: <b>AUTHENTICATED</b></div>
+        <div class="status" style="margin-top:7px">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
+      </div>
+      <div class="card wide">
+        <h2 class="title">Key Database</h2>
+        <p class="sub">Kolom USER menampilkan username Roblox yang dipakai saat FREE key dibuat.</p>
+        <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>ID</th><th>KEY</th><th>TYPE</th><th>USER</th><th>STATUS</th><th>EXPIRED</th><th>ACTION</th></tr></thead><tbody id="keys"><tr><td colspan="7">Loading...</td></tr></tbody></table></div>
+      </div>
+    </div>
+  </section>
 </div>
-
-
-<div class="card">
-
-<h2>
-    Admin Authentication
-</h2>
-
-<p class="muted">
-    Masukkan Admin Token Cloudflare.
-</p>
-
-<input
-    id="token"
-    type="password"
-    placeholder="ADMIN_TOKEN"
->
-
-<button onclick="saveToken()">
-    SAVE TOKEN
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-    Generate Premium Key
-</h2>
-
-<select id="duration">
-
-    <option value="1">
-        1 Hari
-    </option>
-
-    <option value="3">
-        3 Hari
-    </option>
-
-    <option value="7" selected>
-        7 Hari
-    </option>
-
-    <option value="30">
-        30 Hari
-    </option>
-
-    <option value="90">
-        90 Hari
-    </option>
-
-    <option value="365">
-        365 Hari
-    </option>
-
-</select>
-
-<button onclick="createKey()">
-    GENERATE PREMIUM KEY
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-    Key Database
-</h2>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>ID</th>
-<th>KEY</th>
-<th>TYPE</th>
-<th>USER</th>
-<th>STATUS</th>
-<th>EXPIRED</th>
-<th>ACTION</th>
-
-</tr>
-
-</thead>
-
-<tbody id="keys">
-
-<tr>
-
-<td colspan="7">
-    Loading...
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-
-
 <script>
+const API_BASE = "";
+let adminToken = sessionStorage.getItem("vrilz_admin_session") || "";
 
-let adminToken =
-    localStorage.getItem(
-        "vrilz_admin_token"
-    ) || "";
+function authHeaders(){return {"Content-Type":"application/json","Authorization":"Bearer "+adminToken};}
+function showAdmin(){document.getElementById("loginView").classList.add("hidden");document.getElementById("adminView").classList.remove("hidden");loadKeys();}
+function showLogin(msg=""){document.getElementById("loginView").classList.remove("hidden");document.getElementById("adminView").classList.add("hidden");document.getElementById("loginError").textContent=msg;}
 
-
-document
-.getElementById("token")
-.value =
-    adminToken;
-
-
-function saveToken(){
-
-    const token =
-        document
-        .getElementById("token")
-        .value
-        .trim();
-
-
-    if(!token){
-
-        alert(
-            "Token wajib diisi."
-        );
-
-        return;
-    }
-
-
-    adminToken =
-        token;
-
-
-    localStorage.setItem(
-        "vrilz_admin_token",
-        token
-    );
-
-
-    alert(
-        "Admin token tersimpan di browser."
-    );
-
-
-    loadKeys();
-
+async function login(){
+  const btn=document.getElementById("loginBtn"), username=document.getElementById("username").value.trim(), password=document.getElementById("password").value;
+  const err=document.getElementById("loginError"); err.textContent="";
+  if(!username||!password){err.textContent="Username dan password wajib diisi.";return;}
+  btn.disabled=true; btn.textContent="CHECKING...";
+  try{
+    const r=await fetch(API_BASE+"/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});
+    const d=await r.json();
+    if(!r.ok||!d.success){err.textContent=d.message||"Login gagal.";return;}
+    adminToken=d.token; sessionStorage.setItem("vrilz_admin_session",adminToken); showAdmin();
+  }catch(e){err.textContent="Server tidak dapat dihubungi.";}
+  finally{btn.disabled=false;btn.textContent="LOGIN ADMIN";}
 }
 
+function logout(){adminToken="";sessionStorage.removeItem("vrilz_admin_session");showLogin();}
 
-function headers(){
-
-    return {
-
-        "Content-Type":
-            "application/json",
-
-        "Authorization":
-            "Bearer " + adminToken
-
-    };
-
+async function api(path, options={}){
+  const r=await fetch(API_BASE+path,{...options,headers:{...(options.headers||{}),...authHeaders()}});
+  let d={}; try{d=await r.json()}catch{}
+  if(r.status===401){logout();throw new Error("Unauthorized");}
+  return {r,d};
 }
-
 
 async function createKey(){
-
-    if(!adminToken){
-
-        alert(
-            "Masukkan Admin Token dahulu."
-        );
-
-        return;
-    }
-
-
-    const duration =
-        Number(
-            document
-            .getElementById(
-                "duration"
-            )
-            .value
-        );
-
-
-    try{
-
-        const response =
-            await fetch(
-                "/api/admin/create",
-                {
-                    method:"POST",
-
-                    headers:
-                        headers(),
-
-                    body:JSON.stringify({
-                        duration_days:
-                            duration
-                    })
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if(!data.success){
-
-            alert(
-                data.message ||
-                "Gagal membuat key."
-            );
-
-            return;
-        }
-
-
-        alert(
-            "PREMIUM KEY:\n\n" +
-            data.key
-        );
-
-
-        loadKeys();
-
-
-    }catch(error){
-
-        alert(
-            "Server tidak dapat dihubungi."
-        );
-
-    }
-
+  const duration=Number(document.getElementById("duration").value);
+  try{
+    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration})});
+    if(!r.ok||!d.success){alert(d.message||"Gagal membuat key.");return;}
+    alert("PREMIUM KEY:\n\n"+d.key); loadKeys();
+  }catch(e){}
 }
-
 
 async function loadKeys(){
-
-    if(!adminToken){
-
-        return;
-    }
-
-
-    try{
-
-        const response =
-            await fetch(
-                "/api/admin/keys",
-                {
-                    headers:
-                        headers()
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if(!data.success){
-
-            alert(
-                data.message ||
-                "Gagal mengambil data."
-            );
-
-            return;
-        }
-
-
-        const tbody =
-            document
-            .getElementById(
-                "keys"
-            );
-
-
-        tbody.innerHTML = "";
-
-
-        if(!data.keys.length){
-
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="7">
-                        Belum ada key.
-                    </td>
-                </tr>
-            `;
-
-            return;
-        }
-
-
-        data.keys.forEach(
-            key => {
-
-                const tr =
-                    document.createElement(
-                        "tr"
-                    );
-
-
-                const status =
-                    Number(key.active) === 1
-                    ? "ACTIVE"
-                    : "INACTIVE";
-
-
-                const statusClass =
-                    Number(key.active) === 1
-                    ? "active"
-                    : "inactive";
-
-
-                let expired =
-                    "-";
-
-
-                if(key.expires_at){
-
-                    expired =
-                        new Date(
-                            Number(
-                                key.expires_at
-                            )
-                        )
-                        .toLocaleString(
-                            "id-ID"
-                        );
-
-                }
-
-
-                tr.innerHTML = `
-
-                    <td>
-                        ${key.id}
-                    </td>
-
-                    <td>
-                        <strong>
-                            ${escapeHtml(
-                                key.key
-                            )}
-                        </strong>
-                    </td>
-
-                    <td class="${
-                        key.type === "PREMIUM"
-                        ? "premium"
-                        : "free"
-                    }">
-                        ${key.type}
-                    </td>
-
-                    <td>
-                        ${escapeHtml(
-                            key.username ||
-                            "-"
-                        )}
-                    </td>
-
-                    <td>
-                        <span
-                            class="badge ${statusClass}"
-                        >
-                            ${status}
-                        </span>
-                    </td>
-
-                    <td>
-                        ${expired}
-                    </td>
-
-                    <td>
-
-                        <div class="actions">
-
-                            <button
-                                class="danger"
-                                onclick="revokeKey(
-                                    ${key.id}
-                                )"
-                            >
-                                REVOKE
-                            </button>
-
-                            <button
-                                class="danger"
-                                onclick="deleteKey(
-                                    ${key.id}
-                                )"
-                            >
-                                DELETE
-                            </button>
-
-                        </div>
-
-                    </td>
-
-                `;
-
-
-                tbody.appendChild(
-                    tr
-                );
-
-            }
-        );
-
-
-    }catch(error){
-
-        console.error(error);
-
-    }
-
+  if(!adminToken)return;
+  try{
+    const {r,d}=await api("/api/admin/keys");
+    if(!r.ok||!d.success){alert(d.message||"Gagal mengambil data.");return;}
+    const tbody=document.getElementById("keys"); tbody.innerHTML="";
+    if(!d.keys.length){tbody.innerHTML='<tr><td colspan="7">Belum ada key.</td></tr>';return;}
+    d.keys.forEach(key=>{
+      const tr=document.createElement("tr");
+      const active=Number(key.active)===1;
+      const expired=key.expires_at?new Date(Number(key.expires_at)).toLocaleString("id-ID"):"-";
+      tr.innerHTML=`<td>${key.id}</td><td class="key"><strong>${escapeHtml(key.key)}</strong></td><td class="${key.type==="PREMIUM"?"premium":"free"}">${escapeHtml(key.type)}</td><td>${escapeHtml(key.username||"-")}</td><td><span class="badge ${active?"active":"inactive"}">${active?"ACTIVE":"INACTIVE"}</span></td><td>${escapeHtml(expired)}</td><td><div class="actions"><button class="danger" onclick="revokeKey(${key.id})">REVOKE</button><button class="danger" onclick="deleteKey(${key.id})">DELETE</button></div></td>`;
+      tbody.appendChild(tr);
+    });
+  }catch(e){}
 }
 
+async function revokeKey(id){if(!confirm("Revoke key ini?"))return;try{const {d}=await api("/api/admin/revoke",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
+async function deleteKey(id){if(!confirm("Hapus key secara permanen?"))return;try{const {d}=await api("/api/admin/delete",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
+function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
 
-async function revokeKey(id){
-
-    if(
-        !confirm(
-            "Revoke key ini?"
-        )
-    ){
-
-        return;
-    }
-
-
-    const response =
-        await fetch(
-            "/api/admin/revoke",
-            {
-                method:"POST",
-
-                headers:
-                    headers(),
-
-                body:JSON.stringify({
-                    id
-                })
-            }
-        );
-
-
-    const data =
-        await response.json();
-
-
-    alert(
-        data.message
-    );
-
-
-    loadKeys();
-
-}
-
-
-async function deleteKey(id){
-
-    if(
-        !confirm(
-            "Hapus key secara permanen?"
-        )
-    ){
-
-        return;
-    }
-
-
-    const response =
-        await fetch(
-            "/api/admin/delete",
-            {
-                method:"POST",
-
-                headers:
-                    headers(),
-
-                body:JSON.stringify({
-                    id
-                })
-            }
-        );
-
-
-    const data =
-        await response.json();
-
-
-    alert(
-        data.message
-    );
-
-
-    loadKeys();
-
-}
-
-
-function escapeHtml(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-loadKeys();
-
+if(adminToken){showAdmin();}
 </script>
-
 </body>
-
 </html>
