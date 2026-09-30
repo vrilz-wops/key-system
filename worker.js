@@ -47,31 +47,112 @@ function generateKey() {
 
 /* =========================================
    ADMIN AUTH
+   Username/password + signed session token
 ========================================= */
 
-function isAdmin(request, env) {
+const ADMIN_SESSION_TTL = 8 * 60 * 60 * 1000;
 
-    const auth =
-        request.headers.get("Authorization");
-
-    if (!auth) {
-        return false;
-    }
-
-    if (!auth.startsWith("Bearer ")) {
-        return false;
-    }
-
-    const token =
-        auth.slice(7).trim();
-
-    return Boolean(
-        env.ADMIN_TOKEN &&
-        token &&
-        token === env.ADMIN_TOKEN
-    );
+function base64url(input) {
+    return btoa(String.fromCharCode(...new Uint8Array(input)))
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/g, "");
 }
 
+function base64urlText(text) {
+    return btoa(unescape(encodeURIComponent(text)))
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/g, "");
+}
+
+function decodeBase64urlText(value) {
+    const pad = value.length % 4 === 0 ? value : value + "=".repeat(4 - (value.length % 4));
+    return decodeURIComponent(escape(atob(pad.replace(/-/g, "+").replace(/_/g, "/"))));
+}
+
+async function signAdminSession(payload, secret) {
+    const body = base64urlText(JSON.stringify(payload));
+    const key = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(secret),
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+    );
+    const signature = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        new TextEncoder().encode(body)
+    );
+    return `${body}.${base64url(signature)}`;
+}
+
+async function verifyAdminSession(request, env) {
+    const auth = request.headers.get("Authorization") || "";
+    if (!auth.startsWith("Bearer ")) return false;
+
+    const token = auth.slice(7).trim();
+    const parts = token.split(".");
+    if (parts.length !== 2 || !env.ADMIN_SESSION_SECRET) return false;
+
+    try {
+        const expected = await signAdminSession(
+            JSON.parse(decodeBase64urlText(parts[0])),
+            env.ADMIN_SESSION_SECRET
+        );
+
+        if (expected !== token) return false;
+
+        const payload = JSON.parse(decodeBase64urlText(parts[0]));
+        return payload.exp > Date.now() && payload.role === "admin";
+    } catch {
+        return false;
+    }
+}
+
+async function adminLogin(request, env) {
+    try {
+        const body = await request.json();
+        const username = String(body.username || "").trim();
+        const password = String(body.password || "");
+
+        if (!env.ADMIN_USERNAME || !env.ADMIN_PASSWORD || !env.ADMIN_SESSION_SECRET) {
+            return json({
+                success: false,
+                message: "Admin secrets belum dikonfigurasi di Cloudflare Worker."
+            }, 500);
+        }
+
+        if (username !== env.ADMIN_USERNAME || password !== env.ADMIN_PASSWORD) {
+            return json({
+                success: false,
+                message: "Username atau password admin salah."
+            }, 401);
+        }
+
+        const token = await signAdminSession({
+            role: "admin",
+            sub: username,
+            exp: Date.now() + ADMIN_SESSION_TTL
+        }, env.ADMIN_SESSION_SECRET);
+
+        return json({
+            success: true,
+            token,
+            expires_in: ADMIN_SESSION_TTL
+        });
+    } catch {
+        return json({
+            success: false,
+            message: "Login admin gagal."
+        }, 400);
+    }
+}
+
+async function isAdmin(request, env) {
+    return verifyAdminSession(request, env);
+}
 
 /* =========================================
    CLEAN EXPIRED KEYS
@@ -647,7 +728,7 @@ async function adminCreateKey(
     env
 ) {
 
-    if (!isAdmin(request, env)) {
+    if (!(await isAdmin(request, env))) {
 
         return json({
             success: false,
@@ -797,7 +878,7 @@ async function adminListKeys(
     env
 ) {
 
-    if (!isAdmin(request, env)) {
+    if (!(await isAdmin(request, env))) {
 
         return json({
             success: false,
@@ -854,7 +935,7 @@ async function adminRevoke(
     env
 ) {
 
-    if (!isAdmin(request, env)) {
+    if (!(await isAdmin(request, env))) {
 
         return json({
             success: false,
@@ -928,7 +1009,7 @@ async function adminDelete(
     env
 ) {
 
-    if (!isAdmin(request, env)) {
+    if (!(await isAdmin(request, env))) {
 
         return json({
             success: false,
@@ -1086,6 +1167,22 @@ export default {
                 env
             );
 
+        }
+
+
+        if (
+            url.pathname ===
+            "/api/admin/login"
+        ) {
+
+            if (request.method !== "POST") {
+                return json({
+                    success: false,
+                    message: "Method not allowed."
+                }, 405);
+            }
+
+            return adminLogin(request, env);
         }
 
 
