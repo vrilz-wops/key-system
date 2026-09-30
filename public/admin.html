@@ -22,7 +22,7 @@ button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:li
 .login button{width:100%;margin-top:9px}.error{color:#ff7474;min-height:20px;margin-top:10px;font-size:13px}.success{color:#65f28b}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}
 .title{margin:0;font-size:21px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.wide{grid-column:1/-1}
 .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #211b21;font-size:12px}th{color:#8d8790;font-size:10px;letter-spacing:1px}td strong{color:#fff}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:10px;font-weight:900}.active{background:#10351c;color:#61f18a}.inactive{background:#391313;color:#ff7777}.premium{color:#ffb43d}.free{color:#aaa4ac}.key{font-family:monospace;letter-spacing:.5px}
-.notice{border:1px solid #4a2c0c;background:#1b1005;color:#ffc16a;padding:11px 13px;border-radius:11px;font-size:12px;margin-top:12px}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.status{font-size:11px;color:#8d8790}.status b{color:#67f08a}
+.notice{border:1px solid #4a2c0c;background:#1b1005;color:#ffc16a;padding:11px 13px;border-radius:11px;font-size:12px;margin-top:12px}.key-result{display:none;margin-top:12px;padding:14px;border:1px solid #ff8a00;background:linear-gradient(180deg,#211205,#120b06);border-radius:12px;box-shadow:0 0 24px #ff730018}.key-result.show{display:block}.key-result-label{font-size:10px;color:#ffb15c;font-weight:900;letter-spacing:1px}.generated-key{margin-top:7px;padding:11px;background:#050507;border:1px solid #3a2b20;border-radius:9px;color:#fff;font:900 14px monospace;word-break:break-all}.copy-key{margin-top:9px;width:100%}.create-status{min-height:18px;margin-top:8px;font-size:12px;color:#ffb15c}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.status{font-size:11px;color:#8d8790}.status b{color:#67f08a}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start;flex-direction:column}.login{margin-top:8vh}}
 </style>
 </head>
@@ -51,7 +51,13 @@ button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:li
         <select id="duration">
           <option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option>
         </select>
-        <button onclick="createKey()">GENERATE PREMIUM KEY</button>
+        <button id="generateBtn" onclick="createKey()">GENERATE PREMIUM KEY</button>
+        <div id="createStatus" class="create-status"></div>
+        <div id="keyResult" class="key-result">
+          <div class="key-result-label">PREMIUM KEY BERHASIL DIBUAT</div>
+          <div id="generatedKey" class="generated-key"></div>
+          <button class="copy-key" onclick="copyGeneratedKey()">COPY KEY</button>
+        </div>
         <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
       </div>
       <div class="card">
@@ -101,11 +107,29 @@ async function api(path, options={}){
 
 async function createKey(){
   const duration=Number(document.getElementById("duration").value);
+  const btn=document.getElementById("generateBtn");
+  const status=document.getElementById("createStatus");
+  const result=document.getElementById("keyResult");
+  const keyBox=document.getElementById("generatedKey");
+  status.textContent=""; result.classList.remove("show"); btn.disabled=true; btn.textContent="CREATING...";
   try{
     const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration})});
-    if(!r.ok||!d.success){alert(d.message||"Gagal membuat key.");return;}
-    alert("PREMIUM KEY:\n\n"+d.key); loadKeys();
-  }catch(e){}
+    if(!r.ok||!d.success){status.textContent=d.message||"Gagal membuat key.";return;}
+    keyBox.textContent=d.key; result.classList.add("show"); status.textContent="Premium key berhasil dibuat."; loadKeys();
+  }catch(e){status.textContent="Server tidak dapat dihubungi.";}
+  finally{btn.disabled=false;btn.textContent="GENERATE PREMIUM KEY";}
+}
+
+async function copyGeneratedKey(){
+  const key=document.getElementById("generatedKey").textContent.trim();
+  if(!key)return;
+  try{await navigator.clipboard.writeText(key); const b=document.querySelector(".copy-key"); const old=b.textContent; b.textContent="COPIED ✓"; setTimeout(()=>b.textContent=old,1400);}
+  catch(e){statusCopyFallback(key);}
+}
+
+function statusCopyFallback(key){
+  const ta=document.createElement("textarea"); ta.value=key; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+  const b=document.querySelector(".copy-key"); const old=b.textContent; b.textContent="COPIED ✓"; setTimeout(()=>b.textContent=old,1400);
 }
 
 async function loadKeys(){
