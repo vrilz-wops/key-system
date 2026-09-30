@@ -44,6 +44,25 @@ function generateKey() {
     return `VRILZ-${part()}-${part()}-${part()}`;
 }
 
+function generatePremiumKey() {
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    function part() {
+
+        let result = "";
+
+        for (let i = 0; i < 5; i++) {
+            result += chars[Math.floor(Math.random() * chars.length)];
+        }
+
+        return result;
+    }
+
+    return `VRILZ-PREM-${part()}-${part()}-${part()}`;
+}
+
 
 /* =========================================
    ADMIN AUTH
@@ -792,7 +811,7 @@ async function adminCreateKey(
         do {
 
             newKey =
-                generateKey();
+                generatePremiumKey();
 
             exists =
                 await env.DB
