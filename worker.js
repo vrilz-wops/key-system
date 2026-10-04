@@ -1092,6 +1092,83 @@ async function adminDelete(
 
 }
 
+/* =========================================
+   GLOBAL CHAT (pakai CHAT_DB)
+========================================= */
+
+const CHAT_MAX = 200;
+const CHAT_RATE_LIMIT_MS = 1500;
+const CHAT_MAX_LEN = 200;
+
+async function handleChatSend(request, env) {
+    try {
+        const body = await request.json();
+        const userId = Number(body.userId || 0);
+        const username = String(body.username || "unknown").slice(0, 32).trim();
+        const displayName = String(body.displayName || username).slice(0, 32).trim();
+        let text = String(body.text || "").slice(0, CHAT_MAX_LEN);
+        text = text.replace(/[\n\r]/g, " ").trim();
+
+        if (!text) return json({ success: false, message: "Empty message" }, 400);
+        if (!userId || !username) return json({ success: false, message: "Missing user info" }, 400);
+
+        const now = Date.now();
+
+        const last = await env.CHAT_DB.prepare(`
+            SELECT created_at FROM chat_messages
+            WHERE user_id = ?
+            ORDER BY created_at DESC LIMIT 1
+        `).bind(userId).first();
+
+        if (last && now - Number(last.created_at) < CHAT_RATE_LIMIT_MS) {
+            return json({ success: false, message: "Slow down (rate limit)" }, 429);
+        }
+
+        await env.CHAT_DB.prepare(`
+            INSERT INTO chat_messages (user_id, username, display_name, text, created_at)
+            VALUES (?, ?, ?, ?, ?)
+        `).bind(userId, username, displayName, text, now).run();
+
+        await env.CHAT_DB.prepare(`
+            DELETE FROM chat_messages
+            WHERE id NOT IN (
+                SELECT id FROM chat_messages ORDER BY id DESC LIMIT ?
+            )
+        `).bind(CHAT_MAX).run();
+
+        return json({ success: true, ts: now });
+    } catch (error) {
+        return json({ success: false, message: "Server error" }, 500);
+    }
+}
+
+async function handleChatPoll(request, env) {
+    try {
+        const url = new URL(request.url);
+        const since = Number(url.searchParams.get("since") || 0);
+
+        const result = await env.CHAT_DB.prepare(`
+            SELECT user_id, username, display_name, text, created_at
+            FROM chat_messages
+            WHERE created_at > ?
+            ORDER BY created_at ASC
+            LIMIT 100
+        `).bind(since).all();
+
+        const messages = (result.results || []).map(m => ({
+            i: Number(m.user_id),
+            u: m.username,
+            d: m.display_name,
+            t: m.text,
+            ts: Number(m.created_at),
+        }));
+
+        return json({ success: true, messages });
+    } catch (error) {
+        return json({ success: false, message: "Server error", messages: [] }, 500);
+    }
+}
+
 
 /* =========================================
    MAIN WORKER
