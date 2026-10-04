@@ -10,3 +10,8 @@ binding = "ASSETS"
 binding = "DB"
 database_name = "vrilz-key-db"
 database_id = "1f12915e-806c-4ad6-adad-3b73d111804d"
+
+[[d1_databases]]
+binding = "CHAT_DB"
+database_name = "vrilz-chat-db"
+database_id = "7154dd8f-5ee8-4fa5-a114-8b0684fce777"
