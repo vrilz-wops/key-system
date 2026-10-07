@@ -67,6 +67,78 @@ footer{background:#050506;color:#8e8980;text-align:center;padding:30px 20px;font
 .section{background:#070708}
 footer{background:#030304!important;border-top:1px solid #ff8a0025!important}.footerLogo{color:#ff9a00!important}
 @media(max-width:800px){.bolt{opacity:.45}.bolt.a{left:-8%}.bolt.b{right:-8%}}
+
+/* ===== ROBLOX LUA GAMES ===== */
+.gamesSection{
+  background:
+    radial-gradient(circle at 15% 30%,rgba(255,138,0,.055),transparent 28%),
+    radial-gradient(circle at 85% 70%,rgba(255,43,43,.045),transparent 28%),
+    #070708;
+}
+.gameGrid{display:grid;grid-template-columns:minmax(0,780px);justify-content:center}
+.gameCard{
+  position:relative;display:grid;grid-template-columns:.92fr 1.08fr;
+  min-height:330px;overflow:hidden;border:1px solid #292b31;border-radius:26px;
+  background:linear-gradient(145deg,#101114,#09090a);
+  box-shadow:0 22px 70px rgba(0,0,0,.45);
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
+}
+.gameCard:hover{transform:translateY(-7px);border-color:#ff8a0060;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 45px rgba(255,138,0,.07)}
+.gameVisual{
+  position:relative;min-height:330px;display:grid;place-items:center;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,138,0,.24),transparent 24%),
+    radial-gradient(circle at 50% 50%,rgba(255,43,43,.13),transparent 48%),
+    linear-gradient(145deg,#151619,#080809);
+  border-right:1px solid #ff8a0028;
+}
+.gameVisual:before{
+  content:"";position:absolute;inset:0;opacity:.28;
+  background-image:linear-gradient(120deg,transparent 48%,#ff8a00 49%,transparent 50%),
+                   linear-gradient(300deg,transparent 47%,#ff3d00 48%,transparent 49%);
+}
+.gameGlow{position:absolute;width:210px;height:210px;border-radius:50%;background:#ff8a0020;filter:blur(35px);animation:gameGlow 3.2s ease-in-out infinite}
+.robloxCube{
+  position:relative;z-index:2;width:122px;height:122px;border-radius:30px;
+  display:grid;place-items:center;font:800 68px/1 Manrope;color:#fff;
+  background:linear-gradient(145deg,#ffb000,#ff3d00 72%);
+  border:1px solid #ffd27a80;
+  box-shadow:0 25px 55px #0008,0 0 45px #ff8a0040;
+  transform:rotate(-5deg);
+}
+.robloxCube:before,.robloxCube:after{content:"";position:absolute;border-radius:8px;background:#080809}
+.robloxCube:before{width:20px;height:20px;left:31px;top:35px}
+.robloxCube:after{width:20px;height:20px;right:31px;top:35px}
+.gameTag{
+  position:absolute;left:20px;top:20px;padding:7px 9px;border-radius:8px;
+  background:#080809d9;border:1px solid #ff8a0045;color:#ffb000;
+  font-size:8px;font-weight:800;letter-spacing:1px
+}
+.gameBody{padding:34px;display:flex;flex-direction:column;justify-content:center}
+.gameStatus{display:inline-flex;align-items:center;gap:6px;color:#ffb000;font-size:8px;font-weight:800;letter-spacing:1.4px}
+.gameStatus i{width:6px;height:6px;border-radius:50%;background:#42e66b;box-shadow:0 0 10px #42e66b}
+.gameTop{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}
+.gameTop h3{font:800 31px Manrope;letter-spacing:-1.3px;margin:8px 0 0;color:#f5f5f5}
+.gameVersion{font-size:8px;font-weight:800;color:#777a82;border:1px solid #303238;border-radius:999px;padding:7px 9px}
+.gameBody>p{font-size:11px;line-height:1.75;color:#90939a;margin:15px 0 17px;max-width:500px}
+.gameFeatures{display:flex;gap:7px;flex-wrap:wrap}
+.gameFeatures span{padding:8px 10px;border:1px solid #2d3036;background:#0a0b0d;border-radius:9px;color:#b6b8be;font-size:8px;font-weight:700}
+.gameButton{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:10px;margin-top:20px;
+  width:100%;max-width:260px;padding:12px 14px;border-radius:11px;
+  background:linear-gradient(135deg,#ffad00,#ff4300);color:#080809;
+  font-size:9px;font-weight:900;transition:.2s;
+}
+.gameButton:hover{transform:translateY(-2px);box-shadow:0 13px 30px #ff6b001f}
+@keyframes gameGlow{50%{transform:scale(1.15);opacity:.7}}
+@media(max-width:800px){
+  .gameCard{grid-template-columns:1fr;min-height:0}
+  .gameVisual{min-height:245px;border-right:0;border-bottom:1px solid #ff8a0028}
+  .gameBody{padding:25px}
+  .gameTop h3{font-size:27px}
+  .gameButton{max-width:none}
+}
+
 @media(max-width:800px){.navlinks{display:none}.navright .navbtn{display:none}.hamb{display:block}.hero{padding-top:65px}.hero h1{letter-spacing:-3px}.trust{grid-template-columns:1fr}.trustItem{border-right:0;border-bottom:1px solid var(--line);padding:12px}.trustItem:last-child{border-bottom:0}.generator{grid-template-columns:1fr}.genSide{border-left:0;border-top:1px solid var(--line);padding:25px}.plans,.steps{grid-template-columns:1fr}.guides,.faq{grid-template-columns:1fr}.guide.full{grid-column:auto}.section{padding:68px 0}}
 
 /* ===== VRILZ PREMIUM MOTION UPGRADE ===== */
@@ -181,10 +253,10 @@ body:after{
 <div class="announcement">✦ <b>VRILZ KEY SYSTEM</b> — Secure access · Premium plans · Discord support</div>
 <nav class="nav">
 <a class="brand" href="#home"><span class="mark">V</span>VRILZ</a>
-<div class="navlinks"><a href="#create">Create Key</a><a href="#premium">Premium</a><a href="#guide">How To</a><a href="#faq">FAQ</a></div>
+<div class="navlinks"><a href="#create">Create Key</a><a href="#premium">Premium</a><a href="#games">Games</a><a href="#guide">How To</a><a href="#faq">FAQ</a></div>
 <div class="navright"><a class="navbtn gold" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">Discord ↗</a><button class="hamb" id="hamb">☰</button></div>
 </nav>
-<div class="mobile" id="mobile"><a href="#create">Create Key</a><a href="#premium">Premium</a><a href="#guide">How To</a><a href="#faq">FAQ</a><a href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">Join Discord ↗</a></div>
+<div class="mobile" id="mobile"><a href="#create">Create Key</a><a href="#premium">Premium</a><a href="#games">Games</a><a href="#guide">How To</a><a href="#faq">FAQ</a><a href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">Join Discord ↗</a></div>
 
 <section class="hero" id="home"><div class="lightning-field"><span class="lightning one"><i></i></span><span class="lightning two"><i></i></span><span class="lightning three"><i></i></span></div><span class="orb a"></span><span class="orb b"></span><span class="bolt a"></span><span class="bolt b"></span><span class="bolt c"></span><span class="bolt d"></span><div class="heroIn">
 <div class="eyebrow"><span class="dot"></span> Official VRILZ Key System</div>
@@ -212,6 +284,40 @@ body:after{
 <div class="plan featured" data-scroll="#guide"><span class="badge">MOST POPULAR</span><div class="planIcon">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="desc">Extended access for regular users.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2-month access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
 <div class="plan" data-scroll="#guide"><div class="planIcon">♛</div><h3>Permanent</h3><div class="price">$20 <small>/ lifetime</small></div><div class="desc">One-time premium access with no expiry.</div><div class="features"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
 </div></div></section>
+
+
+<section class="section gamesSection" id="games"><div class="wrap">
+  <div class="head reveal" data-reveal>
+    <div class="kicker">03 — Roblox Lua Games</div>
+    <h2>Play. Ride. Explore.</h2>
+    <p>Roblox Lua game experience by VRILZ. Mulai dari <b>Ride A Pet</b> dan ikuti update game berikutnya.</p>
+  </div>
+  <div class="gameGrid stagger" data-reveal>
+    <article class="gameCard">
+      <div class="gameVisual">
+        <div class="gameGlow"></div>
+        <div class="robloxCube">R</div>
+        <span class="gameTag">ROBLOX LUA GAME</span>
+      </div>
+      <div class="gameBody">
+        <div class="gameTop">
+          <div>
+            <span class="gameStatus"><i></i> AVAILABLE</span>
+            <h3>Ride A Pet</h3>
+          </div>
+          <span class="gameVersion">VRILZ</span>
+        </div>
+        <p>Naik, koleksi, dan eksplorasi bersama pet kamu. Dibangun dengan Roblox Lua dengan fokus gameplay ringan, responsif, dan seru dimainkan.</p>
+        <div class="gameFeatures">
+          <span>🐾 Pet System</span>
+          <span>⚡ Lua Powered</span>
+          <span>🎮 Roblox</span>
+        </div>
+        <a class="gameButton" href="#guide">VIEW GAME INFO <b>↗</b></a>
+      </div>
+    </article>
+  </div>
+</div></section>
 
 <section class="section" id="guide"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">03 — How To</div><h2>Everything, step by step.</h2><p>Panduan Bahasa Indonesia + English. Tidak ada redeem key di website.</p></div>
@@ -279,11 +385,12 @@ mobile?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobile.c
 (() => {
   const items = document.querySelectorAll("[data-reveal]");
   if (!items.length) return;
-  const io = new IntersectionObserver((entries, observer) => {
+  const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
         entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
+      }else{
+        entry.target.classList.remove("visible");
       }
     });
   }, {root:null, threshold:.14, rootMargin:"0px 0px -45px 0px"});
