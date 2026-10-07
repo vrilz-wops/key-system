@@ -68,6 +68,113 @@ footer{background:#050506;color:#8e8980;text-align:center;padding:30px 20px;font
 footer{background:#030304!important;border-top:1px solid #ff8a0025!important}.footerLogo{color:#ff9a00!important}
 @media(max-width:800px){.bolt{opacity:.45}.bolt.a{left:-8%}.bolt.b{right:-8%}}
 @media(max-width:800px){.navlinks{display:none}.navright .navbtn{display:none}.hamb{display:block}.hero{padding-top:65px}.hero h1{letter-spacing:-3px}.trust{grid-template-columns:1fr}.trustItem{border-right:0;border-bottom:1px solid var(--line);padding:12px}.trustItem:last-child{border-bottom:0}.generator{grid-template-columns:1fr}.genSide{border-left:0;border-top:1px solid var(--line);padding:25px}.plans,.steps{grid-template-columns:1fr}.guides,.faq{grid-template-columns:1fr}.guide.full{grid-column:auto}.section{padding:68px 0}}
+
+/* ===== VRILZ PREMIUM MOTION UPGRADE ===== */
+html{scroll-behavior:smooth}
+body{background:
+ radial-gradient(circle at 50% -10%,rgba(255,138,0,.08),transparent 32%),
+ #070708;
+}
+body:after{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+ background:linear-gradient(transparent 50%,rgba(255,255,255,.08) 50%);
+ background-size:100% 4px;
+ mix-blend-mode:screen;
+}
+.nav{box-shadow:0 8px 35px rgba(0,0,0,.35)}
+.nav:after{
+ content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+ background:linear-gradient(90deg,transparent,#ff8a00,transparent);
+ opacity:.65;
+}
+.hero{min-height:640px}
+.heroIn{z-index:4}
+.hero h1{text-shadow:0 0 38px rgba(255,138,0,.08)}
+.eyebrow{animation:floatBadge 3.5s ease-in-out infinite}
+.dot{animation:dotPulse 1.3s ease-in-out infinite}
+
+.trust,.generator,.plan,.step,.guide,.faqItem,.support{
+ position:relative;overflow:hidden;
+}
+.trust:before,.generator:before,.plan:before,.step:before,.guide:before,.faqItem:before,.support:before{
+ content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+ background:linear-gradient(120deg,transparent 15%,rgba(255,138,0,.55),transparent 38%,transparent 70%,rgba(255,43,43,.3),transparent 88%);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;mask-composite:exclude;
+ opacity:.42;pointer-events:none;
+}
+.plan:after,.step:after,.guide:after,.faqItem:after{
+ content:"";position:absolute;width:120px;height:120px;right:-65px;top:-65px;
+ background:radial-gradient(circle,rgba(255,138,0,.16),transparent 68%);
+ pointer-events:none;transition:.35s;
+}
+.plan:hover:after,.step:hover:after,.guide:hover:after,.faqItem:hover:after{transform:scale(1.5);opacity:.8}
+
+.reveal{
+ opacity:0;transform:translateY(38px) scale(.985);
+ transition:opacity .7s cubic-bezier(.2,.75,.2,1),transform .7s cubic-bezier(.2,.75,.2,1);
+}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-45px);transition:.75s cubic-bezier(.2,.75,.2,1)}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(45px);transition:.75s cubic-bezier(.2,.75,.2,1)}
+.reveal-right.visible{opacity:1;transform:none}
+.stagger > *{opacity:0;transform:translateY(25px) scale(.98)}
+.stagger.visible > *{animation:cardIn .65s cubic-bezier(.2,.75,.2,1) forwards}
+.stagger.visible > *:nth-child(1){animation-delay:.04s}
+.stagger.visible > *:nth-child(2){animation-delay:.13s}
+.stagger.visible > *:nth-child(3){animation-delay:.22s}
+.stagger.visible > *:nth-child(4){animation-delay:.31s}
+.stagger.visible > *:nth-child(5){animation-delay:.40s}
+
+.lightning-field{
+ position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;
+}
+.lightning{
+ position:absolute;width:2px;height:150px;opacity:0;
+ filter:drop-shadow(0 0 8px #ff9d00) drop-shadow(0 0 18px #ff3d00);
+ transform-origin:top center;
+}
+.lightning i{
+ position:absolute;display:block;width:100%;height:100%;
+ background:linear-gradient(180deg,#fff 0%,#ffb000 28%,#ff4b00 70%,transparent);
+ clip-path:polygon(48% 0,100% 0,63% 31%,82% 31%,35% 69%,53% 69%,0 100%,23% 57%,8% 57%,40% 23%,20% 23%);
+}
+.lightning.one{left:17%;top:5%;transform:rotate(19deg) scale(.9);animation:strike 5.2s 1.2s infinite}
+.lightning.two{right:16%;top:11%;transform:rotate(-22deg) scale(.75);animation:strike 6.1s 3.1s infinite}
+.lightning.three{left:50%;top:0%;transform:rotate(4deg) scale(.55);animation:strike 7s 4.8s infinite}
+@keyframes strike{
+ 0%,72%,100%{opacity:0}
+ 73%{opacity:.05}
+ 74%{opacity:1}
+ 75%{opacity:.15}
+ 76%{opacity:.95}
+ 77%{opacity:0}
+ 79%{opacity:.8}
+ 80%{opacity:0}
+}
+@keyframes cardIn{
+ from{opacity:0;transform:translateY(25px) scale(.98)}
+ to{opacity:1;transform:none}
+}
+@keyframes floatBadge{50%{transform:translateY(-4px)}}
+@keyframes dotPulse{
+ 0%,100%{box-shadow:0 0 0 3px #ff8a0017,0 0 8px #ff8a00}
+ 50%{box-shadow:0 0 0 7px #ff8a000b,0 0 20px #ff8a00}
+}
+@media (prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;transition:none!important}
+ .reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}
+ .stagger>*{opacity:1!important;transform:none!important}
+}
+@media(max-width:800px){
+ .hero{min-height:590px}
+ .lightning.one{left:2%}
+ .lightning.two{right:1%}
+ .lightning.three{left:47%}
+ .reveal{transform:translateY(25px) scale(.99)}
+}
+
 </style>
 </head>
 <body>
@@ -79,18 +186,18 @@ footer{background:#030304!important;border-top:1px solid #ff8a0025!important}.fo
 </nav>
 <div class="mobile" id="mobile"><a href="#create">Create Key</a><a href="#premium">Premium</a><a href="#guide">How To</a><a href="#faq">FAQ</a><a href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">Join Discord ↗</a></div>
 
-<section class="hero" id="home"><span class="orb a"></span><span class="orb b"></span><span class="bolt a"></span><span class="bolt b"></span><span class="bolt c"></span><span class="bolt d"></span><div class="heroIn">
+<section class="hero" id="home"><div class="lightning-field"><span class="lightning one"><i></i></span><span class="lightning two"><i></i></span><span class="lightning three"><i></i></span></div><span class="orb a"></span><span class="orb b"></span><span class="bolt a"></span><span class="bolt b"></span><span class="bolt c"></span><span class="bolt d"></span><div class="heroIn">
 <div class="eyebrow"><span class="dot"></span> Official VRILZ Key System</div>
 <h1>Access <span class="shine">THE KEY.</span></h1>
 <p>Generate your free VRILZ key with your username, copy it, then use it directly in the Lua script. No redeem page. No unnecessary steps.</p>
 <div class="actions"><a class="btn primary" href="#create">Create Free Key ↓</a><a class="btn secondary" href="#premium">Explore Premium</a></div>
 </div></section>
 
-<div class="trust"><div class="trustItem"><strong>Instant</strong><span>Free key generation</span></div><div class="trustItem"><strong>3 Premium Plans</strong><span>Flexible access options</span></div><div class="trustItem"><strong>24 / 7</strong><span>Discord support</span></div></div>
+<div class="trust reveal" data-reveal><div class="trustItem"><strong>Instant</strong><span>Free key generation</span></div><div class="trustItem"><strong>3 Premium Plans</strong><span>Flexible access options</span></div><div class="trustItem"><strong>24 / 7</strong><span>Discord support</span></div></div>
 
 <section class="section" id="create"><div class="wrap">
-<div class="head"><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Masukkan username kamu. Setelah key dibuat, langsung copy dan gunakan di VRILZ Lua Script.</p></div>
-<div class="generator">
+<div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Masukkan username kamu. Setelah key dibuat, langsung copy dan gunakan di VRILZ Lua Script.</p></div>
+<div class="generator reveal" data-reveal>
 <div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> Username digunakan untuk membuat claim key. <b>EN:</b> Enter your username to generate your free key.</p>
 <div class="field"><label for="username">Username</label><div class="inputWrap"><input id="username" type="text" maxlength="50" autocomplete="off" placeholder="Masukkan username kamu..."></div></div>
 <div class="genBtns"><button class="btn primary" id="createBtn">✦ CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div></div>
@@ -99,34 +206,34 @@ footer{background:#030304!important;border-top:1px solid #ff8a0025!important}.fo
 </div></section>
 
 <section class="section premium" id="premium"><div class="wrap">
-<div class="head"><div class="kicker">02 — Premium</div><h2>Premium, without the clutter.</h2><p>Pilih paket premium lalu lanjutkan melalui Discord resmi VRILZ.</p></div>
-<div class="plans">
+<div class="head reveal" data-reveal><div class="kicker">02 — Premium</div><h2>Premium, without the clutter.</h2><p>Pilih paket premium lalu lanjutkan melalui Discord resmi VRILZ.</p></div>
+<div class="plans stagger" data-reveal>
 <div class="plan" data-scroll="#guide"><div class="planIcon">◈</div><h3>30 Days</h3><div class="price">$2 <small>/ 30 days</small></div><div class="desc">Premium access for one month.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>30-day access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
 <div class="plan featured" data-scroll="#guide"><span class="badge">MOST POPULAR</span><div class="planIcon">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="desc">Extended access for regular users.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2-month access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
 <div class="plan" data-scroll="#guide"><div class="planIcon">♛</div><h3>Permanent</h3><div class="price">$20 <small>/ lifetime</small></div><div class="desc">One-time premium access with no expiry.</div><div class="features"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
 </div></div></section>
 
 <section class="section" id="guide"><div class="wrap">
-<div class="head"><div class="kicker">03 — How To</div><h2>Everything, step by step.</h2><p>Panduan Bahasa Indonesia + English. Tidak ada redeem key di website.</p></div>
-<div class="steps">
+<div class="head reveal" data-reveal><div class="kicker">03 — How To</div><h2>Everything, step by step.</h2><p>Panduan Bahasa Indonesia + English. Tidak ada redeem key di website.</p></div>
+<div class="steps stagger" data-reveal>
 <div class="step" data-scroll="#create"><div class="num">01 / CREATE</div><h3>Buat Key / Create Key</h3><p>ID: Masukkan username → Create Key → tunggu hasil → Copy. EN: Enter username → Create Key → receive → Copy.</p></div>
 <div class="step" data-scroll="#guide"><div class="num">02 / USE</div><h3>Pakai Key / Use Key</h3><p>ID: Paste key ke Key System di Lua Script. EN: Paste the generated key into the Lua Script.</p></div>
 <div class="step" data-scroll="#premium"><div class="num">03 / PREMIUM</div><h3>Premium Access</h3><p>ID: Pilih paket → Discord → hubungi staff. EN: Choose a plan → Discord → contact staff.</p></div>
 </div>
-<div class="guides">
+<div class="guides stagger" data-reveal>
 <div class="guide"><div class="guideHead"><div class="guideIcon">⌁</div><div><h3>Cara Membuat & Memakai Key</h3><small>How to create & use your key</small></div></div><ol><li>Buka bagian <b>Create Key</b>.</li><li>Masukkan username kamu.</li><li>Klik <b>CREATE KEY</b> dan tunggu sampai key muncul.</li><li>Klik <b>COPY KEY</b>.</li><li>Buka VRILZ Lua Script lalu paste key pada Key System.</li></ol><div class="note"><b>EN:</b> Enter your username → Generate → Copy → Paste into the Lua Script. Key validation is handled by the script.</div></div>
 <div class="guide"><div class="guideHead"><div class="guideIcon">◆</div><div><h3>Cara Order Premium</h3><small>How to order Premium</small></div></div><ol><li>Pilih $2 / 30 Days, $5 / 2 Months, atau $20 / Permanent.</li><li>Klik <b>ORDER ON DISCORD</b>.</li><li>Join server dan hubungi staff.</li><li>Ikuti instruksi pembayaran dan akses dari staff.</li></ol><div class="note"><b>EN:</b> Choose a plan → Join Discord → Contact staff → Follow the payment instructions.</div></div>
 <div class="guide full"><div class="guideHead"><div class="guideIcon">●</div><div><h3>Cara Join Discord</h3><small>How to join Discord</small></div></div><ol><li>Klik tombol Discord di navbar atau tombol order premium.</li><li>Discord akan terbuka di aplikasi/browser.</li><li>Klik <b>Accept Invite</b>.</li><li>Baca rules dan masuk ke channel/ticket yang diarahkan.</li></ol><div class="note">Official invite: <b>discord.gg/sWGKFdPdR</b></div></div>
 </div></div></section>
 
-<section class="section" id="faq"><div class="wrap"><div class="head"><div class="kicker">04 — FAQ</div><h2>Questions, answered.</h2></div><div class="faq">
+<section class="section" id="faq"><div class="wrap"><div class="head reveal" data-reveal><div class="kicker">04 — FAQ</div><h2>Questions, answered.</h2></div><div class="faq stagger" data-reveal>
 <div class="faqItem" data-scroll="#create"><h3>Apakah harus memasukkan username?</h3><p>Ya. Username diperlukan saat membuat free key.</p></div>
 <div class="faqItem"><h3>Does the website redeem my key?</h3><p>No. There is no redeem/activate feature on this website. The Lua script handles key validation.</p></div>
 <div class="faqItem"><h3>Berapa harga Premium?</h3><p>$2 untuk 30 hari, $5 untuk 2 bulan, dan $20 untuk permanent.</p></div>
 <div class="faqItem"><h3>Where can I get Premium?</h3><p>Use an ORDER ON DISCORD button and contact the official VRILZ staff.</p></div>
 </div></div></section>
 
-<div class="wrap"><div class="support"><h2>Ready to go further?</h2><p>Need Premium, support, or updates? Join the official VRILZ Discord.</p><a class="btn" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">JOIN VRILZ DISCORD ↗</a></div></div>
+<div class="wrap"><div class="support reveal" data-reveal><h2>Ready to go further?</h2><p>Need Premium, support, or updates? Join the official VRILZ Discord.</p><a class="btn" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">JOIN VRILZ DISCORD ↗</a></div></div>
 <footer><div class="footerLogo">VRILZ</div>Key System · Premium Access · ID / EN · © 2026 VRILZ</footer>
 <div class="toast" id="toast"></div>
 <script>
@@ -167,6 +274,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",
 const hamb=$("#hamb"),mobile=$("#mobile");
 hamb?.addEventListener("click",()=>mobile.classList.toggle("open"));
 mobile?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobile.classList.remove("open")));
+
+/* ===== Scroll reveal ===== */
+(() => {
+  const items = document.querySelectorAll("[data-reveal]");
+  if (!items.length) return;
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {root:null, threshold:.14, rootMargin:"0px 0px -45px 0px"});
+  items.forEach(el => io.observe(el));
+})();
+
 </script>
 </body>
 </html>
