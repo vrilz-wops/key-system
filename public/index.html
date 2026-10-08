@@ -344,7 +344,7 @@ body:before{opacity:.12;background-image:linear-gradient(90deg,rgba(255,40,55,.0
 .brand{gap:12px;letter-spacing:-.6px}.brandSub{display:block;margin-top:3px;color:#8e7377;font:800 6px/1.4 "DM Sans",Arial,sans-serif;letter-spacing:1.6px}
 .mark{color:#fff;background:linear-gradient(145deg,#ff3145,#690611);border-color:rgba(255,100,110,.55);box-shadow:inset 0 1px rgba(255,255,255,.15),0 0 28px rgba(255,20,45,.2)}
 .hero{min-height:690px;background:#070203}
-.hero:before{content:"";position:absolute;inset:0;width:auto;height:auto;left:0;top:0;transform:none;filter:none;opacity:.37;background:linear-gradient(90deg,rgba(4,0,1,.94) 0%,rgba(5,0,1,.72) 44%,rgba(5,0,1,.35) 100%),linear-gradient(0deg,#050303 0%,transparent 28%,rgba(5,0,1,.08) 70%,#050303 100%),url('/assets/vrilzhub-bg.png') center 42%/cover no-repeat}
+.hero:before{content:"";position:absolute;inset:0;width:auto;height:auto;left:0;top:0;transform:none;filter:none;opacity:.37;background:linear-gradient(90deg,rgba(4,0,1,.94) 0%,rgba(5,0,1,.72) 44%,rgba(5,0,1,.35) 100%),linear-gradient(0deg,#050303 0%,transparent 28%,rgba(5,0,1,.08) 70%,#050303 100%),url('./vrilzhub-bg.png') center 42%/cover no-repeat}
 .hero:after{opacity:.7;background:linear-gradient(120deg,transparent 0 47%,rgba(255,36,56,.05) 48%,transparent 49%),linear-gradient(300deg,transparent 0 58%,rgba(255,36,56,.04) 59%,transparent 60%)}
 .heroIn{max-width:940px}.eyebrow{color:#ff7c86;background:rgba(255,20,45,.06);border-color:rgba(255,36,56,.4)}
 .shine{background:linear-gradient(105deg,#fff 5%,#ffc5ca 27%,#ff263e 54%,#a50b1d 78%,#fff 95%);background-size:200% auto}
@@ -414,6 +414,23 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 @media(max-width:800px){.hero{min-height:auto;padding-top:60px;padding-bottom:80px}.hero h1{font-size:clamp(42px,11vw,66px);letter-spacing:-2.5px}.showcaseCaption strong{font-size:clamp(22px,7vw,34px)}.discordText b{font-size:12px}.discordText small{font-size:9px}.nav{padding:0 16px}.navlinks{gap:12px}}
 @media(max-width:520px){.hero{padding-left:17px;padding-right:17px}.showcaseImage{border-radius:17px}.showcaseFlag{top:9px;left:9px;font-size:7px;padding:7px 9px}.showcaseCaption{left:13px;right:13px;bottom:12px}.showcaseCaption small{font-size:9px}.discordPromo{padding:12px;gap:10px}.discordGlyph{width:36px;height:36px}.creatorStamp{align-self:center}.hero .actions .btn{flex:1;min-width:0;padding:13px 10px}}
 
+
+/* ===== HOTFIX: image paths, Ride a Pet card, and real Discord mark ===== */
+.hero:before{background-image:linear-gradient(90deg,rgba(4,0,1,.92) 0%,rgba(5,0,1,.66) 44%,rgba(5,0,1,.25) 100%),linear-gradient(0deg,#050303 0%,transparent 28%,rgba(5,0,1,.08) 70%,#050303 100%),url('./vrilzhub-bg.png') !important;background-position:center 42%;background-size:cover;background-repeat:no-repeat}
+.discordGlyph svg{display:block;width:25px;height:22px;color:#fff}
+.creatorDiscord{display:grid;place-items:center;width:27px;height:27px;color:#aeb5ff}
+.creatorDiscord svg{width:24px;height:19px;display:block}
+.showcaseImage{min-height:0;aspect-ratio:1.62}
+.showcaseImage img{display:block;object-fit:cover;object-position:center;width:100%;height:100%}
+.gameCard{overflow:hidden;min-width:0}
+.gameVisual{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;aspect-ratio:16/9;padding:0;overflow:hidden}
+.gameVisual .rideLogo{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;display:block;border-radius:0;filter:none}
+.gameVisual:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(5,2,4,.62),transparent 46%)}
+.gameVisual .gameTag{z-index:3;position:absolute;left:16px;top:15px;background:rgba(7,3,5,.78);padding:8px 11px;border-radius:999px}
+.gameBody{position:relative;z-index:2}
+@media(max-width:900px){.heroShowcase{width:100%}.showcaseImage{aspect-ratio:1.55}.gameVisual{aspect-ratio:16/9}}
+@media(max-width:520px){.showcaseImage{aspect-ratio:1.42}.gameVisual .gameTag{left:10px;top:10px;font-size:7px}.gameVisual{aspect-ratio:4/3}}
+
 </style>
 </head>
 <body>
@@ -439,9 +456,9 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
     <div class="showcaseCaption"><span>NOW FEATURED</span><strong>RIDE A PET</strong><small>Mainkan, pelihara, dan jadilah yang terbaik!</small></div>
   </div>
   <a class="discordPromo" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">
-    <span class="discordGlyph">◉</span><span class="discordText"><b>Join VRILZZHUB Discord</b><small>Update, support, dan komunitas resmi</small></span><span class="discordArrow">↗</span>
+    <span class="discordGlyph"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span><span class="discordText"><b>Join VRILZZHUB Discord</b><small>Update, support, dan komunitas resmi</small></span><span class="discordArrow">↗</span>
   </a>
-  <div class="creatorStamp"><span class="creatorMark">VH</span><span><small>CREATED BY</small><b>VRILZ</b></span><span class="creatorDiscord">◉</span></div>
+  <div class="creatorStamp"><span class="creatorMark">VH</span><span><small>CREATED BY</small><b>VRILZ</b></span><span class="creatorDiscord"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span></div>
 </div></section>
 
 <div class="trust reveal" data-reveal><div class="trustItem"><strong>Instant</strong><span>Free key generation</span></div><div class="trustItem"><strong>3 Premium Plans</strong><span>Flexible access options</span></div><div class="trustItem"><strong>24 / 7</strong><span>Discord support</span></div></div>
