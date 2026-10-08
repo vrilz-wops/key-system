@@ -534,6 +534,11 @@ async function redeemKey(request, env) {
 
         await cleanupExpired(env);
 
+        // Premium redemption uses key_devices.
+        // Create the table before the first SELECT/INSERT so an existing D1
+        // database from an older deployment does not fail with:
+        // "no such table: key_devices".
+        await ensurePremiumDeviceTable(env);
 
         const now =
             Date.now();
