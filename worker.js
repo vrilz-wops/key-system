@@ -765,9 +765,15 @@ async function redeemKey(request, env) {
 
 
             return json({
-                success: false,
-                message:
-                    "Key sudah pernah digunakan."
+                success: true,
+                message: "Key masih aktif.",
+                key: row.key,
+                type: row.type,
+                username: row.username,
+                redeemed_at: Number(row.redeemed_at),
+                expires_at: Number(row.expires_at),
+                device_limit: null,
+                device_count: null
             });
 
         }
