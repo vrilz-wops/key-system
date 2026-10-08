@@ -490,86 +490,34 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 .hero:after{z-index:1}
 .hero .lightning-field{z-index:3}
 
-/* ===== DEFINITIVE HERO / TEXT + WATERMARK FIX ===== */
-.hero{
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-}
-/* Keep the artwork on the right/background so it never sits directly behind readable text. */
+
+/* ===== MIDDLE ARTWORK ONLY FIX — DO NOT MOVE HERO TEXT ===== */
+.hero{position:relative;}
 .hero:before{
+  content:"" !important;
+  position:absolute !important;
   z-index:0 !important;
-  inset:0 !important;
-  left:34% !important;
-  width:66% !important;
+  left:50% !important;
+  top:50% !important;
+  width:100% !important;
   height:100% !important;
-  opacity:.34 !important;
+  transform:translate(-50%,-50%) !important;
+  filter:none !important;
+  opacity:.30 !important;
+  pointer-events:none !important;
+  background-image:
+    linear-gradient(90deg,rgba(4,0,1,.88),rgba(5,0,1,.38) 50%,rgba(5,0,1,.88)),
+    linear-gradient(0deg,rgba(5,3,3,.72),transparent 28%,transparent 72%,rgba(5,3,3,.72)),
+    url('./vrilzhub-bg.png') !important;
   background-position:center center !important;
-  background-size:cover !important;
+  background-size:cover,cover,contain !important;
   background-repeat:no-repeat !important;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 18%,#000 42%,#000 100%);
-  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 18%,#000 42%,#000 100%);
+  background-color:#050303 !important;
 }
-.hero:after{z-index:1 !important;pointer-events:none}
-.heroIn,.heroShowcase{position:relative;z-index:10 !important}
-.heroIn{
-  max-width:650px !important;
-  padding:18px 0 !important;
-}
-.heroIn h1{
-  position:relative;
-  z-index:12 !important;
-  display:block;
-  max-width:620px !important;
-  margin:24px 0 20px !important;
-  color:#fff !important;
-  text-shadow:0 4px 25px rgba(0,0,0,.85);
-}
-.heroIn h1 .shine{
-  position:relative;
-  z-index:13 !important;
-  display:inline;
-  color:#fff !important;
-  -webkit-text-fill-color:transparent;
-  text-shadow:none;
-}
-.heroIn p{
-  position:relative;
-  z-index:12 !important;
-  color:#eee !important;
-  text-shadow:0 2px 12px #000;
-}
-.hero .actions,.hero .heroBadges,.hero .eyebrow{position:relative;z-index:12 !important}
-/* Full, clean VRILZZHUB watermark in the middle of the hero. */
-.hero::marker{display:none}
-@media(min-width:901px){
-  .hero{
-    grid-template-columns:minmax(500px,1.08fr) minmax(340px,.92fr) !important;
-    gap:42px !important;
-    min-height:650px !important;
-  }
-  .heroShowcase{max-width:600px !important}
-}
-@media(max-width:900px){
-  .hero:before{left:0 !important;width:100% !important;opacity:.22 !important;mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);background-size:cover !important}
-  .heroIn{padding:8px 0 !important}
-}
-
-
-/* ===== FINAL HERO FIX ===== */
-.hero{position:relative;isolation:isolate;overflow:hidden;text-align:center!important;display:flex!important;align-items:center!important;justify-content:center!important;}
-.hero:before{z-index:0!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;opacity:.28!important;background-position:center center!important;background-size:contain!important;background-repeat:no-repeat!important;-webkit-mask-image:none!important;mask-image:none!important;}
-.hero:after{z-index:1!important;pointer-events:none!important;}
-.hero .lightning-field{z-index:2!important;}
-.heroIn{position:relative!important;z-index:20!important;width:min(100%,900px)!important;max-width:900px!important;margin:0 auto!important;padding:0 18px!important;text-align:center!important;}
-.heroIn h1{position:relative!important;z-index:30!important;display:block!important;max-width:900px!important;margin:24px auto 20px!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 4px 25px rgba(0,0,0,.9)!important;}
-.heroIn h1 .shine{position:relative!important;z-index:31!important;display:inline!important;background:none!important;background-image:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 0 18px rgba(255,36,56,.12)!important;animation:none!important;}
-.heroIn p{position:relative!important;z-index:30!important;max-width:680px!important;margin:0 auto!important;color:#eee!important;text-shadow:0 2px 12px #000!important;}
-.hero .actions,.hero .heroBadges,.hero .eyebrow{position:relative!important;z-index:30!important;justify-content:center!important;}
-.heroShowcase{position:relative!important;z-index:20!important;}
-@media(min-width:901px){.hero{padding:85px 30px 115px!important;}.heroIn{max-width:980px!important;}.heroIn h1{font-size:clamp(54px,7vw,92px)!important;}.heroIn p{font-size:12px!important;}}
-@media(max-width:900px){.hero{padding:70px 18px 90px!important;}.hero:before{background-size:cover!important;opacity:.22!important;}.heroIn h1{font-size:clamp(42px,11vw,68px)!important;letter-spacing:-3px!important;}}
-@media(max-width:520px){.hero{padding:60px 14px 80px!important;}.heroIn{padding:0 8px!important;}.heroIn h1{font-size:clamp(38px,12vw,58px)!important;letter-spacing:-2.5px!important;}}
+.hero:after{z-index:1 !important;}
+.heroIn{position:relative !important;z-index:5 !important;}
+.heroShowcase{position:relative !important;z-index:5 !important;}
+.hero h1,.hero p,.hero .eyebrow,.hero .actions,.heroBadges{position:relative;z-index:6;}
 </style>
 </head>
 <body>
