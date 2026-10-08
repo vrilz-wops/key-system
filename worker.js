@@ -1102,69 +1102,113 @@ async function verifyKey(request, env) {
         const body = await request.json();
         const username = String(body.username || "").trim();
         const key = String(body.key || "").trim().toUpperCase();
+        const deviceId = String(body.device_id || body.deviceId || "").trim();
 
         if (!username || !key) {
-            return json({ success: false, message: "Username dan key wajib diisi." }, 400);
+            return json({ success: false, message: "Username Roblox dan key wajib diisi." }, 400);
+        }
+        if (username.length < 2 || username.length > 50) {
+            return json({ success: false, message: "Username Roblox tidak valid." }, 400);
         }
 
         await cleanupExpired(env);
         const now = Date.now();
-
-        const row = await env.DB.prepare(`
-            SELECT id, key, type, username, redeemed_at, expires_at, active
-            FROM keys
-            WHERE key = ?
-            LIMIT 1
+        let row = await env.DB.prepare(`
+            SELECT id, key, type, username, duration_seconds, redeemed_at, expires_at, active
+            FROM keys WHERE key = ? LIMIT 1
         `).bind(key).first();
 
-        if (!row) {
-            return json({ success: false, message: "Key tidak ditemukan." }, 404);
+        if (!row) return json({ success: false, message: "Key tidak ditemukan." }, 404);
+        if (Number(row.active) !== 1) return json({ success: false, message: "Key sudah tidak aktif atau dicabut." }, 403);
+
+        // Free keys remain bound to their generated Roblox username and must be redeemed first.
+        if (row.type === "FREE") {
+            if (row.username !== username) {
+                return json({ success: false, message: "Key ini terikat dengan username Roblox lain." }, 403);
+            }
+            if (!row.redeemed_at) {
+                return json({ success: false, message: "Free key belum diredeem." }, 409);
+            }
         }
 
-        if (row.type === "FREE" && row.username !== username) {
-            return json({
-                success: false,
-                message: "Key ini terikat dengan username lain."
-            }, 403);
+        // Premium keys bind permanently to the first Roblox username that activates them.
+        if (row.type === "PREMIUM") {
+            if (row.username && row.username.toLowerCase() !== username.toLowerCase()) {
+                return json({ success: false, message: "Premium key ini sudah terikat dengan username Roblox lain." }, 403);
+            }
+            if (!row.username || !row.redeemed_at) {
+                const duration = Number(row.duration_seconds) || 86400;
+                const expiresAt = now + duration * 1000;
+                await env.DB.prepare(`
+                    UPDATE keys SET username = ?, redeemed_at = ?, expires_at = ?, active = 1
+                    WHERE id = ? AND username IS NULL AND redeemed_at IS NULL
+                `).bind(username, now, expiresAt, row.id).run();
+                row = await env.DB.prepare(`
+                    SELECT id, key, type, username, duration_seconds, redeemed_at, expires_at, active
+                    FROM keys WHERE id = ? LIMIT 1
+                `).bind(row.id).first();
+                if (!row || String(row.username).toLowerCase() !== username.toLowerCase()) {
+                    return json({ success: false, message: "Premium key sedang diaktifkan oleh username lain. Coba lagi." }, 409);
+                }
+            }
         }
 
         if (!row.redeemed_at) {
-            return json({
-                success: false,
-                message: "Key belum pernah digunakan."
-            }, 409);
+            return json({ success: false, message: "Key belum pernah diaktifkan." }, 409);
         }
 
         const expiresAt = Number(row.expires_at || 0);
-        if (Number(row.active) !== 1 || !expiresAt || now >= expiresAt) {
-            await env.DB.prepare(`UPDATE keys SET active = 0 WHERE id = ?`)
-                .bind(row.id).run();
+        if (!expiresAt || now >= expiresAt) {
+            await env.DB.prepare(`UPDATE keys SET active = 0 WHERE id = ?`).bind(row.id).run();
+            return json({ success: false, message: "Key sudah expired.", expired: true, type: row.type, expires_at: expiresAt });
+        }
 
-            return json({
-                success: false,
-                message: "Key sudah expired.",
-                expired: true,
-                type: row.type,
-                expires_at: expiresAt
-            });
+        // Device limits apply to premium keys only. Lua must send a stable device_id.
+        let deviceCount = 0;
+        if (row.type === "PREMIUM") {
+            if (!deviceId || deviceId.length < 8 || deviceId.length > 200) {
+                return json({ success: false, message: "Device ID tidak valid. Update script Lua agar mengirim device_id yang stabil." }, 400);
+            }
+            const existing = await env.DB.prepare(`
+                SELECT id FROM key_devices WHERE key_id = ? AND device_id = ? LIMIT 1
+            `).bind(row.id, deviceId).first();
+            if (!existing) {
+                // Enforce the cap in the INSERT statement itself to reduce race-condition overbooking.
+                await env.DB.prepare(`
+                    INSERT OR IGNORE INTO key_devices (key_id, device_id, first_seen_at, last_seen_at)
+                    SELECT ?, ?, ?, ?
+                    WHERE (SELECT COUNT(*) FROM key_devices WHERE key_id = ?) < 5
+                `).bind(row.id, deviceId, now, now, row.id).run();
+                const justAdded = await env.DB.prepare(`
+                    SELECT id FROM key_devices WHERE key_id = ? AND device_id = ? LIMIT 1
+                `).bind(row.id, deviceId).first();
+                if (!justAdded) {
+                    const countRow = await env.DB.prepare(`SELECT COUNT(*) AS total FROM key_devices WHERE key_id = ?`).bind(row.id).first();
+                    deviceCount = Number(countRow?.total || 0);
+                    return json({ success: false, message: "Batas 5 device untuk premium key ini sudah penuh.", device_limit: 5, device_count: deviceCount }, 403);
+                }
+            } else {
+                await env.DB.prepare(`UPDATE key_devices SET last_seen_at = ? WHERE id = ?`).bind(now, existing.id).run();
+            }
+            const countAfter = await env.DB.prepare(`SELECT COUNT(*) AS total FROM key_devices WHERE key_id = ?`).bind(row.id).first();
+            deviceCount = Number(countAfter?.total || 0);
         }
 
         return json({
             success: true,
-            message: "Key masih aktif.",
+            message: row.type === "PREMIUM" ? "Premium aktif. Username Roblox cocok." : "Key masih aktif.",
             key: row.key,
             type: row.type,
+            username: row.username,
             redeemed_at: Number(row.redeemed_at),
-            expires_at: expiresAt
+            expires_at: expiresAt,
+            device_limit: row.type === "PREMIUM" ? 5 : null,
+            device_count: row.type === "PREMIUM" ? deviceCount : null
         });
     } catch (error) {
-        return json({
-            success: false,
-            message: "Terjadi kesalahan server."
-        }, 500);
+        return json({ success: false, message: "Terjadi kesalahan server. Pastikan migrasi database sudah dijalankan." }, 500);
     }
 }
-
 
 /* =========================================
    GLOBAL CHAT (pakai CHAT_DB)
