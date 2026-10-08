@@ -219,6 +219,23 @@ async function cleanupExpired(env) {
 
 
 /* =========================================
+   PREMIUM DEVICE TABLE SAFETY
+========================================= */
+async function ensurePremiumDeviceTable(env) {
+    await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS key_devices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            key_id INTEGER NOT NULL,
+            device_id TEXT NOT NULL,
+            first_seen_at INTEGER NOT NULL,
+            last_seen_at INTEGER NOT NULL,
+            UNIQUE(key_id, device_id)
+        )
+    `).run();
+}
+
+
+/* =========================================
    USER CLAIM
 ========================================= */
 
@@ -266,6 +283,7 @@ async function claimKey(request, env) {
 
 
         await cleanupExpired(env);
+        await ensurePremiumDeviceTable(env);
 
 
         const now =
@@ -865,17 +883,11 @@ async function redeemKey(request, env) {
 
         });
 
-    } catch (error) {
-
+     } catch (error) {
         return json({
-
             success: false,
-
-            message:
-                "Terjadi kesalahan server."
-
+            message: "PREMIUM ERROR: " + String(error?.message || error)
         }, 500);
-
     }
 
 }
@@ -1255,6 +1267,7 @@ async function verifyKey(request, env) {
         }
 
         await cleanupExpired(env);
+        await ensurePremiumDeviceTable(env);
         const now = Date.now();
         let row = await env.DB.prepare(`
             SELECT id, key, type, username, duration_seconds, redeemed_at, expires_at, active
@@ -1348,8 +1361,11 @@ async function verifyKey(request, env) {
             device_limit: row.type === "PREMIUM" ? 5 : null,
             device_count: row.type === "PREMIUM" ? deviceCount : null
         });
-    } catch (error) {
-        return json({ success: false, message: "Terjadi kesalahan server. Pastikan migrasi database sudah dijalankan." }, 500);
+     } catch (error) {
+        return json({
+            success: false,
+            message: "VERIFY PREMIUM ERROR: " + String(error?.message || error)
+        }, 500);
     }
 }
 
