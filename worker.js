@@ -521,7 +521,7 @@ async function redeemKey(request, env) {
             Date.now();
 
 
-        const row =
+        let row =
             await env.DB
                 .prepare(`
                     SELECT
