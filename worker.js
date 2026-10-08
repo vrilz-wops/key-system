@@ -219,19 +219,14 @@ async function cleanupExpired(env) {
 
 
 /* =========================================
-   PREMIUM DEVICE TABLE SAFETY
+   PREMIUM KEY POLICY
+   Premium is bound only to the first Roblox username.
+   No device table / device limit is used.
 ========================================= */
 async function ensurePremiumDeviceTable(env) {
-    await env.DB.prepare(`
-        CREATE TABLE IF NOT EXISTS key_devices (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            key_id INTEGER NOT NULL,
-            device_id TEXT NOT NULL,
-            first_seen_at INTEGER NOT NULL,
-            last_seen_at INTEGER NOT NULL,
-            UNIQUE(key_id, device_id)
-        )
-    `).run();
+    // Kept as a no-op for compatibility with older deployments.
+    // Premium ownership is stored directly in keys.username.
+    return;
 }
 
 
@@ -283,7 +278,6 @@ async function claimKey(request, env) {
 
 
         await cleanupExpired(env);
-        await ensurePremiumDeviceTable(env);
 
 
         const now =
@@ -534,12 +528,6 @@ async function redeemKey(request, env) {
 
         await cleanupExpired(env);
 
-        // Premium redemption uses key_devices.
-        // Create the table before the first SELECT/INSERT so an existing D1
-        // database from an older deployment does not fail with:
-        // "no such table: key_devices".
-        await ensurePremiumDeviceTable(env);
-
         const now =
             Date.now();
 
@@ -599,10 +587,10 @@ async function redeemKey(request, env) {
         /*
         =====================================
         PREMIUM KEY
-        - Binds to the first Roblox username.
-        - Can be used on up to 5 stable devices.
-        - Re-checking the same key on the same
-          username/device must NOT say "already used".
+        - Binds permanently to the first Roblox username.
+        - No device limit is used.
+        - The same Roblox username can redeem/verify
+          the key repeatedly until it expires.
         =====================================
         */
 
@@ -648,13 +636,6 @@ async function redeemKey(request, env) {
                 }, 409);
             }
 
-            if (!deviceId || deviceId.length < 8 || deviceId.length > 200) {
-                return json({
-                    success: false,
-                    message: "Device ID tidak valid."
-                }, 400);
-            }
-
             const expiresAt = Number(row.expires_at || 0);
             if (!expiresAt || now >= expiresAt) {
                 await env.DB.prepare(`
@@ -670,56 +651,8 @@ async function redeemKey(request, env) {
                 });
             }
 
-            const existingDevice = await env.DB.prepare(`
-                SELECT id
-                FROM key_devices
-                WHERE key_id = ? AND device_id = ?
-                LIMIT 1
-            `).bind(row.id, deviceId).first();
-
-            if (existingDevice) {
-                await env.DB.prepare(`
-                    UPDATE key_devices
-                    SET last_seen_at = ?
-                    WHERE id = ?
-                `).bind(now, existingDevice.id).run();
-            } else {
-                await env.DB.prepare(`
-                    INSERT OR IGNORE INTO key_devices
-                        (key_id, device_id, first_seen_at, last_seen_at)
-                    SELECT ?, ?, ?, ?
-                    WHERE (SELECT COUNT(*) FROM key_devices WHERE key_id = ?) < 5
-                `).bind(row.id, deviceId, now, now, row.id).run();
-
-                const added = await env.DB.prepare(`
-                    SELECT id
-                    FROM key_devices
-                    WHERE key_id = ? AND device_id = ?
-                    LIMIT 1
-                `).bind(row.id, deviceId).first();
-
-                if (!added) {
-                    const countRow = await env.DB.prepare(`
-                        SELECT COUNT(*) AS total
-                        FROM key_devices
-                        WHERE key_id = ?
-                    `).bind(row.id).first();
-
-                    return json({
-                        success: false,
-                        message: "Batas 5 device untuk premium key ini sudah penuh.",
-                        device_limit: 5,
-                        device_count: Number(countRow?.total || 0)
-                    }, 403);
-                }
-            }
-
-            const countRow = await env.DB.prepare(`
-                SELECT COUNT(*) AS total
-                FROM key_devices
-                WHERE key_id = ?
-            `).bind(row.id).first();
-
+            // Premium has NO device binding. Once the key is activated,
+            // only the first Roblox username stored in keys.username may use it.
             return json({
                 success: true,
                 message: "Premium aktif. Username Roblox cocok.",
@@ -727,9 +660,7 @@ async function redeemKey(request, env) {
                 type: "PREMIUM",
                 username: row.username,
                 redeemed_at: Number(row.redeemed_at),
-                expires_at: expiresAt,
-                device_limit: 5,
-                device_count: Number(countRow?.total || 0)
+                expires_at: expiresAt
             });
         }
 
@@ -1272,7 +1203,6 @@ async function verifyKey(request, env) {
         }
 
         await cleanupExpired(env);
-        await ensurePremiumDeviceTable(env);
         const now = Date.now();
         let row = await env.DB.prepare(`
             SELECT id, key, type, username, duration_seconds, redeemed_at, expires_at, active
@@ -1293,6 +1223,7 @@ async function verifyKey(request, env) {
         }
 
         // Premium keys bind permanently to the first Roblox username that activates them.
+        // No device limit is used.
         if (row.type === "PREMIUM") {
             if (row.username && row.username.toLowerCase() !== username.toLowerCase()) {
                 return json({ success: false, message: "Premium key ini sudah terikat dengan username Roblox lain." }, 403);
@@ -1324,37 +1255,6 @@ async function verifyKey(request, env) {
             return json({ success: false, message: "Key sudah expired.", expired: true, type: row.type, expires_at: expiresAt });
         }
 
-        // Device limits apply to premium keys only. Lua must send a stable device_id.
-        let deviceCount = 0;
-        if (row.type === "PREMIUM") {
-            if (!deviceId || deviceId.length < 8 || deviceId.length > 200) {
-                return json({ success: false, message: "Device ID tidak valid. Update script Lua agar mengirim device_id yang stabil." }, 400);
-            }
-            const existing = await env.DB.prepare(`
-                SELECT id FROM key_devices WHERE key_id = ? AND device_id = ? LIMIT 1
-            `).bind(row.id, deviceId).first();
-            if (!existing) {
-                // Enforce the cap in the INSERT statement itself to reduce race-condition overbooking.
-                await env.DB.prepare(`
-                    INSERT OR IGNORE INTO key_devices (key_id, device_id, first_seen_at, last_seen_at)
-                    SELECT ?, ?, ?, ?
-                    WHERE (SELECT COUNT(*) FROM key_devices WHERE key_id = ?) < 5
-                `).bind(row.id, deviceId, now, now, row.id).run();
-                const justAdded = await env.DB.prepare(`
-                    SELECT id FROM key_devices WHERE key_id = ? AND device_id = ? LIMIT 1
-                `).bind(row.id, deviceId).first();
-                if (!justAdded) {
-                    const countRow = await env.DB.prepare(`SELECT COUNT(*) AS total FROM key_devices WHERE key_id = ?`).bind(row.id).first();
-                    deviceCount = Number(countRow?.total || 0);
-                    return json({ success: false, message: "Batas 5 device untuk premium key ini sudah penuh.", device_limit: 5, device_count: deviceCount }, 403);
-                }
-            } else {
-                await env.DB.prepare(`UPDATE key_devices SET last_seen_at = ? WHERE id = ?`).bind(now, existing.id).run();
-            }
-            const countAfter = await env.DB.prepare(`SELECT COUNT(*) AS total FROM key_devices WHERE key_id = ?`).bind(row.id).first();
-            deviceCount = Number(countAfter?.total || 0);
-        }
-
         return json({
             success: true,
             message: row.type === "PREMIUM" ? "Premium aktif. Username Roblox cocok." : "Key masih aktif.",
@@ -1362,9 +1262,7 @@ async function verifyKey(request, env) {
             type: row.type,
             username: row.username,
             redeemed_at: Number(row.redeemed_at),
-            expires_at: expiresAt,
-            device_limit: row.type === "PREMIUM" ? 5 : null,
-            device_count: row.type === "PREMIUM" ? deviceCount : null
+            expires_at: expiresAt
         });
      } catch (error) {
         return json({
