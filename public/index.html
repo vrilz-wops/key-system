@@ -431,6 +431,130 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 @media(max-width:900px){.heroShowcase{width:100%}.showcaseImage{aspect-ratio:1.55}.gameVisual{aspect-ratio:16/9}}
 @media(max-width:520px){.showcaseImage{aspect-ratio:1.42}.gameVisual .gameTag{left:10px;top:10px;font-size:7px}.gameVisual{aspect-ratio:4/3}}
 
+
+/* ===== FINAL HERO FIX ===== */
+@media(min-width:901px){
+  .hero{
+    grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);
+    gap:clamp(22px,3vw,42px);
+    padding-left:max(22px,4vw);
+    padding-right:max(22px,4vw);
+    overflow:hidden;
+  }
+  .heroIn{
+    position:relative;
+    z-index:20;
+    min-width:0;
+    width:100%;
+    max-width:620px;
+  }
+  .heroIn h1{
+    max-width:620px;
+    overflow:visible;
+    position:relative;
+    z-index:21;
+  }
+  .heroIn p{
+    max-width:560px;
+    position:relative;
+    z-index:21;
+  }
+  .hero .actions,.hero .heroBadges{
+    position:relative;
+    z-index:21;
+  }
+  .heroShowcase{
+    position:relative;
+    z-index:8;
+    min-width:0;
+    width:100%;
+    max-width:none;
+    justify-self:stretch;
+  }
+  .showcaseImage{
+    width:100%;
+    min-width:0;
+  }
+}
+
+/* Keep the complete VRILZZHUB artwork visible instead of cropping its center. */
+.hero:before{
+  background-position:center center !important;
+  background-size:contain !important;
+  background-repeat:no-repeat !important;
+  background-color:#070203;
+  opacity:.42 !important;
+}
+
+/* Make the hero artwork sit behind all readable content. */
+.hero:after{z-index:1}
+.hero .lightning-field{z-index:3}
+
+/* ===== DEFINITIVE HERO / TEXT + WATERMARK FIX ===== */
+.hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+/* Keep the artwork on the right/background so it never sits directly behind readable text. */
+.hero:before{
+  z-index:0 !important;
+  inset:0 !important;
+  left:34% !important;
+  width:66% !important;
+  height:100% !important;
+  opacity:.34 !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 18%,#000 42%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.35) 18%,#000 42%,#000 100%);
+}
+.hero:after{z-index:1 !important;pointer-events:none}
+.heroIn,.heroShowcase{position:relative;z-index:10 !important}
+.heroIn{
+  max-width:650px !important;
+  padding:18px 0 !important;
+}
+.heroIn h1{
+  position:relative;
+  z-index:12 !important;
+  display:block;
+  max-width:620px !important;
+  margin:24px 0 20px !important;
+  color:#fff !important;
+  text-shadow:0 4px 25px rgba(0,0,0,.85);
+}
+.heroIn h1 .shine{
+  position:relative;
+  z-index:13 !important;
+  display:inline;
+  color:#fff !important;
+  -webkit-text-fill-color:transparent;
+  text-shadow:none;
+}
+.heroIn p{
+  position:relative;
+  z-index:12 !important;
+  color:#eee !important;
+  text-shadow:0 2px 12px #000;
+}
+.hero .actions,.hero .heroBadges,.hero .eyebrow{position:relative;z-index:12 !important}
+/* Full, clean VRILZZHUB watermark in the middle of the hero. */
+.hero::marker{display:none}
+@media(min-width:901px){
+  .hero{
+    grid-template-columns:minmax(500px,1.08fr) minmax(340px,.92fr) !important;
+    gap:42px !important;
+    min-height:650px !important;
+  }
+  .heroShowcase{max-width:600px !important}
+}
+@media(max-width:900px){
+  .hero:before{left:0 !important;width:100% !important;opacity:.22 !important;mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);background-size:cover !important}
+  .heroIn{padding:8px 0 !important}
+}
+
 </style>
 </head>
 <body>
