@@ -236,6 +236,7 @@ async function ensurePremiumDeviceTable(env) {
 const LOOTLABS_URL = "https://links.lootlabs.gg/s?rveZhVVu";
 const SESSION_COOKIE = "vrilz_session";
 const MONTHLY_CREATE_LIMIT = 3;
+const MISSION_COOLDOWN_MS = 2 * 60 * 60 * 1000;
 
 function randomToken(bytes = 24) {
     const data = new Uint8Array(bytes);
@@ -301,8 +302,15 @@ async function startLootMission(request, env) {
     try {
         await ensureMissionTables(env);
         const session = await getOrSetSession(request);
-        const clickId = randomToken(20);
         const now = Date.now();
+        const recent = await env.DB.prepare(`SELECT created_at FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(session.id).first();
+        const lastStarted = Number(recent?.created_at || 0);
+        const remaining = MISSION_COOLDOWN_MS - (now - lastStarted);
+        if (lastStarted && remaining > 0) {
+            const response = json({ success: false, cooldown: true, remaining_ms: remaining, message: `You can start another mission in ${Math.ceil(remaining / 60000)} minute(s).` }, 429);
+            return withSessionCookie(response, session.id, session.setCookie);
+        }
+        const clickId = randomToken(20);
         await env.DB.prepare(`INSERT INTO loot_missions (click_id, session_id, status, created_at) VALUES (?, ?, 'started', ?)`).bind(clickId, session.id, now).run();
         const link = `${LOOTLABS_URL}${LOOTLABS_URL.includes('?') ? '&' : '?'}puid=${encodeURIComponent(clickId)}`;
         return withSessionCookie(json({ success: true, mission_url: link, message: 'Misi dimulai. Selesaikan LootLabs, lalu kembali ke halaman ini.' }), session.id, session.setCookie);
@@ -382,7 +390,9 @@ async function createOrRenewSessionKey(request, env) {
         const existing = await env.DB.prepare(`SELECT k.id, k.key, k.active, k.expires_at, k.redeemed_at, k.claim_expires_at
             FROM browser_key_history h JOIN keys k ON k.id = h.key_id
             WHERE h.session_id = ? ORDER BY h.created_at DESC LIMIT 1`).bind(sessionId).first();
-        if (existing && Number(existing.expires_at || 0) > 0 && Number(existing.expires_at) <= now) {
+        const redeemedExpired = existing && Number(existing.expires_at || 0) > 0 && Number(existing.expires_at) <= now;
+        const neverRedeemedExpired = existing && !existing.redeemed_at && Number(existing.claim_expires_at || 0) > 0 && Number(existing.claim_expires_at) <= now;
+        if (redeemedExpired || neverRedeemedExpired) {
             await env.DB.prepare(`UPDATE keys SET active = 1, type = 'FREE', duration_seconds = 86400, claimed_at = ?, claim_expires_at = ?, redeemed_at = NULL, expires_at = NULL WHERE id = ?`).bind(now, now + 10 * 60 * 1000, existing.id).run();
             await env.DB.prepare(`UPDATE loot_missions SET status = 'used' WHERE id = ?`).bind(latest.id).run();
             return json({ success: true, key: existing.key, renewed: true, message: 'Key lama berhasil diperbarui. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem.' });
