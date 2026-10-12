@@ -561,7 +561,7 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 
 <style>
 .keyTableWrap th,.keyTableWrap td{border-bottom:1px solid rgba(255,255,255,.10);text-align:left;padding:10px;white-space:nowrap}.keyTableWrap .keyAction{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:8px;padding:7px 10px;cursor:pointer}.keyTableWrap .keyStatus{font-weight:800;letter-spacing:.6px}.keyTableWrap .status-active{color:#8ff0b0}.keyTableWrap .status-expired{color:#ff9c9c}.keyTableWrap .status-ready{color:#ffd889}
-.keyTableWrap{box-shadow:0 18px 50px rgba(0,0,0,.18)}.keyTableWrap table{table-layout:auto}.keyTableWrap code{display:inline-block;max-width:300px;overflow-wrap:anywhere;white-space:normal;color:#ffe0a0;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.18);padding:7px 9px;border-radius:8px}.keyTableWrap .keyAction{font-weight:800;font-size:10px;letter-spacing:.5px}.keyTableWrap .renewAction{border-color:rgba(255,170,50,.45);background:rgba(255,170,50,.13);color:#ffd889;margin-left:5px}
+.keyTableWrap{box-shadow:0 18px 50px rgba(0,0,0,.18)}.keyTableWrap table{table-layout:auto}.keyTableWrap code{display:inline-block;max-width:300px;overflow-wrap:anywhere;white-space:normal;color:#ffe0a0;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.18);padding:7px 9px;border-radius:8px}.keyTableWrap .keyAction{font-weight:800;font-size:10px;letter-spacing:.5px}.keyTableWrap .renewAction{border:1px solid rgba(255,72,82,.55);background:linear-gradient(135deg,rgba(255,55,70,.20),rgba(120,20,30,.24));color:#ff737d;margin-left:5px;transition:background .2s,border-color .2s,color .2s,box-shadow .2s}.keyTableWrap .renewAction:disabled{opacity:.8;cursor:not-allowed;filter:saturate(.8)}.keyTableWrap .renewAction.renew-ready{border-color:rgba(80,255,155,.6);background:linear-gradient(135deg,rgba(58,235,133,.24),rgba(255,70,90,.2));color:#b8ffd0;box-shadow:0 0 12px rgba(75,255,155,.12);cursor:pointer}.keyTableWrap .renewAction.renew-ready:hover{border-color:rgba(80,255,155,.9);box-shadow:0 0 16px rgba(75,255,155,.22)}
 /* Key table stays a compact PC-style table on phones (no stacked cards). */
 .keyTableWrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
 .keyTableWrap table{width:100%;min-width:0!important;table-layout:fixed}
@@ -649,15 +649,18 @@ const out=$("#keyOut"), create=$("#createBtn"), copy=$("#copyBtn"), startMission
 function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>toast.classList.remove("show"),2300)}
 function scrollToSel(sel){document.querySelector(sel)?.scrollIntoView({behavior:"smooth",block:"start"})}
 let missionPoll=null;
+let cooldownPoll=null;
 let missionVerified=false;
+let missionCooldownUntil=0;
 function fmtLeft(ms){if(!ms||ms<=0)return "Expired";let sec=Math.floor(ms/1000),d=Math.floor(sec/86400);sec%=86400;let h=Math.floor(sec/3600);sec%=3600;let m=Math.floor(sec/60);return d?`${d}d ${h}h`:`${h}h ${m}m`;}
+function cooldownLabel(ms){const total=Math.max(0,Math.ceil(ms/60000));return `${Math.floor(total/60)}h ${total%60}m`;}
 async function refreshKeys(){
  const body=$("#keysTableBody");if(!body)return;
  try{const r=await fetch("/api/keys/list",{credentials:"same-origin",headers:{"Accept":"application/json"}});const d=await r.json();if(!d.success)throw 0;
  if(!d.keys?.length){body.innerHTML='<tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet. Complete a mission to create your first key.</td></tr>';return;}
- body.innerHTML=d.keys.map(k=>{const status=k.status||'READY';const safe=String(k.key).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const expired=status==='EXPIRED';return `<tr><td><code>${safe}</code></td><td>${fmtLeft(Number(k.time_left_ms||0))}</td><td><span class="keyStatus status-${status.toLowerCase()}">${status}</span></td><td><button class="keyAction" data-copy-key="${safe}">COPY</button>${expired?`<button class="keyAction renewAction" data-renew-key="${safe}">RENEW</button>`:''}</td></tr>`}).join('');
+ body.innerHTML=d.keys.map(k=>{const status=k.status||'READY';const safe=String(k.key).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const expired=status==='EXPIRED';return `<tr><td><code>${safe}</code></td><td>${fmtLeft(Number(k.time_left_ms||0))}</td><td><span class="keyStatus status-${status.toLowerCase()}">${status}</span></td><td><button class="keyAction" data-copy-key="${safe}">COPY</button>${expired?`<button class="keyAction renewAction" data-renew-key="${safe}" ${missionVerified?'':'disabled'}>${missionVerified?'RENEW':'RENEW'}</button>`:''}</td></tr>`}).join('');
  body.querySelectorAll('[data-copy-key]').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copyKey);showToast('Key copied!')}catch{showToast('Copy failed')}}));
- body.querySelectorAll('[data-renew-key]').forEach(b=>b.addEventListener('click',()=>{scrollToSel('#create');showToast('Start a new mission to renew this key.');startMission.focus({preventScroll:true});}));
+ body.querySelectorAll('[data-renew-key]').forEach(b=>{if(missionVerified)b.classList.add('renew-ready');b.addEventListener('click',()=>{if(!missionVerified){showToast('Start and complete the mission first.');return;}showToast('Mission verified. Renewal is unlocked for this key.');create.dataset.renewKey=b.dataset.renewKey;create.textContent='✦ RENEW KEY';create.hidden=false;create.style.display='';create.setAttribute('aria-disabled','false');scrollToSel('#create');});});
  }catch{body.innerHTML='<tr><td colspan="4" style="padding:14px;opacity:.65">Could not load keys. Try refreshing.</td></tr>';}
 }
 
@@ -665,9 +668,15 @@ async function checkMission(){
  try{
   const r=await fetch("/api/mission/status",{headers:{"Accept":"application/json"},credentials:"same-origin"});
   const data=await r.json();
-  if(data.success&&data.verified){missionVerified=true;create.hidden=false;create.style.display="";create.setAttribute("aria-disabled","false");missionStatus.textContent="Status: mission verified ✓ You can create or renew your key.";startMission.disabled=false;if(missionPoll){clearInterval(missionPoll);missionPoll=null;}return true;}
-  missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: mission not verified yet. Start and complete the LootLabs mission.";return false;
- }catch(e){missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: unable to check mission verification.";return false;}
+  if(data.success&&data.cooldown&&data.remaining_ms>0){
+   missionVerified=false;missionCooldownUntil=Date.now()+Number(data.remaining_ms);document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=true;b.classList.remove("renew-ready")});create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");startMission.disabled=true;startMission.textContent="MISSION COOLDOWN";missionStatus.textContent=`Status: cooldown active. You can start another mission in ${cooldownLabel(data.remaining_ms)}.`;
+   if(cooldownPoll)clearInterval(cooldownPoll);cooldownPoll=setInterval(()=>{const left=missionCooldownUntil-Date.now();if(left<=0){clearInterval(cooldownPoll);cooldownPoll=null;startMission.disabled=false;startMission.textContent="✦ START MISSION";missionStatus.textContent="Status: cooldown finished. You can start a new mission.";checkMission();}else{missionStatus.textContent=`Status: cooldown active. You can start another mission in ${cooldownLabel(left)}.`;}},10000);
+   return false;
+  }
+  missionCooldownUntil=0;if(cooldownPoll){clearInterval(cooldownPoll);cooldownPoll=null;}startMission.disabled=false;startMission.textContent="✦ START MISSION";
+  if(data.success&&data.verified){missionVerified=true;document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=false;b.classList.add("renew-ready")});create.hidden=false;create.style.display="";create.setAttribute("aria-disabled","false");missionStatus.textContent="Status: mission verified ✓ You can create or renew your key.";if(missionPoll){clearInterval(missionPoll);missionPoll=null;}return true;}
+  missionVerified=false;document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=true;b.classList.remove("renew-ready")});create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: mission not verified yet. Start and complete the LootLabs mission.";return false;
+ }catch(e){missionVerified=false;document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=true;b.classList.remove("renew-ready")});create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: unable to check mission verification.";return false;}
 }
 startMission.addEventListener("click",async()=>{
  const missionTab=window.open("about:blank","_blank");
@@ -676,22 +685,22 @@ startMission.addEventListener("click",async()=>{
   const r=await fetch("/api/mission/start",{method:"POST",headers:{"Accept":"application/json"},credentials:"same-origin"});
   const data=await r.json();if(!r.ok||!data.success){if(data.cooldown&&data.remaining_ms){const total=Math.ceil(data.remaining_ms/60000);throw new Error(`Mission cooldown active. Try again in ${Math.floor(total/60)}h ${total%60}m.`);}throw new Error(data.message||"Unable to start mission.");}
   if(missionTab) missionTab.location.href=data.mission_url; else showToast("Allow pop-ups to open the LootLabs mission.");
-  create.hidden=true;create.style.display="none";missionVerified=false;
+  create.hidden=true;create.style.display="none";missionVerified=false;document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=true;b.classList.remove("renew-ready")});
   missionStatus.textContent="Mission opened in a new tab. Complete it and return here for verification.";
   await checkMission();if(!missionPoll)missionPoll=setInterval(checkMission,4000);
  }catch(e){if(missionTab)missionTab.close();showToast(e.message||"Unable to start mission.");missionStatus.textContent=e.message||"Mission could not be started.";}
- finally{startMission.disabled=false;startMission.textContent="✦ START MISSION";}
+ finally{if(!missionCooldownUntil){startMission.disabled=false;startMission.textContent="✦ START MISSION";}else{startMission.disabled=true;startMission.textContent="MISSION COOLDOWN";}}
 });
 create.addEventListener("click",async()=>{
  if(!missionVerified){create.hidden=true;create.style.display="none";showToast("Mission not completed yet. Click START MISSION first.");missionStatus.textContent="Complete the LootLabs mission first to unlock key creation.";return;}
  create.disabled=true;create.textContent="CREATING...";out.classList.remove("ready");out.textContent="Verifying mission and creating key...";
  try{
-  const r=await fetch("/api/claim",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},credentials:"same-origin",body:JSON.stringify({})});
+  const r=await fetch("/api/claim",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},credentials:"same-origin",body:JSON.stringify(create.dataset.renewKey?{renew_key:create.dataset.renewKey}:{})});
   const data=await r.json();if(!r.ok||!data.success)throw new Error(data.message||"Unable to create key.");
   const key=data.key;if(!key)throw new Error("Key was not returned by the server.");
   out.textContent=key;out.classList.add("ready","pulse");copy.dataset.key=key;showToast(data.renewed?"Key renewed successfully!":"Key created successfully!");missionStatus.textContent=data.message||"Mission used. Start another mission after the cooldown to create or renew again.";
-  missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");startMission.disabled=false;
-  refreshKeys();setTimeout(()=>out.classList.remove("pulse"),600);
+  missionVerified=false;document.querySelectorAll("[data-renew-key]").forEach(b=>{b.disabled=true;b.classList.remove("renew-ready")});create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");startMission.disabled=true;startMission.textContent="MISSION COOLDOWN";missionStatus.textContent="Key action successful. Checking the 2-hour mission cooldown…";
+  await checkMission();refreshKeys();setTimeout(()=>out.classList.remove("pulse"),600);
  }catch(e){out.textContent="Key creation failed.";showToast(e.message||"Unable to create key.");await checkMission();}
  finally{create.textContent="✦ CREATE KEY";create.disabled=false;}
 });
