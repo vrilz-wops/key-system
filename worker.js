@@ -233,7 +233,7 @@ async function ensurePremiumDeviceTable(env) {
 /* =========================================
    LOOTLABS MISSION + BROWSER SESSION
 ========================================= */
-const LOOTLABS_URL = "https://links.lootlabs.gg/s?jvEqlVoz";
+const LOOTLABS_URL = "https://links.lootlabs.gg/s?rveZhVVu";
 const SESSION_COOKIE = "vrilz_session";
 const MONTHLY_CREATE_LIMIT = 3;
 
@@ -348,6 +348,26 @@ async function lootLabsPostback(request, env, url) {
         return new Response('OK', { status: 200, headers: { 'Content-Type': 'text/plain; charset=UTF-8', 'Cache-Control': 'no-store' } });
     } catch {
         return new Response('Postback error', { status: 500 });
+    }
+}
+
+async function listSessionKeys(request, env) {
+    try {
+        await ensureMissionTables(env);
+        const sessionId = cookieValue(request, SESSION_COOKIE);
+        if (!/^[a-f0-9]{48}$/.test(sessionId)) return json({ success: true, keys: [] });
+        const rows = await env.DB.prepare(`SELECT k.key, k.type, k.active, k.claim_expires_at, k.redeemed_at, k.expires_at, h.created_at
+            FROM browser_key_history h JOIN keys k ON k.id = h.key_id
+            WHERE h.session_id = ? ORDER BY h.created_at DESC`).bind(sessionId).all();
+        const now = Date.now();
+        const keys = (rows.results || []).map(k => {
+            const exp = Number(k.expires_at || k.claim_expires_at || 0);
+            const expired = exp > 0 && exp <= now;
+            return { key: k.key, type: k.type || 'FREE', status: expired ? 'EXPIRED' : (k.redeemed_at ? 'ACTIVE' : 'READY'), expires_at: exp || null, time_left_ms: exp > now ? exp - now : 0, created_at: Number(k.created_at || 0) };
+        });
+        return json({ success: true, keys });
+    } catch {
+        return json({ success: false, keys: [], message: 'Gagal memuat daftar key.' }, 500);
     }
 }
 
@@ -1594,6 +1614,11 @@ export default {
         API ROUTES
         =====================================
         */
+
+        if (url.pathname === "/api/keys/list") {
+            if (request.method !== "GET") return json({ success: false, message: "Method not allowed." }, 405);
+            return listSessionKeys(request, env);
+        }
 
         if (url.pathname === "/api/mission/start") {
             if (request.method !== "POST") return json({ success: false, message: "Method not allowed." }, 405);
