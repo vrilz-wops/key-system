@@ -279,6 +279,10 @@ async function ensureMissionTables(env) {
         click_id TEXT NOT NULL,
         received_at INTEGER NOT NULL
     )`).run();
+    await env.DB.prepare(`CREATE TABLE IF NOT EXISTS mission_action_cooldowns (
+        session_id TEXT PRIMARY KEY,
+        last_action_at INTEGER NOT NULL
+    )`).run();
 }
 
 function monthKey(now = new Date()) {
@@ -303,10 +307,12 @@ async function startLootMission(request, env) {
         await ensureMissionTables(env);
         const session = await getOrSetSession(request);
         const now = Date.now();
-        const recent = await env.DB.prepare(`SELECT created_at FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(session.id).first();
-        const lastStarted = Number(recent?.created_at || 0);
-        const remaining = MISSION_COOLDOWN_MS - (now - lastStarted);
-        if (lastStarted && remaining > 0) {
+        // Cooldown starts only after a key is successfully created or renewed,
+        // never merely because the user opened LootLabs without finishing it.
+        const cooldownRow = await env.DB.prepare(`SELECT last_action_at FROM mission_action_cooldowns WHERE session_id = ? LIMIT 1`).bind(session.id).first();
+        const lastActionAt = Number(cooldownRow?.last_action_at || 0);
+        const remaining = MISSION_COOLDOWN_MS - (now - lastActionAt);
+        if (lastActionAt && remaining > 0) {
             const response = json({ success: false, cooldown: true, remaining_ms: remaining, message: `You can start another mission in ${Math.ceil(remaining / 60000)} minute(s).` }, 429);
             return withSessionCookie(response, session.id, session.setCookie);
         }
@@ -324,8 +330,14 @@ async function lootMissionStatus(request, env) {
         await ensureMissionTables(env);
         const sessionId = cookieValue(request, SESSION_COOKIE);
         if (!/^[a-f0-9]{48}$/.test(sessionId)) return json({ success: true, verified: false, message: 'Mulai misi terlebih dahulu.' });
-        const mission = await env.DB.prepare(`SELECT status FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
-        return json({ success: true, verified: !!mission && mission.status === 'completed', message: mission?.status === 'completed' ? 'Misi berhasil diverifikasi.' : 'Misi belum terverifikasi.' });
+        const cooldownRow = await env.DB.prepare(`SELECT last_action_at FROM mission_action_cooldowns WHERE session_id = ? LIMIT 1`).bind(sessionId).first();
+        const lastActionAt = Number(cooldownRow?.last_action_at || 0);
+        const remaining = MISSION_COOLDOWN_MS - (Date.now() - lastActionAt);
+        if (lastActionAt && remaining > 0) {
+            return json({ success: true, verified: false, cooldown: true, remaining_ms: remaining, message: `Cooldown active for ${Math.ceil(remaining / 60000)} minute(s).` });
+        }
+        const mission = await env.DB.prepare(`SELECT status FROM loot_missions WHERE session_id = ? AND status = 'completed' ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
+        return json({ success: true, verified: !!mission, message: mission ? 'Misi berhasil diverifikasi.' : 'Misi belum terverifikasi.' });
     } catch {
         return json({ success: false, message: 'Gagal memeriksa status misi.' }, 500);
     }
@@ -384,9 +396,17 @@ async function createOrRenewSessionKey(request, env) {
         await ensureMissionTables(env);
         const sessionId = cookieValue(request, SESSION_COOKIE);
         if (!/^[a-f0-9]{48}$/.test(sessionId)) return json({ success: false, message: 'Sesi browser tidak ditemukan. Klik START terlebih dahulu.' }, 400);
-        const latest = await env.DB.prepare(`SELECT id, status FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
-        if (!latest || latest.status !== 'completed') return json({ success: false, message: 'Selesaikan misi LootLabs sampai terverifikasi terlebih dahulu.' }, 403);
         const now = Date.now();
+        const cooldownRow = await env.DB.prepare(`SELECT last_action_at FROM mission_action_cooldowns WHERE session_id = ? LIMIT 1`).bind(sessionId).first();
+        const lastActionAt = Number(cooldownRow?.last_action_at || 0);
+        const cooldownRemaining = MISSION_COOLDOWN_MS - (now - lastActionAt);
+        if (lastActionAt && cooldownRemaining > 0) {
+            return json({ success: false, cooldown: true, remaining_ms: cooldownRemaining, message: `You can create or renew another key in ${Math.ceil(cooldownRemaining / 60000)} minute(s).` }, 429);
+        }
+        // Use a completed, unused mission. An unfinished redirect does not consume
+        // the 2-hour cooldown, and the user can start another mission.
+        const latest = await env.DB.prepare(`SELECT id, status FROM loot_missions WHERE session_id = ? AND status = 'completed' ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
+        if (!latest) return json({ success: false, message: 'Selesaikan misi LootLabs sampai terverifikasi terlebih dahulu.' }, 403);
         const existing = await env.DB.prepare(`SELECT k.id, k.key, k.active, k.expires_at, k.redeemed_at, k.claim_expires_at
             FROM browser_key_history h JOIN keys k ON k.id = h.key_id
             WHERE h.session_id = ? ORDER BY h.created_at DESC LIMIT 1`).bind(sessionId).first();
@@ -395,7 +415,8 @@ async function createOrRenewSessionKey(request, env) {
         if (redeemedExpired || neverRedeemedExpired) {
             await env.DB.prepare(`UPDATE keys SET active = 1, type = 'FREE', duration_seconds = 86400, claimed_at = ?, claim_expires_at = ?, redeemed_at = NULL, expires_at = NULL WHERE id = ?`).bind(now, now + 10 * 60 * 1000, existing.id).run();
             await env.DB.prepare(`UPDATE loot_missions SET status = 'used' WHERE id = ?`).bind(latest.id).run();
-            return json({ success: true, key: existing.key, renewed: true, message: 'Key lama berhasil diperbarui. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem.' });
+            await env.DB.prepare(`INSERT INTO mission_action_cooldowns (session_id, last_action_at) VALUES (?, ?) ON CONFLICT(session_id) DO UPDATE SET last_action_at = excluded.last_action_at`).bind(sessionId, now).run();
+            return json({ success: true, key: existing.key, renewed: true, cooldown_ms: MISSION_COOLDOWN_MS, message: 'Key lama berhasil diperbarui. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem. Mission cooldown: 2 hours.' });
         }
         const month = monthKey(new Date(now));
         const countRow = await env.DB.prepare(`SELECT COUNT(*) AS count FROM browser_key_history WHERE session_id = ? AND month_key = ?`).bind(sessionId, month).first();
@@ -406,7 +427,8 @@ async function createOrRenewSessionKey(request, env) {
         const row = await env.DB.prepare(`SELECT id FROM keys WHERE key = ? LIMIT 1`).bind(newKey).first();
         await env.DB.prepare(`INSERT INTO browser_key_history (session_id, key_id, created_at, month_key) VALUES (?, ?, ?, ?)`).bind(sessionId, row.id, now, month).run();
         await env.DB.prepare(`UPDATE loot_missions SET status = 'used' WHERE id = ?`).bind(latest.id).run();
-        return json({ success: true, key: newKey, renewed: false, message: 'Key berhasil dibuat. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem.' });
+        await env.DB.prepare(`INSERT INTO mission_action_cooldowns (session_id, last_action_at) VALUES (?, ?) ON CONFLICT(session_id) DO UPDATE SET last_action_at = excluded.last_action_at`).bind(sessionId, now).run();
+        return json({ success: true, key: newKey, renewed: false, cooldown_ms: MISSION_COOLDOWN_MS, message: 'Key berhasil dibuat. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem. Mission cooldown: 2 hours.' });
     } catch (e) {
         return json({ success: false, message: 'Terjadi kesalahan server saat membuat key.' }, 500);
     }
