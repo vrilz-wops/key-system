@@ -231,6 +231,159 @@ async function ensurePremiumDeviceTable(env) {
 
 
 /* =========================================
+   LOOTLABS MISSION + BROWSER SESSION
+========================================= */
+const LOOTLABS_URL = "https://links.lootlabs.gg/s?jvEqlVoz";
+const SESSION_COOKIE = "vrilz_session";
+const MONTHLY_CREATE_LIMIT = 3;
+
+function randomToken(bytes = 24) {
+    const data = new Uint8Array(bytes);
+    crypto.getRandomValues(data);
+    return Array.from(data, b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function cookieValue(request, name) {
+    const raw = request.headers.get("Cookie") || "";
+    for (const part of raw.split(";")) {
+        const i = part.indexOf("=");
+        if (i > 0 && part.slice(0, i).trim() === name) return part.slice(i + 1).trim();
+    }
+    return "";
+}
+
+async function ensureMissionTables(env) {
+    await env.DB.prepare(`CREATE TABLE IF NOT EXISTS loot_missions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        click_id TEXT NOT NULL UNIQUE,
+        session_id TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'started',
+        unique_id TEXT,
+        created_at INTEGER NOT NULL,
+        completed_at INTEGER
+    )`).run();
+    await env.DB.prepare(`CREATE INDEX IF NOT EXISTS idx_loot_missions_session ON loot_missions(session_id, status, created_at)`).run();
+    await env.DB.prepare(`CREATE TABLE IF NOT EXISTS browser_key_history (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id TEXT NOT NULL,
+        key_id INTEGER NOT NULL,
+        created_at INTEGER NOT NULL,
+        month_key TEXT NOT NULL,
+        UNIQUE(session_id, key_id)
+    )`).run();
+    await env.DB.prepare(`CREATE INDEX IF NOT EXISTS idx_browser_key_history_month ON browser_key_history(session_id, month_key)`).run();
+    await env.DB.prepare(`CREATE TABLE IF NOT EXISTS loot_postback_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        unique_id TEXT NOT NULL UNIQUE,
+        click_id TEXT NOT NULL,
+        received_at INTEGER NOT NULL
+    )`).run();
+}
+
+function monthKey(now = new Date()) {
+    return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+async function getOrSetSession(request) {
+    const existing = cookieValue(request, SESSION_COOKIE);
+    if (/^[a-f0-9]{48}$/.test(existing)) return { id: existing, setCookie: false };
+    return { id: randomToken(24), setCookie: true };
+}
+
+function withSessionCookie(response, sessionId, shouldSet) {
+    if (!shouldSet) return response;
+    const headers = new Headers(response.headers);
+    headers.append("Set-Cookie", `${SESSION_COOKIE}=${sessionId}; Path=/; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax`);
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
+async function startLootMission(request, env) {
+    try {
+        await ensureMissionTables(env);
+        const session = await getOrSetSession(request);
+        const clickId = randomToken(20);
+        const now = Date.now();
+        await env.DB.prepare(`INSERT INTO loot_missions (click_id, session_id, status, created_at) VALUES (?, ?, 'started', ?)`).bind(clickId, session.id, now).run();
+        const link = `${LOOTLABS_URL}${LOOTLABS_URL.includes('?') ? '&' : '?'}puid=${encodeURIComponent(clickId)}`;
+        return withSessionCookie(json({ success: true, mission_url: link, message: 'Misi dimulai. Selesaikan LootLabs, lalu kembali ke halaman ini.' }), session.id, session.setCookie);
+    } catch (e) {
+        return json({ success: false, message: 'Gagal memulai misi.' }, 500);
+    }
+}
+
+async function lootMissionStatus(request, env) {
+    try {
+        await ensureMissionTables(env);
+        const sessionId = cookieValue(request, SESSION_COOKIE);
+        if (!/^[a-f0-9]{48}$/.test(sessionId)) return json({ success: true, verified: false, message: 'Mulai misi terlebih dahulu.' });
+        const mission = await env.DB.prepare(`SELECT status FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
+        return json({ success: true, verified: !!mission && mission.status === 'completed', message: mission?.status === 'completed' ? 'Misi berhasil diverifikasi.' : 'Misi belum terverifikasi.' });
+    } catch {
+        return json({ success: false, message: 'Gagal memeriksa status misi.' }, 500);
+    }
+}
+
+async function lootLabsPostback(request, env, url) {
+    try {
+        await ensureMissionTables(env);
+        if (!env.LOOTLABS_POSTBACK_SECRET) return new Response('Postback secret not configured', { status: 500 });
+        const supplied = url.searchParams.get('secret') || request.headers.get('X-Postback-Secret') || '';
+        if (supplied.length !== env.LOOTLABS_POSTBACK_SECRET.length || !crypto.subtle) return new Response('Forbidden', { status: 403 });
+        const a = new TextEncoder().encode(supplied), b = new TextEncoder().encode(env.LOOTLABS_POSTBACK_SECRET);
+        let diff = 0; for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+        if (diff !== 0) return new Response('Forbidden', { status: 403 });
+        const clickId = String(url.searchParams.get('click_id') || '').trim();
+        const uniqueId = String(url.searchParams.get('unique_id') || '').trim();
+        if (!clickId || !uniqueId) return new Response('Missing click_id or unique_id', { status: 400 });
+        const mission = await env.DB.prepare(`SELECT id, status FROM loot_missions WHERE click_id = ? LIMIT 1`).bind(clickId).first();
+        if (!mission) return new Response('Unknown click_id', { status: 404 });
+        try {
+            await env.DB.prepare(`INSERT INTO loot_postback_events (unique_id, click_id, received_at) VALUES (?, ?, ?)`).bind(uniqueId, clickId, Date.now()).run();
+        } catch (e) {
+            // Duplicate postbacks are idempotent: a completed mission stays completed.
+            const duplicate = await env.DB.prepare(`SELECT id FROM loot_postback_events WHERE unique_id = ?`).bind(uniqueId).first();
+            if (!duplicate) throw e;
+        }
+        await env.DB.prepare(`UPDATE loot_missions SET status = 'completed', unique_id = ?, completed_at = ? WHERE click_id = ?`).bind(uniqueId, Date.now(), clickId).run();
+        return new Response('OK', { status: 200, headers: { 'Content-Type': 'text/plain; charset=UTF-8', 'Cache-Control': 'no-store' } });
+    } catch {
+        return new Response('Postback error', { status: 500 });
+    }
+}
+
+async function createOrRenewSessionKey(request, env) {
+    try {
+        await ensureMissionTables(env);
+        const sessionId = cookieValue(request, SESSION_COOKIE);
+        if (!/^[a-f0-9]{48}$/.test(sessionId)) return json({ success: false, message: 'Sesi browser tidak ditemukan. Klik START terlebih dahulu.' }, 400);
+        const latest = await env.DB.prepare(`SELECT id, status FROM loot_missions WHERE session_id = ? ORDER BY created_at DESC LIMIT 1`).bind(sessionId).first();
+        if (!latest || latest.status !== 'completed') return json({ success: false, message: 'Selesaikan misi LootLabs sampai terverifikasi terlebih dahulu.' }, 403);
+        const now = Date.now();
+        const existing = await env.DB.prepare(`SELECT k.id, k.key, k.active, k.expires_at, k.redeemed_at, k.claim_expires_at
+            FROM browser_key_history h JOIN keys k ON k.id = h.key_id
+            WHERE h.session_id = ? ORDER BY h.created_at DESC LIMIT 1`).bind(sessionId).first();
+        if (existing && Number(existing.expires_at || 0) > 0 && Number(existing.expires_at) <= now) {
+            await env.DB.prepare(`UPDATE keys SET active = 1, type = 'FREE', duration_seconds = 86400, claimed_at = ?, claim_expires_at = ?, redeemed_at = NULL, expires_at = NULL WHERE id = ?`).bind(now, now + 10 * 60 * 1000, existing.id).run();
+            await env.DB.prepare(`UPDATE loot_missions SET status = 'used' WHERE id = ?`).bind(latest.id).run();
+            return json({ success: true, key: existing.key, renewed: true, message: 'Key lama berhasil diperbarui. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem.' });
+        }
+        const month = monthKey(new Date(now));
+        const countRow = await env.DB.prepare(`SELECT COUNT(*) AS count FROM browser_key_history WHERE session_id = ? AND month_key = ?`).bind(sessionId, month).first();
+        if (Number(countRow?.count || 0) >= MONTHLY_CREATE_LIMIT) return json({ success: false, message: 'Batas Create Key bulan ini sudah mencapai 3 kali. Key expired tetap bisa diperbarui setelah misi selesai.' }, 429);
+        let newKey, exists;
+        do { newKey = generateKey(); exists = await env.DB.prepare(`SELECT id FROM keys WHERE key = ? LIMIT 1`).bind(newKey).first(); } while (exists);
+        await env.DB.prepare(`INSERT INTO keys (key, type, username, duration_seconds, claimed_at, claim_expires_at, redeemed_at, expires_at, active, created_at) VALUES (?, 'FREE', NULL, 86400, ?, ?, NULL, NULL, 1, ?)`).bind(newKey, now, now + 10 * 60 * 1000, now).run();
+        const row = await env.DB.prepare(`SELECT id FROM keys WHERE key = ? LIMIT 1`).bind(newKey).first();
+        await env.DB.prepare(`INSERT INTO browser_key_history (session_id, key_id, created_at, month_key) VALUES (?, ?, ?, ?)`).bind(sessionId, row.id, now, month).run();
+        await env.DB.prepare(`UPDATE loot_missions SET status = 'used' WHERE id = ?`).bind(latest.id).run();
+        return json({ success: true, key: newKey, renewed: false, message: 'Key berhasil dibuat. Redeem dalam 10 menit; masa aktif 24 jam dimulai saat redeem.' });
+    } catch (e) {
+        return json({ success: false, message: 'Terjadi kesalahan server saat membuat key.' }, 500);
+    }
+}
+
+
+/* =========================================
    USER CLAIM
 ========================================= */
 
@@ -673,7 +826,7 @@ async function redeemKey(request, env) {
 
         if (
             row.type === "FREE" &&
-            row.username !== username
+            row.username && row.username !== username
         ) {
 
             return json({
@@ -1214,7 +1367,7 @@ async function verifyKey(request, env) {
 
         // Free keys remain bound to their generated Roblox username and must be redeemed first.
         if (row.type === "FREE") {
-            if (row.username !== username) {
+            if (row.username && row.username !== username) {
                 return json({ success: false, message: "Key ini terikat dengan username Roblox lain." }, 403);
             }
             if (!row.redeemed_at) {
@@ -1442,6 +1595,21 @@ export default {
         =====================================
         */
 
+        if (url.pathname === "/api/mission/start") {
+            if (request.method !== "POST") return json({ success: false, message: "Method not allowed." }, 405);
+            return startLootMission(request, env);
+        }
+
+        if (url.pathname === "/api/mission/status") {
+            if (request.method !== "GET") return json({ success: false, message: "Method not allowed." }, 405);
+            return lootMissionStatus(request, env);
+        }
+
+        if (url.pathname === "/api/lootlabs/postback") {
+            if (request.method !== "GET") return new Response("Method not allowed", { status: 405 });
+            return lootLabsPostback(request, env, url);
+        }
+
         if (
             url.pathname === "/api/claim"
         ) {
@@ -1458,7 +1626,7 @@ export default {
 
             }
 
-            return claimKey(
+            return createOrRenewSessionKey(
                 request,
                 env
             );
