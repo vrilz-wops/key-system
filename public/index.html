@@ -561,12 +561,18 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 
 <style>
 .keyTableWrap th,.keyTableWrap td{border-bottom:1px solid rgba(255,255,255,.10);text-align:left;padding:10px;white-space:nowrap}.keyTableWrap .keyAction{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:8px;padding:7px 10px;cursor:pointer}.keyTableWrap .keyStatus{font-weight:800;letter-spacing:.6px}.keyTableWrap .status-active{color:#8ff0b0}.keyTableWrap .status-expired{color:#ff9c9c}.keyTableWrap .status-ready{color:#ffd889}
+.keyTableWrap{box-shadow:0 18px 50px rgba(0,0,0,.18)}.keyTableWrap table{table-layout:auto}.keyTableWrap code{display:inline-block;max-width:300px;overflow-wrap:anywhere;white-space:normal;color:#ffe0a0;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.18);padding:7px 9px;border-radius:8px}.keyTableWrap .keyAction{font-weight:800;font-size:10px;letter-spacing:.5px}.keyTableWrap .renewAction{border-color:rgba(255,170,50,.45);background:rgba(255,170,50,.13);color:#ffd889;margin-left:5px}
+/* Key table stays a compact PC-style table on phones (no stacked cards). */
+.keyTableWrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+.keyTableWrap table{width:100%;min-width:0!important;table-layout:fixed}
+.keyTableWrap th,.keyTableWrap td{overflow-wrap:anywhere}
+@media(max-width:650px){.keyTableWrap{padding:10px!important;margin-left:-2px;margin-right:-2px}.keyTableWrap table{font-size:10px!important}.keyTableWrap th,.keyTableWrap td{padding:7px 4px!important;white-space:normal!important}.keyTableWrap th:nth-child(1),.keyTableWrap td:nth-child(1){width:39%}.keyTableWrap th:nth-child(2),.keyTableWrap td:nth-child(2){width:20%}.keyTableWrap th:nth-child(3),.keyTableWrap td:nth-child(3){width:17%}.keyTableWrap th:nth-child(4),.keyTableWrap td:nth-child(4){width:24%}.keyTableWrap code{font-size:9px!important;padding:5px 4px!important;max-width:100%;word-break:break-all}.keyTableWrap .keyAction{font-size:8px!important;padding:5px 5px!important;letter-spacing:0!important;margin:2px 0!important}.keyTableWrap .renewAction{margin-left:0!important}.genBtns{flex-wrap:wrap}.genBtns .btn{flex:1 1 140px}}
 </style>
 <section class="section" id="create"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
 <div class="generator reveal" data-reveal>
 <div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> Tidak perlu memasukkan username di website. Selesaikan misi LootLabs terlebih dahulu. <b>EN:</b> Complete the LootLabs mission to unlock key creation.</p>
-<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" disabled>CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: misi belum dimulai.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
+<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" aria-disabled="true" hidden style="display:none">CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: misi belum dimulai.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
 <div class="genSide"><div class="resultLabel">YOUR KEY</div><div class="keyout" id="keyOut">Your key will appear here after verification.</div><button class="copy" id="copyBtn">COPY KEY</button><div class="hint">Key berlaku 24 jam setelah di-redeem. Key expired tetap tercatat dan dapat diperbarui setelah misi baru terverifikasi.</div></div>
 <div class="keyTableWrap" style="grid-column:1/-1;margin-top:22px;overflow-x:auto;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:14px;padding:16px;background:rgba(0,0,0,.15)"><div style="font-size:12px;font-weight:900;letter-spacing:1.5px;margin-bottom:12px">YOUR KEYS</div><table style="width:100%;border-collapse:collapse;min-width:580px;font-size:12px"><thead><tr style="text-align:left;opacity:.7"><th style="padding:10px">YOUR KEY</th><th style="padding:10px">TIME LEFT</th><th style="padding:10px">STATUS</th><th style="padding:10px">ACTIONS</th></tr></thead><tbody id="keysTableBody"><tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet.</td></tr></tbody></table></div>
 </div>
@@ -643,13 +649,15 @@ const out=$("#keyOut"), create=$("#createBtn"), copy=$("#copyBtn"), startMission
 function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>toast.classList.remove("show"),2300)}
 function scrollToSel(sel){document.querySelector(sel)?.scrollIntoView({behavior:"smooth",block:"start"})}
 let missionPoll=null;
+let missionVerified=false;
 function fmtLeft(ms){if(!ms||ms<=0)return "Expired";let sec=Math.floor(ms/1000),d=Math.floor(sec/86400);sec%=86400;let h=Math.floor(sec/3600);sec%=3600;let m=Math.floor(sec/60);return d?`${d}d ${h}h`:`${h}h ${m}m`;}
 async function refreshKeys(){
  const body=$("#keysTableBody");if(!body)return;
  try{const r=await fetch("/api/keys/list",{credentials:"same-origin",headers:{"Accept":"application/json"}});const d=await r.json();if(!d.success)throw 0;
  if(!d.keys?.length){body.innerHTML='<tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet. Complete a mission to create your first key.</td></tr>';return;}
- body.innerHTML=d.keys.map(k=>{const status=k.status||'READY';const safe=String(k.key).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));return `<tr><td><code>${safe}</code></td><td>${fmtLeft(Number(k.time_left_ms||0))}</td><td><span class="keyStatus status-${status.toLowerCase()}">${status}</span></td><td><button class="keyAction" data-copy-key="${safe}">COPY</button></td></tr>`}).join('');
+ body.innerHTML=d.keys.map(k=>{const status=k.status||'READY';const safe=String(k.key).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const expired=status==='EXPIRED';return `<tr><td><code>${safe}</code></td><td>${fmtLeft(Number(k.time_left_ms||0))}</td><td><span class="keyStatus status-${status.toLowerCase()}">${status}</span></td><td><button class="keyAction" data-copy-key="${safe}">COPY</button>${expired?`<button class="keyAction renewAction" data-renew-key="${safe}">RENEW</button>`:''}</td></tr>`}).join('');
  body.querySelectorAll('[data-copy-key]').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(b.dataset.copyKey);showToast('Key copied!')}catch{showToast('Copy failed')}}));
+ body.querySelectorAll('[data-renew-key]').forEach(b=>b.addEventListener('click',()=>{scrollToSel('#create');showToast('Start a new mission to renew this key.');startMission.focus({preventScroll:true});}));
  }catch{body.innerHTML='<tr><td colspan="4" style="padding:14px;opacity:.65">Could not load keys. Try refreshing.</td></tr>';}
 }
 
@@ -657,32 +665,35 @@ async function checkMission(){
  try{
   const r=await fetch("/api/mission/status",{headers:{"Accept":"application/json"},credentials:"same-origin"});
   const data=await r.json();
-  if(data.success&&data.verified){missionStatus.textContent="Status: misi terverifikasi ✓ Kamu bisa membuat atau memperbarui key.";create.disabled=false;startMission.disabled=false;if(missionPoll){clearInterval(missionPoll);missionPoll=null;}return true;}
-  missionStatus.textContent="Status: menunggu verifikasi LootLabs…";return false;
- }catch(e){missionStatus.textContent="Status: belum bisa memeriksa verifikasi.";return false;}
+  if(data.success&&data.verified){missionVerified=true;create.hidden=false;create.style.display="";create.setAttribute("aria-disabled","false");missionStatus.textContent="Status: mission verified ✓ You can create or renew your key.";startMission.disabled=false;if(missionPoll){clearInterval(missionPoll);missionPoll=null;}return true;}
+  missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: mission not verified yet. Start and complete the LootLabs mission.";return false;
+ }catch(e){missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");missionStatus.textContent="Status: unable to check mission verification.";return false;}
 }
 startMission.addEventListener("click",async()=>{
  const missionTab=window.open("about:blank","_blank");
- startMission.disabled=true;startMission.textContent="STARTING...";missionStatus.textContent="Menyiapkan misi LootLabs…";
+ startMission.disabled=true;startMission.textContent="STARTING...";missionStatus.textContent="Opening LootLabs mission…";
  try{
   const r=await fetch("/api/mission/start",{method:"POST",headers:{"Accept":"application/json"},credentials:"same-origin"});
-  const data=await r.json();if(!r.ok||!data.success)throw new Error(data.message||"Gagal memulai misi.");
-  if(missionTab) missionTab.location.href=data.mission_url; else showToast("Izinkan pop-up browser untuk membuka misi LootLabs.");
-  missionStatus.textContent="Misi dibuka di tab baru. Selesaikan misi, lalu kembali ke sini.";
+  const data=await r.json();if(!r.ok||!data.success){if(data.cooldown&&data.remaining_ms){const total=Math.ceil(data.remaining_ms/60000);throw new Error(`Mission cooldown active. Try again in ${Math.floor(total/60)}h ${total%60}m.`);}throw new Error(data.message||"Unable to start mission.");}
+  if(missionTab) missionTab.location.href=data.mission_url; else showToast("Allow pop-ups to open the LootLabs mission.");
+  create.hidden=true;create.style.display="none";missionVerified=false;
+  missionStatus.textContent="Mission opened in a new tab. Complete it and return here for verification.";
   await checkMission();if(!missionPoll)missionPoll=setInterval(checkMission,4000);
- }catch(e){if(missionTab)missionTab.close();showToast(e.message||"Gagal memulai misi.");missionStatus.textContent="Status: gagal memulai misi.";}
+ }catch(e){if(missionTab)missionTab.close();showToast(e.message||"Unable to start mission.");missionStatus.textContent=e.message||"Mission could not be started.";}
  finally{startMission.disabled=false;startMission.textContent="✦ START MISSION";}
 });
 create.addEventListener("click",async()=>{
+ if(!missionVerified){create.hidden=true;create.style.display="none";showToast("Mission not completed yet. Click START MISSION first.");missionStatus.textContent="Complete the LootLabs mission first to unlock key creation.";return;}
  create.disabled=true;create.textContent="CREATING...";out.classList.remove("ready");out.textContent="Verifying mission and creating key...";
  try{
   const r=await fetch("/api/claim",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},credentials:"same-origin",body:JSON.stringify({})});
-  const data=await r.json();if(!r.ok||!data.success)throw new Error(data.message||"Gagal membuat key.");
-  const key=data.key;if(!key)throw new Error("Key tidak diterima dari server.");
-  out.textContent=key;out.classList.add("ready","pulse");copy.dataset.key=key;showToast(data.renewed?"Key berhasil diperbarui!":"Key berhasil dibuat!");missionStatus.textContent=data.message||"Misi telah digunakan.";create.disabled=true;refreshKeys();
-  setTimeout(()=>out.classList.remove("pulse"),600);
- }catch(e){out.textContent="Failed to create key.";showToast(e.message||"Gagal membuat key.");await checkMission();}
- finally{create.textContent="✦ CREATE KEY";}
+  const data=await r.json();if(!r.ok||!data.success)throw new Error(data.message||"Unable to create key.");
+  const key=data.key;if(!key)throw new Error("Key was not returned by the server.");
+  out.textContent=key;out.classList.add("ready","pulse");copy.dataset.key=key;showToast(data.renewed?"Key renewed successfully!":"Key created successfully!");missionStatus.textContent=data.message||"Mission used. Start another mission after the cooldown to create or renew again.";
+  missionVerified=false;create.hidden=true;create.style.display="none";create.setAttribute("aria-disabled","true");startMission.disabled=false;
+  refreshKeys();setTimeout(()=>out.classList.remove("pulse"),600);
+ }catch(e){out.textContent="Key creation failed.";showToast(e.message||"Unable to create key.");await checkMission();}
+ finally{create.textContent="✦ CREATE KEY";create.disabled=false;}
 });
 checkMission();refreshKeys();
 copy.addEventListener("click",async()=>{
