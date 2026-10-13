@@ -810,8 +810,7 @@ async function redeemKey(request, env) {
             // First activation: bind the premium key to this Roblox username.
             if (!row.username || !row.redeemed_at) {
                 const duration = Number(row.duration_seconds);
-                const isPermanent = duration === 0;
-                const expiresAt = isPermanent ? null : now + (duration > 0 ? duration : 86400) * 1000;
+                const expiresAt = duration === 0 ? null : now + (duration || 86400) * 1000;
 
                 await env.DB.prepare(`
                     UPDATE keys
@@ -842,8 +841,8 @@ async function redeemKey(request, env) {
                 }, 409);
             }
 
+            const expiresAt = Number(row.expires_at || 0);
             const isPermanent = Number(row.duration_seconds) === 0;
-            const expiresAt = row.expires_at == null ? null : Number(row.expires_at);
             if (!isPermanent && (!expiresAt || now >= expiresAt)) {
                 await env.DB.prepare(`
                     UPDATE keys SET active = 0 WHERE id = ?
@@ -867,7 +866,8 @@ async function redeemKey(request, env) {
                 type: "PREMIUM",
                 username: row.username,
                 redeemed_at: Number(row.redeemed_at),
-                expires_at: expiresAt
+                expires_at: isPermanent ? null : expiresAt,
+                permanent: isPermanent
             });
         }
 
@@ -1065,21 +1065,11 @@ async function adminCreateKey(
         const durationDays = Number(body.duration_days);
 
         if (!permanent && (!Number.isInteger(durationDays) || durationDays < 1 || durationDays > 36500)) {
-            return json({
-                success: false,
-                message: "Durasi harus antara 1 sampai 36.500 hari."
-            }, 400);
-        }
-
-        if (permanent && durationDays !== 0) {
-            return json({
-                success: false,
-                message: "Format permanent tidak valid."
-            }, 400);
+            return json({ success: false, message: "Durasi harus 1–36500 hari, atau pilih permanent." }, 400);
         }
 
         const now = Date.now();
-        // 0 means permanent; redeem logic keeps expires_at NULL.
+        // duration_seconds = 0 means permanent; expires_at stays NULL after activation.
         const durationSeconds = permanent ? 0 : durationDays * 24 * 60 * 60;
 
 
@@ -1147,8 +1137,7 @@ async function adminCreateKey(
             key:
                 newKey,
 
-            duration_days:
-                permanent ? null : durationDays,
+            duration_days: permanent ? null : durationDays,
             permanent
 
         });
@@ -1418,8 +1407,8 @@ async function verifyKey(request, env) {
                 return json({ success: false, message: "Premium key ini sudah terikat dengan username Roblox lain." }, 403);
             }
             if (!row.username || !row.redeemed_at) {
-                const duration = Number(row.duration_seconds) || 86400;
-                const expiresAt = now + duration * 1000;
+                const duration = Number(row.duration_seconds);
+                const expiresAt = duration === 0 ? null : now + (duration || 86400) * 1000;
                 await env.DB.prepare(`
                     UPDATE keys SET username = ?, redeemed_at = ?, expires_at = ?, active = 1
                     WHERE id = ? AND username IS NULL AND redeemed_at IS NULL
@@ -1439,7 +1428,8 @@ async function verifyKey(request, env) {
         }
 
         const expiresAt = Number(row.expires_at || 0);
-        if (!expiresAt || now >= expiresAt) {
+        const isPermanent = row.type === "PREMIUM" && Number(row.duration_seconds) === 0;
+        if (!isPermanent && (!expiresAt || now >= expiresAt)) {
             await env.DB.prepare(`UPDATE keys SET active = 0 WHERE id = ?`).bind(row.id).run();
             return json({ success: false, message: "Key sudah expired.", expired: true, type: row.type, expires_at: expiresAt });
         }
@@ -1451,7 +1441,8 @@ async function verifyKey(request, env) {
             type: row.type,
             username: row.username,
             redeemed_at: Number(row.redeemed_at),
-            expires_at: expiresAt
+            expires_at: isPermanent ? null : expiresAt,
+            permanent: isPermanent
         });
      } catch (error) {
         return json({
