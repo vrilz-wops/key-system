@@ -5,29 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VRILZ • Admin</title>
 <style>
-*{box-sizing:border-box}
-:root{--orange:#ff7a00;--orange2:#ffb000;--red:#ff2b2b;--bg:#050507;--card:#0d0d12;--line:#27212a;--muted:#92909b;--surface:#101015;--glow:#ff7a0022}
-body{margin:0;background:radial-gradient(circle at 50% -10%,#321300 0,#09070a 32%,#030304 72%);color:#fff;font-family:Arial,Helvetica,sans-serif;min-height:100vh;overflow-x:hidden}
-body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:0;opacity:.22;filter:blur(.2px)}
-body:before{width:2px;height:250px;left:12%;top:0;background:linear-gradient(150deg,transparent 0 25%,var(--orange) 26% 28%,transparent 29% 45%,var(--red) 46% 48%,transparent 49%);transform:skewX(-18deg) rotate(12deg)}
-body:after{width:2px;height:300px;right:15%;top:5%;background:linear-gradient(30deg,transparent 0 20%,var(--orange2) 21% 23%,transparent 24% 50%,var(--red) 51% 53%,transparent 54%);transform:skewX(18deg) rotate(-10deg)}
-.container{position:relative;z-index:1;width:min(1240px,100%);margin:auto;padding:clamp(14px,3vw,34px) clamp(12px,2.5vw,26px) 50px}
-.hidden{display:none!important}
-.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;letter-spacing:1px}.mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--orange2),var(--orange),#ff2b00);box-shadow:0 0 28px #ff730055, inset 0 1px #fff5;color:#090909;font-size:25px;font-style:italic;font-weight:1000;transform:skew(-4deg)}
-.brand small{display:block;color:#8f8a92;font-size:10px;letter-spacing:2px;margin-top:2px}
-.card{min-width:0;background:linear-gradient(180deg,#111116ee,#09090cee);border:1px solid #2a2024;border-radius:18px;padding:clamp(15px,2vw,24px);margin-top:18px;box-shadow:0 14px 50px #0008,0 0 35px #ff69000b;backdrop-filter:blur(10px)}
-.login{max-width:430px;margin:13vh auto 0;text-align:center}.login h1{margin:18px 0 7px;font-size:27px}.login p,.muted{color:var(--muted);font-size:13px;line-height:1.5}
-input,select{width:100%;min-width:0;font-size:16px;padding:14px 15px;border-radius:11px;border:1px solid #322a30;background:#050507;color:#fff;margin:7px 0;outline:none}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0018}
-button{min-height:44px;border:0;border-radius:11px;padding:13px 16px;color:#080808;background:linear-gradient(135deg,var(--orange2),var(--orange));font-weight:900;cursor:pointer;box-shadow:0 8px 25px #ff730022}button:hover{filter:brightness(1.08)}button:disabled{opacity:.55;cursor:not-allowed}.danger{background:linear-gradient(135deg,#ff4545,#c81414);color:#fff}.ghost{background:#171319;color:#fff;border:1px solid #342a31;box-shadow:none}
-.login button{width:100%;margin-top:9px}.error{color:#ff7474;min-height:20px;margin-top:10px;font-size:13px}.success{color:#65f28b}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}
-.title{margin:0;font-size:21px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:16px;align-items:stretch}.wide{grid-column:1/-1}
-.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #211b21;font-size:12px}th{color:#8d8790;font-size:10px;letter-spacing:1px}td strong{color:#fff}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:10px;font-weight:900}.active{background:#10351c;color:#61f18a}.inactive{background:#391313;color:#ff7777}.premium{color:#ffb43d}.free{color:#aaa4ac}.key{font-family:monospace;letter-spacing:.5px}
-.notice{border:1px solid #4a2c0c;background:#1b1005;color:#ffc16a;padding:11px 13px;border-radius:11px;font-size:12px;margin-top:12px}.key-result{display:none;margin-top:12px;padding:14px;border:1px solid #ff8a00;background:linear-gradient(180deg,#211205,#120b06);border-radius:12px;box-shadow:0 0 24px #ff730018}.key-result.show{display:block}.key-result-label{font-size:10px;color:#ffb15c;font-weight:900;letter-spacing:1px}.generated-key{margin-top:7px;padding:11px;background:#050507;border:1px solid #3a2b20;border-radius:9px;color:#fff;font:900 14px monospace;word-break:break-all}.copy-key{margin-top:9px;width:100%}.create-status{min-height:18px;margin-top:8px;font-size:12px;color:#ffb15c}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.status{font-size:11px;color:#8d8790}.status b{color:#67f08a}
-.generator-options{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.65fr);gap:10px;align-items:end;margin-top:14px}.field-label{display:block;color:#bdb6c0;font-size:11px;font-weight:800;letter-spacing:.8px;margin:8px 0 4px}.duration-hint{color:var(--muted);font-size:11px;margin-top:3px}.hero{display:flex;align-items:center;gap:12px;padding:18px;border-radius:15px;background:linear-gradient(120deg,#ff7a0018,#ffb00008);border:1px solid #ff7a0025;margin-bottom:12px}.hero-icon{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border-radius:13px;background:#ff7a001e;color:#ffae42;font-size:23px}.hero strong{display:block;font-size:14px}.hero span{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.45}.statsline{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.statsline span{font-size:11px;color:#d7d0d8;border:1px solid #30262e;background:#0a090c;padding:7px 9px;border-radius:9px}.table-wrap{border:1px solid #282129;border-radius:12px}table{min-width:820px}td,th{white-space:nowrap}.login{width:100%;padding:clamp(20px,4vw,30px)}.brand{min-width:0}.actions button{flex:0 0 auto}
-@media(min-width:1100px){.container{padding-top:32px}.grid{gap:20px}.card{border-radius:20px}}
-@media(max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}.wide{grid-column:auto}.brandbar{align-items:flex-start;flex-direction:column}.brandbar>.actions{width:100%}.brandbar>.actions button{flex:1}.login{margin-top:7vh}.generator-options{grid-template-columns:1fr}.title{font-size:19px}}
-@media(max-width:380px){.brand{font-size:18px}.mark{width:40px;height:40px}.card{padding:14px}.actions{gap:6px}.actions button{padding:11px 10px;font-size:11px}.generated-key{font-size:12px}}
-@media(prefers-reduced-motion:no-preference){button,.card{transition:filter .18s ease,border-color .18s ease,transform .18s ease}button:hover{transform:translateY(-1px)}.card:hover{border-color:#44302a}}
+*{box-sizing:border-box} :root{color-scheme:dark;--orange:#ff7a00;--gold:#ffb547;--bg:#08090d;--panel:#11131a;--line:#252833;--muted:#9398a7;--text:#f7f8fb;--green:#55e69a}
+body{margin:0;min-height:100vh;color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 12% 0%,#492006 0,transparent 32%),radial-gradient(ellipse at 100% 18%,#25142b 0,transparent 28%),var(--bg);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.15;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
+.container{position:relative;z-index:1;width:min(1180px,100%);margin:auto;padding:clamp(14px,3vw,32px)}.hidden{display:none!important}
+.brand{display:flex;align-items:center;gap:12px;font-weight:950;font-size:21px;letter-spacing:1.2px}.mark{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe09a,var(--gold),var(--orange));box-shadow:0 8px 30px #ff7a0035;color:#14100a;font-size:27px;font-style:italic;font-weight:1000}.brand small{display:block;color:#9ba0af;font-size:10px;letter-spacing:2.2px;margin-top:1px}
+.card{background:linear-gradient(145deg,#151720f5,#101117f5);border:1px solid #292c37;border-radius:22px;padding:clamp(18px,2.6vw,28px);margin-top:18px;box-shadow:0 20px 65px #0005;backdrop-filter:blur(16px)}
+.login{width:min(460px,100%);margin:clamp(34px,10vh,100px) auto 0;text-align:center;padding:clamp(24px,5vw,38px)}.login h1{font-size:clamp(27px,5vw,34px);letter-spacing:-1px;margin:25px 0 7px}.login p,.muted{color:var(--muted);font-size:13px;line-height:1.7}.login .brand{justify-content:center}
+input,select{font:inherit;width:100%;padding:14px 15px;border-radius:13px;border:1px solid #333744;background:#0a0b10;color:#fff;margin:7px 0;outline:none;min-height:49px}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0020}input::placeholder{color:#717687}
+button{font:inherit;border:0;border-radius:13px;min-height:46px;padding:12px 17px;color:#15100a;background:linear-gradient(135deg,#ffd078,var(--orange));font-weight:900;cursor:pointer;box-shadow:0 7px 22px #ff730018;transition:transform .16s,filter .16s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:active{transform:translateY(0)}button:disabled{opacity:.55;cursor:wait;transform:none}.login button{width:100%;margin-top:12px;min-height:51px;letter-spacing:.6px}.danger{background:linear-gradient(135deg,#ff6b6b,#d62d43);color:white}.ghost{background:#1a1c25;color:#f5f6fa;border:1px solid #343744;box-shadow:none}
+.error{color:#ff8b94;min-height:20px;margin-top:12px;font-size:13px}.success{color:var(--green)}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}.title{margin:0;font-size:clamp(18px,2vw,22px);letter-spacing:-.3px}.sub{margin:6px 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);gap:18px}.wide{grid-column:1/-1}
+.table-wrap{overflow:auto;border:1px solid #282b35;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:820px}th,td{padding:14px 12px;text-align:left;border-bottom:1px solid #252832;font-size:12px;vertical-align:middle}th{color:#9ca1b1;font-size:10px;letter-spacing:1.1px;background:#0d0f15;position:sticky;top:0}tbody tr:hover{background:#ffffff04}tbody tr:last-child td{border-bottom:0}td strong{color:#fff}.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.4px}.active{background:#103a2a;color:#6af2ac}.inactive{background:#421d26;color:#ff9ba6}.premium{color:#ffc66f}.free{color:#aaaeb9}.key{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.3px;word-break:break-all}
+.notice{border:1px solid #594022;background:#21180d;color:#ffce89;padding:13px 14px;border-radius:13px;font-size:12px;line-height:1.6;margin-top:16px}.key-result{display:none;margin-top:15px;padding:16px;border:1px solid #a95b16;background:linear-gradient(180deg,#2a1a0d,#15100c);border-radius:15px}.key-result.show{display:block}.key-result-label{font-size:10px;color:#ffbd69;font-weight:950;letter-spacing:1.2px}.generated-key{margin-top:9px;padding:13px;background:#090a0e;border:1px solid #403326;border-radius:11px;color:#fff;font:900 14px ui-monospace,monospace;word-break:break-all}.copy-key{margin-top:10px;width:100%}.create-status{min-height:20px;margin-top:10px;font-size:12px;color:#ffbd69}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:4px 0 20px}.status{font-size:12px;color:#a2a6b3;margin-top:10px}.status b{color:var(--green)}.eyebrow{font-size:10px;letter-spacing:1.8px;color:#ffb45c;font-weight:900;margin-bottom:9px}.admin-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px}.admin-head p{margin:7px 0 0;color:var(--muted);font-size:13px}.field-label{display:block;font-size:12px;color:#c7cad4;font-weight:750;margin:13px 0 4px}.duration-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.duration-row select,.duration-row input{margin:0}.primary-wide{width:100%;margin-top:14px}.stat-icon{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#302010;color:#ffb65d;margin-bottom:14px;font-size:19px}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #2c303a;background:#151821;border-radius:999px;color:#c5c8d2;font-size:11px}
+@media(max-width:760px){.container{padding:14px}.grid{grid-template-columns:1fr;gap:0}.wide{grid-column:auto}.brandbar,.admin-head{align-items:flex-start;flex-direction:column}.brandbar .actions{width:100%}.brandbar .actions button{flex:1}.card{border-radius:18px}.login{margin-top:5vh}.table-wrap{margin-inline:-2px}th,td{padding:12px 10px}}
+@media(min-width:1100px){.container{padding-top:34px}.login{margin-top:12vh}}
 </style>
 </head>
 <body>
@@ -38,52 +29,38 @@ button{min-height:44px;border:0;border-radius:11px;padding:13px 16px;color:#0808
     <p>Panel ini hanya dapat digunakan setelah login admin yang divalidasi oleh Cloudflare Worker.</p>
     <input id="username" autocomplete="username" placeholder="Admin username">
     <input id="password" type="password" autocomplete="current-password" placeholder="Admin password">
-    <button id="loginBtn" onclick="login()">LOGIN ADMIN</button>
+    <button id="loginBtn" type="button">MASUK KE DASHBOARD <span aria-hidden="true">→</span></button>
     <div id="loginError" class="error"></div>
   </section>
 
   <section id="adminView" class="hidden">
     <div class="brandbar">
       <div class="brand"><div class="mark">V</div><div>VRILZ<small>KEY SYSTEM ADMIN</small></div></div>
-      <div class="actions"><button class="ghost" onclick="loadKeys()">REFRESH</button><button class="danger" onclick="logout()">LOGOUT</button></div>
+      <div class="actions"><button id="refreshBtn" class="ghost" type="button">↻ REFRESH</button><button id="logoutBtn" class="danger" type="button">LOGOUT</button></div>
     </div>
 
+    <div class="admin-head"><div><div class="eyebrow">CONTROL CENTER / KEY MANAGEMENT</div><h1 class="title" style="font-size:clamp(25px,4vw,34px)">Admin Dashboard</h1><p>Kelola akses premium dan buat key sesuai durasi yang kamu butuhkan.</p></div><span class="pill">● <span style="color:#65efa6">System online</span></span></div>
     <div class="grid">
       <div class="card">
-        <h2 class="title">Generate Premium Key</h2>
-        <p class="sub">Buat key premium dari server, bukan dari browser.</p>
-        <div class="hero"><div class="hero-icon">✦</div><div><strong>Premium Key Generator</strong><span>Tentukan masa aktif sendiri, dari 1 hari sampai ribuan hari, atau pilih permanent.</span></div></div>
-        <label class="field-label" for="durationMode">JENIS MASA AKTIF</label>
-        <select id="durationMode" onchange="syncDurationMode()">
-          <option value="preset">Durasi pilihan</option>
-          <option value="custom">Durasi custom</option>
-          <option value="permanent">Permanent / selamanya</option>
-        </select>
-        <div id="presetWrap">
-          <label class="field-label" for="duration">PILIH DURASI</label>
-          <select id="duration">
-            <option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="60">60 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option>
-          </select>
-        </div>
-        <div id="customWrap" class="hidden">
-          <label class="field-label" for="customDays">DURASI BEBAS (HARI)</label>
-          <input id="customDays" type="number" min="1" max="36500" step="1" value="60" inputmode="numeric" placeholder="Contoh: 120">
-          <div class="duration-hint">Masukkan 1–36.500 hari (maksimal 100 tahun).</div>
-        </div>
-        <button id="generateBtn" style="width:100%;margin-top:12px" onclick="createKey()">GENERATE PREMIUM KEY</button>
+        <div class="stat-icon">✦</div><h2 class="title">Generate Premium Key</h2>
+        <p class="sub">Pilih durasi siap pakai atau tentukan jumlah hari sendiri.</p>
+        <label class="field-label" for="duration">PILIH DURASI</label>
+        <select id="duration"><option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="60">60 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option><option value="custom">Custom — isi sendiri</option><option value="permanent">Permanent / Selamanya</option></select>
+        <div id="customDurationWrap" class="hidden"><label class="field-label" for="customDuration">JUMLAH HARI (1–36500)</label><input id="customDuration" type="number" inputmode="numeric" min="1" max="36500" placeholder="Contoh: 120"></div>
+        <button id="generateBtn" class="primary-wide" type="button">✦ &nbsp; GENERATE PREMIUM KEY</button>
         <div id="createStatus" class="create-status"></div>
         <div id="keyResult" class="key-result">
           <div class="key-result-label">PREMIUM KEY BERHASIL DIBUAT</div>
           <div id="generatedKey" class="generated-key"></div>
-          <button class="copy-key" onclick="copyGeneratedKey()">COPY KEY</button>
+          <button id="copyBtn" class="copy-key" type="button">COPY KEY</button>
         </div>
         <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
       </div>
       <div class="card">
-        <h2 class="title">Admin Status</h2>
-        <p class="sub">Session admin berlaku sementara dan token tidak disimpan sebagai credential permanen.</p>
-        <div class="status" style="margin-top:16px">STATUS: <b>AUTHENTICATED</b></div>
-        <div class="status" style="margin-top:7px">SOURCE: <b>VRILZ KEY SYSTEM</b></div><div class="statsline"><span>SERVER-SIDE GENERATION</span><span>D1 DATABASE</span><span>RESPONSIVE PANEL</span></div>
+        <div class="stat-icon">⌘</div><h2 class="title">Admin Status</h2>
+        <p class="sub">Informasi sesi dan koneksi panel admin.</p>
+        <div class="status">STATUS: <b>AUTHENTICATED</b></div><div class="status">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
+        <div class="notice">Simpan key yang baru dibuat. Key hanya bisa digunakan sesuai kebijakan aktivasi dan masa berlaku sistem.</div>
       </div>
       <div class="card wide">
         <h2 class="title">Key Database</h2>
@@ -94,7 +71,7 @@ button{min-height:44px;border:0;border-radius:11px;padding:13px 16px;color:#0808
   </section>
 </div>
 <script>
-const API_BASE = "";
+const API_BASE = window.location.origin;
 let adminToken = sessionStorage.getItem("vrilz_admin_session") || "";
 
 function authHeaders(){return {"Content-Type":"application/json","Authorization":"Bearer "+adminToken};}
@@ -124,30 +101,23 @@ async function api(path, options={}){
   return {r,d};
 }
 
-function syncDurationMode(){
-  const mode=document.getElementById("durationMode").value;
-  document.getElementById("presetWrap").classList.toggle("hidden",mode!=="preset");
-  document.getElementById("customWrap").classList.toggle("hidden",mode!=="custom");
-}
 async function createKey(){
-  const mode=document.getElementById("durationMode").value;
-  const rawDays=mode==="custom"?document.getElementById("customDays").value:document.getElementById("duration").value;
-  const duration=mode==="permanent"?0:Number(rawDays);
-  if(mode!=="permanent"&&(!Number.isInteger(duration)||duration<1||duration>36500)){
-    document.getElementById("createStatus").textContent="Durasi harus antara 1 sampai 36.500 hari.";
-    return;
-  }
+  const selected=document.getElementById("duration").value;
+  const custom=document.getElementById("customDuration");
+  const duration=selected==="permanent"?0:(selected==="custom"?Number(custom.value):Number(selected));
   const btn=document.getElementById("generateBtn");
   const status=document.getElementById("createStatus");
   const result=document.getElementById("keyResult");
   const keyBox=document.getElementById("generatedKey");
-  status.textContent=""; result.classList.remove("show"); btn.disabled=true; btn.textContent="CREATING...";
+  status.textContent=""; result.classList.remove("show");
+  if(selected==="custom"&&(!Number.isInteger(duration)||duration<1||duration>36500)){status.textContent="Masukkan durasi 1 sampai 36500 hari.";custom.focus();return;}
+  btn.disabled=true; btn.textContent="MEMBUAT KEY...";
   try{
-    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration,permanent:mode==="permanent"})});
+    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration,permanent:selected==="permanent"})});
     if(!r.ok||!d.success){status.textContent=d.message||"Gagal membuat key.";return;}
-    keyBox.textContent=d.key; result.classList.add("show"); status.textContent=mode==="permanent"?"Premium permanent berhasil dibuat.":`Premium key ${duration} hari berhasil dibuat.`; loadKeys();
+    keyBox.textContent=d.key; result.classList.add("show"); status.textContent="Premium key berhasil dibuat."; loadKeys();
   }catch(e){status.textContent="Server tidak dapat dihubungi.";}
-  finally{btn.disabled=false;btn.textContent="GENERATE PREMIUM KEY";}
+  finally{btn.disabled=false;btn.textContent="✦   GENERATE PREMIUM KEY";}
 }
 
 async function copyGeneratedKey(){
@@ -172,7 +142,7 @@ async function loadKeys(){
     d.keys.forEach(key=>{
       const tr=document.createElement("tr");
       const active=Number(key.active)===1;
-      const expired=key.expires_at?new Date(Number(key.expires_at)).toLocaleString("id-ID"):"-";
+      const expired=Number(key.duration_seconds)===0&&key.type==="PREMIUM"?"PERMANENT":(key.expires_at?new Date(Number(key.expires_at)).toLocaleString("id-ID"):"Belum diaktifkan");
       tr.innerHTML=`<td>${key.id}</td><td class="key"><strong>${escapeHtml(key.key)}</strong></td><td class="${key.type==="PREMIUM"?"premium":"free"}">${escapeHtml(key.type)}</td><td>${escapeHtml(key.username||"-")}</td><td><span class="badge ${active?"active":"inactive"}">${active?"ACTIVE":"INACTIVE"}</span></td><td>${escapeHtml(expired)}</td><td><div class="actions"><button class="danger" onclick="revokeKey(${key.id})">REVOKE</button><button class="danger" onclick="deleteKey(${key.id})">DELETE</button></div></td>`;
       tbody.appendChild(tr);
     });
@@ -183,7 +153,17 @@ async function revokeKey(id){if(!confirm("Revoke key ini?"))return;try{const {d}
 async function deleteKey(id){if(!confirm("Hapus key secara permanen?"))return;try{const {d}=await api("/api/admin/delete",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
 function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
 
-syncDurationMode();\nif(adminToken){showAdmin();}
+
+// Bind actions explicitly so login works even when inline event handlers are restricted.
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("password").addEventListener("keydown", e=>{if(e.key==="Enter")login();});
+document.getElementById("username").addEventListener("keydown", e=>{if(e.key==="Enter")document.getElementById("password").focus();});
+document.getElementById("generateBtn").addEventListener("click", createKey);
+document.getElementById("copyBtn").addEventListener("click", copyGeneratedKey);
+document.getElementById("refreshBtn").addEventListener("click", loadKeys);
+document.getElementById("logoutBtn").addEventListener("click", logout);
+document.getElementById("duration").addEventListener("change", e=>{document.getElementById("customDurationWrap").classList.toggle("hidden",e.target.value!=="custom");});
+if(adminToken){showAdmin();}
 </script>
 </body>
 </html>
