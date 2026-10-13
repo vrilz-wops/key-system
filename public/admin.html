@@ -6,24 +6,28 @@
 <title>VRILZ • Admin</title>
 <style>
 *{box-sizing:border-box}
-:root{--orange:#ff7a00;--orange2:#ffb000;--red:#ff2b2b;--bg:#050507;--card:#0d0d12;--line:#27212a;--muted:#92909b}
+:root{--orange:#ff7a00;--orange2:#ffb000;--red:#ff2b2b;--bg:#050507;--card:#0d0d12;--line:#27212a;--muted:#92909b;--surface:#101015;--glow:#ff7a0022}
 body{margin:0;background:radial-gradient(circle at 50% -10%,#321300 0,#09070a 32%,#030304 72%);color:#fff;font-family:Arial,Helvetica,sans-serif;min-height:100vh;overflow-x:hidden}
 body:before,body:after{content:"";position:fixed;pointer-events:none;z-index:0;opacity:.22;filter:blur(.2px)}
 body:before{width:2px;height:250px;left:12%;top:0;background:linear-gradient(150deg,transparent 0 25%,var(--orange) 26% 28%,transparent 29% 45%,var(--red) 46% 48%,transparent 49%);transform:skewX(-18deg) rotate(12deg)}
 body:after{width:2px;height:300px;right:15%;top:5%;background:linear-gradient(30deg,transparent 0 20%,var(--orange2) 21% 23%,transparent 24% 50%,var(--red) 51% 53%,transparent 54%);transform:skewX(18deg) rotate(-10deg)}
-.container{position:relative;z-index:1;max-width:1120px;margin:auto;padding:24px 16px 50px}
+.container{position:relative;z-index:1;width:min(1240px,100%);margin:auto;padding:clamp(14px,3vw,34px) clamp(12px,2.5vw,26px) 50px}
 .hidden{display:none!important}
 .brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;letter-spacing:1px}.mark{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,var(--orange2),var(--orange),#ff2b00);box-shadow:0 0 28px #ff730055, inset 0 1px #fff5;color:#090909;font-size:25px;font-style:italic;font-weight:1000;transform:skew(-4deg)}
 .brand small{display:block;color:#8f8a92;font-size:10px;letter-spacing:2px;margin-top:2px}
-.card{background:linear-gradient(180deg,#111116ee,#09090cee);border:1px solid #2a2024;border-radius:18px;padding:20px;margin-top:18px;box-shadow:0 14px 50px #0008,0 0 35px #ff69000b;backdrop-filter:blur(10px)}
+.card{min-width:0;background:linear-gradient(180deg,#111116ee,#09090cee);border:1px solid #2a2024;border-radius:18px;padding:clamp(15px,2vw,24px);margin-top:18px;box-shadow:0 14px 50px #0008,0 0 35px #ff69000b;backdrop-filter:blur(10px)}
 .login{max-width:430px;margin:13vh auto 0;text-align:center}.login h1{margin:18px 0 7px;font-size:27px}.login p,.muted{color:var(--muted);font-size:13px;line-height:1.5}
-input,select{width:100%;padding:14px 15px;border-radius:11px;border:1px solid #322a30;background:#050507;color:#fff;margin:7px 0;outline:none}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0018}
-button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:linear-gradient(135deg,var(--orange2),var(--orange));font-weight:900;cursor:pointer;box-shadow:0 8px 25px #ff730022}button:hover{filter:brightness(1.08)}button:disabled{opacity:.55;cursor:not-allowed}.danger{background:linear-gradient(135deg,#ff4545,#c81414);color:#fff}.ghost{background:#171319;color:#fff;border:1px solid #342a31;box-shadow:none}
+input,select{width:100%;min-width:0;font-size:16px;padding:14px 15px;border-radius:11px;border:1px solid #322a30;background:#050507;color:#fff;margin:7px 0;outline:none}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0018}
+button{min-height:44px;border:0;border-radius:11px;padding:13px 16px;color:#080808;background:linear-gradient(135deg,var(--orange2),var(--orange));font-weight:900;cursor:pointer;box-shadow:0 8px 25px #ff730022}button:hover{filter:brightness(1.08)}button:disabled{opacity:.55;cursor:not-allowed}.danger{background:linear-gradient(135deg,#ff4545,#c81414);color:#fff}.ghost{background:#171319;color:#fff;border:1px solid #342a31;box-shadow:none}
 .login button{width:100%;margin-top:9px}.error{color:#ff7474;min-height:20px;margin-top:10px;font-size:13px}.success{color:#65f28b}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}
-.title{margin:0;font-size:21px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.wide{grid-column:1/-1}
+.title{margin:0;font-size:21px}.sub{margin:5px 0 0;color:var(--muted);font-size:12px}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:16px;align-items:stretch}.wide{grid-column:1/-1}
 .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:900px}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid #211b21;font-size:12px}th{color:#8d8790;font-size:10px;letter-spacing:1px}td strong{color:#fff}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:10px;font-weight:900}.active{background:#10351c;color:#61f18a}.inactive{background:#391313;color:#ff7777}.premium{color:#ffb43d}.free{color:#aaa4ac}.key{font-family:monospace;letter-spacing:.5px}
 .notice{border:1px solid #4a2c0c;background:#1b1005;color:#ffc16a;padding:11px 13px;border-radius:11px;font-size:12px;margin-top:12px}.key-result{display:none;margin-top:12px;padding:14px;border:1px solid #ff8a00;background:linear-gradient(180deg,#211205,#120b06);border-radius:12px;box-shadow:0 0 24px #ff730018}.key-result.show{display:block}.key-result-label{font-size:10px;color:#ffb15c;font-weight:900;letter-spacing:1px}.generated-key{margin-top:7px;padding:11px;background:#050507;border:1px solid #3a2b20;border-radius:9px;color:#fff;font:900 14px monospace;word-break:break-all}.copy-key{margin-top:9px;width:100%}.create-status{min-height:18px;margin-top:8px;font-size:12px;color:#ffb15c}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.status{font-size:11px;color:#8d8790}.status b{color:#67f08a}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.top{align-items:flex-start;flex-direction:column}.login{margin-top:8vh}}
+.generator-options{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.65fr);gap:10px;align-items:end;margin-top:14px}.field-label{display:block;color:#bdb6c0;font-size:11px;font-weight:800;letter-spacing:.8px;margin:8px 0 4px}.duration-hint{color:var(--muted);font-size:11px;margin-top:3px}.hero{display:flex;align-items:center;gap:12px;padding:18px;border-radius:15px;background:linear-gradient(120deg,#ff7a0018,#ffb00008);border:1px solid #ff7a0025;margin-bottom:12px}.hero-icon{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;border-radius:13px;background:#ff7a001e;color:#ffae42;font-size:23px}.hero strong{display:block;font-size:14px}.hero span{display:block;color:var(--muted);font-size:12px;margin-top:4px;line-height:1.45}.statsline{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.statsline span{font-size:11px;color:#d7d0d8;border:1px solid #30262e;background:#0a090c;padding:7px 9px;border-radius:9px}.table-wrap{border:1px solid #282129;border-radius:12px}table{min-width:820px}td,th{white-space:nowrap}.login{width:100%;padding:clamp(20px,4vw,30px)}.brand{min-width:0}.actions button{flex:0 0 auto}
+@media(min-width:1100px){.container{padding-top:32px}.grid{gap:20px}.card{border-radius:20px}}
+@media(max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}.wide{grid-column:auto}.brandbar{align-items:flex-start;flex-direction:column}.brandbar>.actions{width:100%}.brandbar>.actions button{flex:1}.login{margin-top:7vh}.generator-options{grid-template-columns:1fr}.title{font-size:19px}}
+@media(max-width:380px){.brand{font-size:18px}.mark{width:40px;height:40px}.card{padding:14px}.actions{gap:6px}.actions button{padding:11px 10px;font-size:11px}.generated-key{font-size:12px}}
+@media(prefers-reduced-motion:no-preference){button,.card{transition:filter .18s ease,border-color .18s ease,transform .18s ease}button:hover{transform:translateY(-1px)}.card:hover{border-color:#44302a}}
 </style>
 </head>
 <body>
@@ -48,10 +52,25 @@ button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:li
       <div class="card">
         <h2 class="title">Generate Premium Key</h2>
         <p class="sub">Buat key premium dari server, bukan dari browser.</p>
-        <select id="duration">
-          <option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option>
+        <div class="hero"><div class="hero-icon">✦</div><div><strong>Premium Key Generator</strong><span>Tentukan masa aktif sendiri, dari 1 hari sampai ribuan hari, atau pilih permanent.</span></div></div>
+        <label class="field-label" for="durationMode">JENIS MASA AKTIF</label>
+        <select id="durationMode" onchange="syncDurationMode()">
+          <option value="preset">Durasi pilihan</option>
+          <option value="custom">Durasi custom</option>
+          <option value="permanent">Permanent / selamanya</option>
         </select>
-        <button id="generateBtn" onclick="createKey()">GENERATE PREMIUM KEY</button>
+        <div id="presetWrap">
+          <label class="field-label" for="duration">PILIH DURASI</label>
+          <select id="duration">
+            <option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="60">60 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option>
+          </select>
+        </div>
+        <div id="customWrap" class="hidden">
+          <label class="field-label" for="customDays">DURASI BEBAS (HARI)</label>
+          <input id="customDays" type="number" min="1" max="36500" step="1" value="60" inputmode="numeric" placeholder="Contoh: 120">
+          <div class="duration-hint">Masukkan 1–36.500 hari (maksimal 100 tahun).</div>
+        </div>
+        <button id="generateBtn" style="width:100%;margin-top:12px" onclick="createKey()">GENERATE PREMIUM KEY</button>
         <div id="createStatus" class="create-status"></div>
         <div id="keyResult" class="key-result">
           <div class="key-result-label">PREMIUM KEY BERHASIL DIBUAT</div>
@@ -64,7 +83,7 @@ button{border:0;border-radius:11px;padding:13px 16px;color:#080808;background:li
         <h2 class="title">Admin Status</h2>
         <p class="sub">Session admin berlaku sementara dan token tidak disimpan sebagai credential permanen.</p>
         <div class="status" style="margin-top:16px">STATUS: <b>AUTHENTICATED</b></div>
-        <div class="status" style="margin-top:7px">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
+        <div class="status" style="margin-top:7px">SOURCE: <b>VRILZ KEY SYSTEM</b></div><div class="statsline"><span>SERVER-SIDE GENERATION</span><span>D1 DATABASE</span><span>RESPONSIVE PANEL</span></div>
       </div>
       <div class="card wide">
         <h2 class="title">Key Database</h2>
@@ -105,17 +124,28 @@ async function api(path, options={}){
   return {r,d};
 }
 
+function syncDurationMode(){
+  const mode=document.getElementById("durationMode").value;
+  document.getElementById("presetWrap").classList.toggle("hidden",mode!=="preset");
+  document.getElementById("customWrap").classList.toggle("hidden",mode!=="custom");
+}
 async function createKey(){
-  const duration=Number(document.getElementById("duration").value);
+  const mode=document.getElementById("durationMode").value;
+  const rawDays=mode==="custom"?document.getElementById("customDays").value:document.getElementById("duration").value;
+  const duration=mode==="permanent"?0:Number(rawDays);
+  if(mode!=="permanent"&&(!Number.isInteger(duration)||duration<1||duration>36500)){
+    document.getElementById("createStatus").textContent="Durasi harus antara 1 sampai 36.500 hari.";
+    return;
+  }
   const btn=document.getElementById("generateBtn");
   const status=document.getElementById("createStatus");
   const result=document.getElementById("keyResult");
   const keyBox=document.getElementById("generatedKey");
   status.textContent=""; result.classList.remove("show"); btn.disabled=true; btn.textContent="CREATING...";
   try{
-    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration})});
+    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration,permanent:mode==="permanent"})});
     if(!r.ok||!d.success){status.textContent=d.message||"Gagal membuat key.";return;}
-    keyBox.textContent=d.key; result.classList.add("show"); status.textContent="Premium key berhasil dibuat."; loadKeys();
+    keyBox.textContent=d.key; result.classList.add("show"); status.textContent=mode==="permanent"?"Premium permanent berhasil dibuat.":`Premium key ${duration} hari berhasil dibuat.`; loadKeys();
   }catch(e){status.textContent="Server tidak dapat dihubungi.";}
   finally{btn.disabled=false;btn.textContent="GENERATE PREMIUM KEY";}
 }
@@ -153,7 +183,7 @@ async function revokeKey(id){if(!confirm("Revoke key ini?"))return;try{const {d}
 async function deleteKey(id){if(!confirm("Hapus key secara permanen?"))return;try{const {d}=await api("/api/admin/delete",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
 function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
 
-if(adminToken){showAdmin();}
+syncDurationMode();\nif(adminToken){showAdmin();}
 </script>
 </body>
 </html>
