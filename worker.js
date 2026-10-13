@@ -809,8 +809,9 @@ async function redeemKey(request, env) {
 
             // First activation: bind the premium key to this Roblox username.
             if (!row.username || !row.redeemed_at) {
-                const duration = Number(row.duration_seconds) || 86400;
-                const expiresAt = now + duration * 1000;
+                const duration = Number(row.duration_seconds);
+                const isPermanent = duration === 0;
+                const expiresAt = isPermanent ? null : now + (duration > 0 ? duration : 86400) * 1000;
 
                 await env.DB.prepare(`
                     UPDATE keys
@@ -841,8 +842,9 @@ async function redeemKey(request, env) {
                 }, 409);
             }
 
-            const expiresAt = Number(row.expires_at || 0);
-            if (!expiresAt || now >= expiresAt) {
+            const isPermanent = Number(row.duration_seconds) === 0;
+            const expiresAt = row.expires_at == null ? null : Number(row.expires_at);
+            if (!isPermanent && (!expiresAt || now >= expiresAt)) {
                 await env.DB.prepare(`
                     UPDATE keys SET active = 0 WHERE id = ?
                 `).bind(row.id).run();
@@ -1059,45 +1061,26 @@ async function adminCreateKey(
         const body =
             await request.json();
 
-        const durationDays =
-            Number(
-                body.duration_days
-            );
+        const permanent = body.permanent === true;
+        const durationDays = Number(body.duration_days);
 
-
-        const allowed = [
-            1,
-            3,
-            7,
-            30,
-            90,
-            365
-        ];
-
-
-        if (
-            !allowed.includes(
-                durationDays
-            )
-        ) {
-
+        if (!permanent && (!Number.isInteger(durationDays) || durationDays < 1 || durationDays > 36500)) {
             return json({
                 success: false,
-                message:
-                    "Durasi tidak valid."
+                message: "Durasi harus antara 1 sampai 36.500 hari."
             }, 400);
-
         }
 
+        if (permanent && durationDays !== 0) {
+            return json({
+                success: false,
+                message: "Format permanent tidak valid."
+            }, 400);
+        }
 
-        const now =
-            Date.now();
-
-        const durationSeconds =
-            durationDays *
-            24 *
-            60 *
-            60;
+        const now = Date.now();
+        // 0 means permanent; redeem logic keeps expires_at NULL.
+        const durationSeconds = permanent ? 0 : durationDays * 24 * 60 * 60;
 
 
         let newKey;
@@ -1165,7 +1148,8 @@ async function adminCreateKey(
                 newKey,
 
             duration_days:
-                durationDays
+                permanent ? null : durationDays,
+            permanent
 
         });
 
