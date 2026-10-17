@@ -749,6 +749,67 @@ body:after{opacity:.008}
 }
 
 </style>
+<style>
+
+/* ===== VRILZHUB: PREMIUM TERMINAL / FEATURED GAME POLISH ===== */
+:root{--terminal-green:#7cf7c5;--terminal-mint:#b4ffe1;--terminal-panel:#0b1112;--terminal-line:rgba(124,247,197,.16)}
+/* Featured game is a compact banner, not a giant half-empty poster */
+.gameGridMulti{max-width:980px!important;gap:24px!important}
+.gameGridMulti .gameCard{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto 1fr!important;border-radius:24px!important;border:1px solid rgba(175,211,196,.15)!important;background:linear-gradient(145deg,#111819 0%,#0b1011 72%)!important;box-shadow:0 24px 70px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.035)!important}
+.gameGridMulti .gameCard:hover{border-color:rgba(124,247,197,.35)!important;box-shadow:0 28px 75px rgba(0,0,0,.4),0 0 32px rgba(124,247,197,.055)!important}
+.gameGridMulti .gameVisual{width:100%!important;min-height:0!important;height:auto!important;aspect-ratio:16/5!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.08)!important;background:#111a19!important}
+.gameGridMulti .gameVisual:before{background:linear-gradient(0deg,rgba(5,10,9,.8),transparent 55%)!important;opacity:1!important}
+.gameGridMulti .rideLogo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 48%!important;filter:saturate(.94) contrast(1.03)!important}
+.gameGridMulti .gameTag{top:14px!important;left:14px!important;border-radius:999px!important;padding:8px 12px!important;background:rgba(8,15,13,.78)!important;border:1px solid rgba(190,255,226,.28)!important;color:#dfffee!important;letter-spacing:1.2px!important;backdrop-filter:blur(14px)!important}
+.gameGridMulti .coverLabel{left:auto!important;right:15px!important;bottom:14px!important;max-width:56%!important;padding:12px 16px!important;border-radius:16px!important;border:1px solid rgba(255,255,255,.16)!important;background:rgba(7,13,12,.65)!important;backdrop-filter:blur(14px)!important}
+.gameGridMulti .coverLabel span{font-size:8px!important;letter-spacing:1.7px!important;color:#a9e9cf!important}
+.gameGridMulti .coverLabel strong{font-size:clamp(20px,3vw,30px)!important;line-height:1.05!important;letter-spacing:-.8px!important;color:#fff!important}
+.gameGridMulti .coverLabel small{font-size:10px!important;color:#d0d8d3!important}
+.gameGridMulti .gameBody{padding:25px clamp(18px,3vw,34px) 27px!important}
+.gameGridMulti .gameTop h3{color:#f3f7f4!important;font-size:clamp(25px,3vw,32px)!important;letter-spacing:-1px!important}
+.gameStatus{color:#8fffd0!important}
+.gameVersion{border-radius:999px!important;border-color:rgba(124,247,197,.2)!important;background:rgba(124,247,197,.055)!important;color:#b4ffe1!important}
+.gameGridMulti .gameBody>p{color:#a8b5af!important;max-width:650px;line-height:1.75!important}
+.gameFeatures span{border-radius:999px!important;background:rgba(255,255,255,.035)!important;border-color:rgba(255,255,255,.08)!important;color:#c5d2cb!important}
+/* Animated hacker-style terminal, while preserving the original copy buttons and scripts */
+.loaderBox{position:relative!important;isolation:isolate;overflow:hidden!important;margin-top:21px!important;padding:0!important;border-radius:20px!important;border:1px solid rgba(124,247,197,.23)!important;background:linear-gradient(145deg,#101918,#080d0d 72%)!important;box-shadow:0 16px 38px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.045)!important}
+.loaderBox:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 4px,rgba(124,247,197,.025) 5px 6px);opacity:.65}
+.loaderBox:after{content:"";position:absolute;left:0;right:0;top:-40%;height:35%;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(124,247,197,.075),transparent);animation:terminalScan 5.5s linear infinite}
+@keyframes terminalScan{0%{top:-40%}100%{top:120%}}
+.loaderHead{position:relative;display:flex!important;align-items:center!important;gap:10px!important;padding:15px 17px!important;border-bottom:1px solid rgba(124,247,197,.14)!important;background:rgba(124,247,197,.035)!important;color:#c7fbe4!important;font-size:10px!important;letter-spacing:1.35px!important}
+.loaderHead:after{content:"● LIVE TERMINAL";margin-left:auto;color:#79dcb3;font:800 8px ui-monospace,monospace;letter-spacing:1px;opacity:.8;animation:terminalPulse 2s ease-in-out infinite}
+@keyframes terminalPulse{0%,100%{opacity:.45}50%{opacity:1}}
+.loaderDots{gap:5px!important}.loaderDots i{width:7px!important;height:7px!important;background:#7cf7c5!important;box-shadow:0 0 9px rgba(124,247,197,.35)!important}
+.loaderCode{position:relative!important;margin:0!important;padding:18px 18px 19px!important;min-height:70px!important;max-height:145px!important;overflow:auto!important;border:0!important;border-radius:0!important;background:rgba(3,8,8,.72)!important;color:#a8f7d2!important;font:11px/1.9 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;user-select:all!important}
+.loaderCode:before{content:"❯ ";color:#68e7aa;font-weight:900}
+.loaderCode:after{content:"▋";display:inline-block;margin-left:3px;color:#b8ffdd;animation:terminalCursor 1s steps(2,end) infinite}
+@keyframes terminalCursor{50%{opacity:0}}
+.loaderCopy{display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:calc(100% - 28px)!important;margin:14px!important;padding:14px 18px!important;border:1px solid rgba(124,247,197,.3)!important;border-radius:14px!important;background:linear-gradient(110deg,#b5f7d7,#72ddb0 55%,#a6efd0)!important;color:#092018!important;font-size:11px!important;font-weight:1000!important;letter-spacing:1.4px!important;box-shadow:0 7px 22px rgba(67,209,150,.12),inset 0 1px rgba(255,255,255,.5)!important;transition:transform .2s,box-shadow .2s,filter .2s!important}
+.loaderCopy span{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin:0!important;border-radius:8px;background:rgba(7,42,28,.1);font-size:14px!important}
+.loaderCopy:hover{transform:translateY(-1px)!important;filter:brightness(1.04)!important;box-shadow:0 10px 26px rgba(67,209,150,.2)!important}
+.loaderCopy:active{transform:scale(.985)!important}
+.loaderToastLine{margin:0!important;padding:0 12px 14px!important;color:#788d83!important;font:9px ui-monospace,monospace!important;letter-spacing:.45px!important}
+.loaderFish .loaderCode{color:#a8f7e9!important}.loaderDice .loaderCode{color:#d8c8ff!important}
+@media(max-width:900px){.gameGridMulti .gameVisual{aspect-ratio:16/6!important;min-height:0!important}.gameGridMulti .gameCard{grid-template-columns:minmax(0,1fr)!important}}
+@media(max-width:520px){
+ .gamesSection .head{margin-bottom:23px!important}
+ .gameGridMulti{gap:17px!important;padding:0 1px}
+ .gameGridMulti .gameCard{border-radius:20px!important}
+ .gameGridMulti .gameVisual{aspect-ratio:16/7!important;min-height:0!important}
+ .gameGridMulti .gameTag{top:10px!important;left:10px!important;padding:7px 10px!important;font-size:8px!important}
+ .gameGridMulti .coverLabel{right:10px!important;bottom:9px!important;max-width:64%!important;padding:9px 11px!important;border-radius:12px!important}
+ .gameGridMulti .coverLabel strong{font-size:19px!important}.gameGridMulti .coverLabel small{font-size:9px!important}
+ .gameGridMulti .gameBody{padding:19px 15px 20px!important}
+ .gameGridMulti .gameTop h3{font-size:25px!important}
+ .loaderBox{margin-top:16px!important;border-radius:17px!important}
+ .loaderHead{padding:13px 13px!important;font-size:9px!important;letter-spacing:.8px!important}
+ .loaderHead:after{font-size:7px;letter-spacing:.4px}
+ .loaderCode{padding:15px 13px!important;font-size:10px!important;line-height:1.8!important;max-height:120px!important}
+ .loaderCopy{width:calc(100% - 22px)!important;margin:11px!important;padding:13px!important;border-radius:12px!important}
+}
+@media(prefers-reduced-motion:reduce){.loaderBox:after,.loaderHead:after,.loaderCode:after{animation:none!important}}
+
+</style>
 </head>
 <body>
 <div class="announcement">✦ <b>VRILZ KEY SYSTEM</b> — Secure access · Premium plans · Discord support</div>
