@@ -810,6 +810,60 @@ body:after{opacity:.008}
 @media(prefers-reduced-motion:reduce){.loaderBox:after,.loaderHead:after,.loaderCode:after{animation:none!important}}
 
 </style>
+
+<style id="vrilzhub-compact-featured-loader-fix">
+/* Compact, polished featured-game cards: landscape artwork, never split into a side panel. */
+.gameGridMulti{width:100%!important;max-width:850px!important;margin-inline:auto!important;gap:16px!important}
+.gameGridMulti .gameCard{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;min-height:0!important;overflow:hidden!important;border-radius:22px!important;border:1px solid rgba(177,202,188,.15)!important;background:linear-gradient(145deg,#151b19,#0d1210 72%)!important;box-shadow:0 18px 48px rgba(0,0,0,.28)!important}
+.gameGridMulti .gameVisual{position:relative!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/7!important;overflow:hidden!important;align-self:stretch!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.09)!important;border-radius:0!important;background:#111815!important}
+.gameGridMulti .rideLogo{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center 48%!important;border-radius:0!important;filter:none!important;transform:none!important}
+.gameGridMulti .gameVisual:after{content:""!important;position:absolute!important;inset:0!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(0deg,rgba(5,10,8,.72),transparent 62%)!important}
+.gameGridMulti .gameTag{position:absolute!important;z-index:3!important;top:12px!important;left:12px!important;padding:6px 9px!important;border:1px solid rgba(226,238,230,.24)!important;border-radius:999px!important;background:rgba(9,15,12,.72)!important;color:#e1eee6!important;font-size:8px!important;letter-spacing:1px!important;backdrop-filter:blur(8px)!important}
+.gameGridMulti .coverLabel{position:absolute!important;z-index:2!important;left:16px!important;right:16px!important;bottom:12px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.gameGridMulti .coverLabel span{font-size:7px!important;letter-spacing:1.6px!important;color:#c1d7ca!important}
+.gameGridMulti .coverLabel strong{display:block!important;margin-top:3px!important;font-size:clamp(18px,3vw,25px)!important;line-height:1.05!important;letter-spacing:-.5px!important;color:#fff!important}
+.gameGridMulti .coverLabel small{font-size:9px!important;color:#d0d9d3!important}
+.gameGridMulti .gameBody{min-width:0!important;padding:17px 18px 18px!important}
+.gameGridMulti .gameTop{gap:10px!important;align-items:center!important}
+.gameGridMulti .gameTop h3{font-size:clamp(19px,2.5vw,24px)!important;letter-spacing:-.6px!important}
+.gameGridMulti .gameStatus{font-size:8px!important;letter-spacing:1.15px!important;color:#a5d9bb!important}
+.gameGridMulti .gameVersion{font-size:8px!important;padding:6px 9px!important;border-radius:999px!important;color:#d7e5dc!important;background:rgba(255,255,255,.035)!important;border-color:rgba(255,255,255,.12)!important}
+.gameGridMulti .gameBody>p{font-size:11px!important;line-height:1.65!important;margin:9px 0 11px!important;color:#aab6ae!important;max-width:620px!important}
+.gameGridMulti .gameFeatures{display:flex!important;flex-wrap:wrap!important;gap:6px!important;margin:0!important}
+.gameGridMulti .gameFeatures span{font-size:8px!important;padding:6px 9px!important;border-radius:999px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.09)!important;color:#c6d2ca!important}
+/* Short, elegant terminal panel — no oversized LIVE TERMINAL label or huge code block. */
+.gameGridMulti .loaderBox{margin-top:13px!important;padding:0!important;border-radius:14px!important;border:1px solid rgba(141,190,160,.19)!important;background:#0a100d!important;box-shadow:0 10px 25px rgba(0,0,0,.18)!important}
+.gameGridMulti .loaderBox:before{opacity:.28!important;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(133,220,169,.035) 6px 7px)!important}
+.gameGridMulti .loaderBox:after{height:22%!important;opacity:.6!important;animation:vrCompactScan 4.2s linear infinite!important;background:linear-gradient(180deg,transparent,rgba(131,227,170,.08),transparent)!important}
+@keyframes vrCompactScan{0%{top:-24%}100%{top:115%}}
+.gameGridMulti .loaderHead{display:flex!important;align-items:center!important;gap:8px!important;padding:10px 12px!important;min-height:0!important;background:rgba(255,255,255,.018)!important;border-bottom:1px solid rgba(255,255,255,.07)!important;color:#c9d9ce!important;font-size:8px!important;letter-spacing:.8px!important}
+.gameGridMulti .loaderHead:after{content:"READY"!important;margin-left:auto!important;color:#91d6aa!important;font:700 7px ui-monospace,monospace!important;letter-spacing:1px!important;opacity:1!important;animation:none!important}
+.gameGridMulti .loaderDots{display:flex!important;gap:4px!important}.gameGridMulti .loaderDots i{width:5px!important;height:5px!important;background:#8fd9aa!important;box-shadow:0 0 6px rgba(143,217,170,.18)!important}
+.gameGridMulti .loaderCode{position:relative!important;display:block!important;min-height:0!important;max-height:62px!important;margin:0!important;padding:11px 12px!important;overflow:auto!important;border:0!important;border-radius:0!important;background:rgba(0,0,0,.16)!important;color:#c5e8d0!important;font:10px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important}
+.gameGridMulti .loaderCopy{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:calc(100% - 20px)!important;min-height:38px!important;margin:9px 10px 10px!important;padding:10px 13px!important;border:1px solid rgba(163,218,181,.3)!important;border-radius:10px!important;background:linear-gradient(120deg,#c6e6d0,#9cc9ad)!important;color:#102018!important;box-shadow:0 5px 15px rgba(99,170,125,.1)!important;font-size:9px!important;font-weight:900!important;letter-spacing:1px!important;transition:transform .2s,box-shadow .2s,filter .2s!important}
+.gameGridMulti .loaderCopy:hover{transform:translateY(-1px)!important;box-shadow:0 8px 20px rgba(99,170,125,.18)!important;filter:brightness(1.04)!important}
+.gameGridMulti .loaderCopy:active{transform:scale(.985)!important}
+.gameGridMulti .loaderCopy.copying{animation:vrCopyPulse .65s ease-in-out!important}
+@keyframes vrCopyPulse{0%{box-shadow:0 0 0 0 rgba(151,230,177,.0)}45%{box-shadow:0 0 0 5px rgba(151,230,177,.18),0 0 22px rgba(151,230,177,.2)}100%{box-shadow:0 0 0 0 rgba(151,230,177,0)}}
+.gameGridMulti .loaderToastLine{font-size:8px!important;margin-top:7px!important;color:#73877a!important;letter-spacing:.2px!important}
+@media(max-width:700px){
+ .gameGridMulti{max-width:420px!important;gap:14px!important}
+ .gameGridMulti .gameCard{border-radius:18px!important}
+ .gameGridMulti .gameVisual{aspect-ratio:16/7!important;min-height:0!important;height:auto!important}
+ .gameGridMulti .gameBody{padding:14px 14px 15px!important}
+ .gameGridMulti .gameTop h3{font-size:21px!important}
+ .gameGridMulti .gameBody>p{font-size:10px!important;line-height:1.55!important;margin:8px 0 10px!important}
+ .gameGridMulti .coverLabel{left:12px!important;right:12px!important;bottom:9px!important}
+ .gameGridMulti .coverLabel strong{font-size:19px!important}
+ .gameGridMulti .coverLabel small{font-size:8px!important}
+ .gameGridMulti .gameTag{top:9px!important;left:9px!important;font-size:7px!important;padding:5px 8px!important}
+ .gameGridMulti .loaderHead{padding:9px 10px!important}
+ .gameGridMulti .loaderCode{font-size:9px!important;padding:10px!important;max-height:58px!important}
+ .gameGridMulti .loaderCopy{min-height:36px!important;margin:8px 9px 9px!important;width:calc(100% - 18px)!important;font-size:8px!important}
+}
+@media(prefers-reduced-motion:reduce){.gameGridMulti .loaderBox:after,.gameGridMulti .loaderCopy.copying{animation:none!important}}
+</style>
+
 </head>
 <body>
 <div class="announcement">✦ <b>VRILZ KEY SYSTEM</b> — Secure access · Premium plans · Discord support</div>
@@ -1162,8 +1216,8 @@ document.querySelectorAll("[data-copy-loader]").forEach(button=>{
     const field=document.createElement("textarea");field.value=script;field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();
     const copied=document.execCommand("copy");field.remove();if(!copied)throw new Error("copy unavailable");
    }
-   const old=button.innerHTML;button.innerHTML="✓ COPIED TO CLIPBOARD";showToast("Loader berhasil disalin!");
-   setTimeout(()=>button.innerHTML=old,1600);
+   const old=button.innerHTML;button.classList.remove("copying");void button.offsetWidth;button.classList.add("copying");button.innerHTML="✓ COPIED";showToast("Loader berhasil disalin!");
+   setTimeout(()=>{button.innerHTML=old;button.classList.remove("copying")},1400);
   }catch(e){showToast("Gagal menyalin. Tekan lama kode loader untuk menyalin.");}
  });
 });
