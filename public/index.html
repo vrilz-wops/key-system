@@ -748,6 +748,32 @@ body:after{opacity:.008}
  .gameGridMulti .gameVersion{font-size:8px;padding:7px}
 }
 
+
+/* ===== PREMIUM LOADER POLISH: compact, refined, responsive ===== */
+.gameGridMulti .loaderBox{margin-top:12px!important;padding:0!important;border:1px solid rgba(135,125,255,.25)!important;border-radius:15px!important;background:linear-gradient(145deg,rgba(19,20,35,.96),rgba(10,13,22,.98))!important;box-shadow:0 10px 28px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.035)!important;overflow:hidden!important}
+.gameGridMulti .loaderHead{min-height:34px!important;padding:9px 12px!important;display:flex!important;gap:9px!important;align-items:center!important;background:linear-gradient(90deg,rgba(105,91,220,.18),rgba(42,183,190,.08))!important;border-bottom:1px solid rgba(151,145,255,.14)!important;color:#c9c5ff!important;font-size:9px!important;letter-spacing:1.1px!important;font-weight:800!important}
+.gameGridMulti .loaderDots{gap:4px!important}.gameGridMulti .loaderDots i{width:6px!important;height:6px!important;border-radius:50%!important;background:#8e85ff!important;box-shadow:0 0 8px rgba(142,133,255,.5)!important}
+.gameGridMulti .loaderCode{position:relative!important;display:block!important;min-height:0!important;max-height:54px!important;margin:0!important;padding:10px 12px!important;background:rgba(5,8,15,.78)!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.055)!important;border-radius:0!important;color:#a9e9df!important;font:500 9px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;user-select:all!important}
+.gameGridMulti .loaderCopy{position:relative!important;isolation:isolate!important;width:calc(100% - 18px)!important;min-height:37px!important;margin:9px!important;padding:9px 12px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;overflow:hidden!important;border:1px solid rgba(174,166,255,.35)!important;border-radius:11px!important;background:linear-gradient(105deg,#7669e8,#5c72db 52%,#39a9ad)!important;color:#fff!important;box-shadow:0 5px 14px rgba(88,91,208,.18),inset 0 1px rgba(255,255,255,.22)!important;font-size:10px!important;font-weight:850!important;letter-spacing:1.2px!important;transition:transform .2s ease,filter .2s ease,box-shadow .2s ease!important}
+.gameGridMulti .loaderCopy:before{content:"";position:absolute;z-index:-1;top:-60%;left:-45%;width:28%;height:220%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:left .55s ease}
+.gameGridMulti .loaderCopy:hover{filter:brightness(1.09)!important;transform:translateY(-1px)!important;box-shadow:0 8px 20px rgba(88,91,208,.28),inset 0 1px rgba(255,255,255,.25)!important}
+.gameGridMulti .loaderCopy:hover:before{left:130%}.gameGridMulti .loaderCopy:active{transform:scale(.985)!important}
+.gameGridMulti .loaderCopy.copying{animation:loaderCopyPulse .65s ease!important;background:linear-gradient(105deg,#268b7d,#4baea0)!important;border-color:rgba(130,255,222,.48)!important;box-shadow:0 0 0 3px rgba(65,206,174,.10),0 0 20px rgba(65,206,174,.18)!important}
+@keyframes loaderCopyPulse{0%{filter:brightness(1);transform:scale(1)}35%{filter:brightness(1.22);transform:scale(.975)}100%{filter:brightness(1);transform:scale(1)}}
+.gameGridMulti .loaderToastLine{margin:7px 2px 0!important;color:#8994aa!important;font-size:9px!important;line-height:1.5!important;letter-spacing:.1px!important;text-transform:none!important}
+.gameGridMulti .gameBody>p{font-size:12px!important;line-height:1.7!important;color:#c0c6d4!important}
+.gameGridMulti .gameFeatures span{font-size:9px!important;letter-spacing:.2px!important;border-color:rgba(151,145,255,.13)!important;background:rgba(117,108,221,.055)!important;color:#d3d4e7!important}
+.gameGridMulti .gameStatus{color:#8fe1d1!important}.gameGridMulti .gameStatus i{background:#69d6c2!important;box-shadow:0 0 9px rgba(105,214,194,.35)!important}
+.gameGridMulti .gameVersion{color:#c9c5ff!important;border-color:rgba(151,145,255,.25)!important;background:rgba(117,108,221,.08)!important}
+/* Keep artwork framed like a featured game thumbnail on both mobile and desktop. */
+.gameGridMulti .gameVisual{position:relative!important;overflow:hidden!important;aspect-ratio:16/9!important;height:auto!important;min-height:0!important;max-height:250px!important;border-radius:20px 20px 0 0!important}
+.gameGridMulti .rideLogo{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 46%!important}
+.gameGridMulti .gameTag{border-radius:999px!important;backdrop-filter:blur(12px)!important;background:rgba(12,15,26,.72)!important;border:1px solid rgba(255,255,255,.15)!important;color:#f1efff!important;font-size:8px!important;padding:7px 10px!important}
+.gameGridMulti .coverLabel{max-width:calc(100% - 24px)!important;padding:10px 12px!important;border-radius:13px!important;background:linear-gradient(90deg,rgba(8,11,20,.82),rgba(8,11,20,.25))!important;backdrop-filter:blur(8px)!important}
+@media(min-width:701px){.gameGridMulti .gameCard{overflow:hidden!important;border-radius:22px!important}.gameGridMulti .gameVisual{max-height:210px!important}.gameGridMulti .gameBody{padding:20px!important}.gameGridMulti .loaderCode{font-size:9px!important;max-height:54px!important}}
+@media(max-width:700px){.gameGridMulti{max-width:440px!important;margin-inline:auto!important;gap:16px!important}.gameGridMulti .gameCard{border-radius:20px!important;overflow:hidden!important}.gameGridMulti .gameVisual{aspect-ratio:16/9!important;height:auto!important;min-height:0!important;max-height:190px!important;border-radius:20px 20px 0 0!important}.gameGridMulti .rideLogo{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 46%!important}.gameGridMulti .gameBody{padding:15px 15px 16px!important}.gameGridMulti .gameTop h3{font-size:22px!important}.gameGridMulti .loaderCode{font-size:8px!important;line-height:1.6!important;padding:9px 10px!important;max-height:48px!important}.gameGridMulti .loaderCopy{min-height:36px!important;margin:8px!important;width:calc(100% - 16px)!important;font-size:9px!important}.gameGridMulti .loaderHead{padding:8px 10px!important;font-size:8px!important}.gameGridMulti .coverLabel strong{font-size:20px!important}}
+@media(prefers-reduced-motion:reduce){.gameGridMulti .loaderCopy,.gameGridMulti .loaderCopy:before{transition:none!important}.gameGridMulti .loaderCopy.copying{animation:none!important}}
+
 </style>
 <style>
 
@@ -877,7 +903,7 @@ body:after{opacity:.008}
 <section class="hero" id="home"><div class="lightning-field"><span class="lightning one"><i></i></span><span class="lightning two"><i></i></span><span class="lightning three"><i></i></span></div><span class="orb a"></span><span class="orb b"></span><span class="bolt a"></span><span class="bolt b"></span><span class="bolt c"></span><span class="bolt d"></span><div class="heroIn">
 <div class="eyebrow"><span class="dot"></span> OFFICIAL VRILZZHUB COMMUNITY</div>
 <h1>UNLOCK THE <span class="shine">ADVANTAGE.</span></h1>
-<p>Temukan akses Roblox Lua, premium script, dan komunitas VRILZZHUB. Buat free key dengan mudah, atau gabung Discord untuk mendapatkan akses Premium dan update terbaru.</p>
+<p>Explore Roblox Lua tools, premium scripts, and the VRILZZHUB community. Create a free key or join Discord for premium access and updates.</p>
 <div class="actions"><a class="btn primary" href="#create">✦ CREATE FREE KEY</a><a class="btn secondary" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">◈ JOIN DISCORD ↗</a></div>
 <div class="heroBadges"><span>⚡ ROBLOX LUA</span><span>♛ PREMIUM ACCESS</span><span>◉ COMMUNITY</span></div>
 </div>
@@ -885,10 +911,10 @@ body:after{opacity:.008}
   <div class="showcaseImage">
     <img src="./ride-a-pet.png" alt="Ride a Pet Roblox game thumbnail" fetchpriority="high">
     <span class="showcaseFlag">✦ FEATURED GAME</span>
-    <div class="showcaseCaption"><span>NOW FEATURED</span><strong>RIDE A PET</strong><small>Mainkan, pelihara, dan jadilah yang terbaik!</small></div>
+    <div class="showcaseCaption"><span>NOW FEATURED</span><strong>RIDE A PET</strong><small>Ride pets, explore faster, and enjoy the adventure.</small></div>
   </div>
   <a class="discordPromo" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">
-    <span class="discordGlyph"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span><span class="discordText"><b>Join VRILZZHUB Discord</b><small>Update, support, dan komunitas resmi</small></span><span class="discordArrow">↗</span>
+    <span class="discordGlyph"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span><span class="discordText"><b>Join VRILZZHUB Discord</b><small>Updates, support, and the official community</small></span><span class="discordArrow">↗</span>
   </a>
   <div class="creatorStamp"><span class="creatorMark">VH</span><span><small>CREATED BY</small><b>VRILZ</b></span><span class="creatorDiscord"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span></div>
 </div></section>
@@ -897,7 +923,7 @@ body:after{opacity:.008}
   <div class="head reveal" data-reveal>
     <div class="kicker">03 — VRILZ GAME HUB</div>
     <h2>Choose Your <span class="gameHeadingAccent">Adventure.</span></h2>
-    <p>Pilih game favoritmu, salin loader, lalu jalankan melalui executor Roblox yang kamu gunakan.</p>
+    <p>Choose a game below and copy its loader to get started.</p>
   </div>
 
   <div class="gameGrid gameGridMulti stagger" data-reveal>
@@ -905,57 +931,57 @@ body:after{opacity:.008}
       <div class="gameVisual gameVisualPet">
         <div class="gameGlow"></div>
         <img class="rideLogo" src="./ride-a-pet.png" alt="Ride A Pet artwork" loading="lazy">
-        <span class="gameTag">✦ VRILZ FEATURED</span>
+        <span class="gameTag">✦ FEATURED GAME</span>
         <div class="coverLabel"><span>ROBLOX EXPERIENCE</span><strong>RIDE A PET</strong><small>Collect • Ride • Explore</small></div>
       </div>
       <div class="gameBody">
         <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Ride A Pet</h3></div><span class="gameVersion">RAP / 01</span></div>
-        <p>Loader VRILZ untuk Ride A Pet dengan tampilan cyan-biru yang clean dan mudah disalin dari HP maupun desktop.</p>
-        <div class="gameFeatures"><span>✦ Pet Adventure</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <p>Ride pets and move faster while hunting eggs. Designed for a smoother run with fewer interruptions, so you can keep exploring and stealing eggs throughout your session.</p>
+        <div class="gameFeatures"><span>Pet Riding</span><span>Fast Egg Runs</span><span>Smooth Play</span></div>
         <div class="loaderBox loaderPet">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A PET · LOADER</b></div>
           <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-bot-exploit/vrilzhub/main/loader_universal.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="pet"><span>▣</span> COPY LOADER</button>
         </div>
-        <div class="loaderToastLine">Copy script • Paste into your executor</div>
+        <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
       </div>
     </article>
 
     <article class="gameCard gameCardFish">
       <div class="gameVisual gameVisualFish">
         <div class="artFish" aria-hidden="true"><span class="fishBubble bubbleOne"></span><span class="fishBubble bubbleTwo"></span><span class="fishShape">◢</span><span class="fishTail">‹</span><span class="fishStar">✦</span></div>
-        <span class="gameTag">✦ FISHING ADVENTURE</span>
+        <span class="gameTag">✦ FEATURED GAME</span>
         <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>RIDE A FISH</strong><small>Deep sea • Discover • Ride</small></div>
       </div>
       <div class="gameBody">
         <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Ride A Fish</h3></div><span class="gameVersion">RAF / 02</span></div>
-        <p>Siap menjelajahi Ride A Fish? Salin loader khusus game ini dengan aksen aqua dan ocean-blue.</p>
-        <div class="gameFeatures"><span>〰 Ocean Theme</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <p>Explore the Ride A Fish event with a smooth script, quick routes, and an auto-return-to-base feature to help keep your run moving.</p>
+        <div class="gameFeatures"><span>Auto Return</span><span>Event Ready</span><span>Smooth Script</span></div>
         <div class="loaderBox loaderFish">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A FISH · LOADER</b></div>
           <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/rideafish/main/loader.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="fish"><span>▣</span> COPY LOADER</button>
         </div>
-        <div class="loaderToastLine">Copy script • Paste into your executor</div>
+        <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
       </div>
     </article>
 
     <article class="gameCard gameCardDice">
       <div class="gameVisual gameVisualDice">
         <div class="diceArt" aria-hidden="true"><div class="diceCube"><span>⚄</span></div><div class="diceGlowOrb"></div><span class="diceSpark diceSparkA">✦</span><span class="diceSpark diceSparkB">✧</span></div>
-        <span class="gameTag">✦ DICE & ANIME</span>
+        <span class="gameTag">✦ FEATURED GAME</span>
         <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>ANIME DICE</strong><small>Roll • Power up • Ascend</small></div>
       </div>
       <div class="gameBody">
         <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Anime Dice</h3></div><span class="gameVersion">AD / 03</span></div>
-        <p>Loader Anime Dice dengan gaya violet-magenta yang berbeda, lengkap dengan tombol salin sekali tekan.</p>
-        <div class="gameFeatures"><span>✧ Anime Style</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <p>Roll for anime characters and keep collecting without limits. Includes an anti-AFK option to help you stay active while enjoying a smoother experience.</p>
+        <div class="gameFeatures"><span>Unlimited Rolls</span><span>Anti-AFK</span><span>Smooth Play</span></div>
         <div class="loaderBox loaderDice">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>ANIME DICE · LOADER</b></div>
           <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/violence-district/refs/heads/main/loader.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="dice"><span>▣</span> COPY LOADER</button>
         </div>
-        <div class="loaderToastLine">Copy script • Paste into your executor</div>
+        <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
       </div>
     </article>
   </div>
@@ -1097,11 +1123,11 @@ body:before{opacity:.025;background-size:64px 64px}
 
 </style>
 <section class="section" id="create"><div class="wrap">
-<div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
+<div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Complete the LootLabs mission and create your key after server verification succeeds.</p></div>
 <div class="generator reveal" data-reveal>
-<div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> Tidak perlu memasukkan username di website. Selesaikan misi LootLabs terlebih dahulu. <b>EN:</b> Complete the LootLabs mission to unlock key creation.</p>
-<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" aria-disabled="true" hidden style="display:none">CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: misi belum dimulai.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
-<div class="genSide"><div class="resultLabel">YOUR KEY</div><div class="keyout" id="keyOut">Your key will appear here after verification.</div><button class="copy" id="copyBtn">COPY KEY</button><div class="hint">Key berlaku 24 jam setelah di-redeem. Key expired tetap tercatat dan dapat diperbarui setelah misi baru terverifikasi.</div></div>
+<div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> No username is required on this website. Complete the LootLabs mission first. <b>EN:</b> Complete the LootLabs mission to unlock key creation.</p>
+<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" aria-disabled="true" hidden style="display:none">CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: mission has not started.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
+<div class="genSide"><div class="resultLabel">YOUR KEY</div><div class="keyout" id="keyOut">Your key will appear here after verification.</div><button class="copy" id="copyBtn">COPY KEY</button><div class="hint">Keys are valid for 24 hours after redemption. Expired keys remain listed and can be renewed after a new mission is verified.</div></div>
 <div class="keyTableWrap" style="grid-column:1/-1;margin-top:22px;overflow-x:auto;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:14px;padding:16px;background:rgba(0,0,0,.15)"><div style="font-size:12px;font-weight:900;letter-spacing:1.5px;margin-bottom:12px">YOUR KEYS</div><table style="width:100%;border-collapse:collapse;min-width:580px;font-size:12px"><thead><tr style="text-align:left;opacity:.7"><th style="padding:10px">YOUR KEY</th><th style="padding:10px">TIME LEFT</th><th style="padding:10px">STATUS</th><th style="padding:10px">ACTIONS</th></tr></thead><tbody id="keysTableBody"><tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet.</td></tr></tbody></table></div>
 </div>
 </div></section>
