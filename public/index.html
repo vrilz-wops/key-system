@@ -940,7 +940,7 @@ body:after{opacity:.008}
         <div class="gameFeatures"><span>Pet Riding</span><span>Fast Egg Runs</span><span>Smooth Play</span></div>
         <div class="loaderBox loaderPet">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A PET · LOADER</b></div>
-          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-bot-exploit/vrilzhub/main/loader_universal.lua"))()</pre>
+          <div class="terminalFeed" aria-hidden="true"><span><i>01</i> <b>BOOT</b> / vrilzhub.client</span><span><i>02</i> <em>require</em>("game.services") <u>✓</u></span><span><i>03</i> <b>MODULE</b> / pet.runtime <u>READY</u></span></div><pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-bot-exploit/vrilzhub/main/loader_universal.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="pet"><span>▣</span> COPY LOADER</button>
         </div>
         <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
@@ -949,7 +949,7 @@ body:after{opacity:.008}
 
     <article class="gameCard gameCardFish">
       <div class="gameVisual gameVisualFish">
-        <div class="artFish" aria-hidden="true"><span class="fishBubble bubbleOne"></span><span class="fishBubble bubbleTwo"></span><span class="fishShape">◢</span><span class="fishTail">‹</span><span class="fishStar">✦</span></div>
+        <img class="gameArtwork" src="./images%20(1).jpe" alt="Ride A Fish game artwork" loading="lazy">
         <span class="gameTag">✦ FEATURED GAME</span>
         <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>RIDE A FISH</strong><small>Deep sea • Discover • Ride</small></div>
       </div>
@@ -959,7 +959,7 @@ body:after{opacity:.008}
         <div class="gameFeatures"><span>Auto Return</span><span>Event Ready</span><span>Smooth Script</span></div>
         <div class="loaderBox loaderFish">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A FISH · LOADER</b></div>
-          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/rideafish/main/loader.lua"))()</pre>
+          <div class="terminalFeed" aria-hidden="true"><span><i>01</i> <b>BOOT</b> / rideafish.client</span><span><i>02</i> <em>load</em>("event.runtime") <u>✓</u></span><span><i>03</i> <b>MODULE</b> / auto-return <u>READY</u></span></div><pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/rideafish/main/loader.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="fish"><span>▣</span> COPY LOADER</button>
         </div>
         <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
@@ -968,7 +968,7 @@ body:after{opacity:.008}
 
     <article class="gameCard gameCardDice">
       <div class="gameVisual gameVisualDice">
-        <div class="diceArt" aria-hidden="true"><div class="diceCube"><span>⚄</span></div><div class="diceGlowOrb"></div><span class="diceSpark diceSparkA">✦</span><span class="diceSpark diceSparkB">✧</span></div>
+        <img class="gameArtwork" src="./anime.jpe" alt="Anime Dice Roll game artwork" loading="lazy">
         <span class="gameTag">✦ FEATURED GAME</span>
         <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>ANIME DICE</strong><small>Roll • Power up • Ascend</small></div>
       </div>
@@ -978,7 +978,7 @@ body:after{opacity:.008}
         <div class="gameFeatures"><span>Unlimited Rolls</span><span>Anti-AFK</span><span>Smooth Play</span></div>
         <div class="loaderBox loaderDice">
           <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>ANIME DICE · LOADER</b></div>
-          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/violence-district/refs/heads/main/loader.lua"))()</pre>
+          <div class="terminalFeed" aria-hidden="true"><span><i>01</i> <b>BOOT</b> / anime-dice.client</span><span><i>02</i> <em>require</em>("roll.engine") <u>✓</u></span><span><i>03</i> <b>MODULE</b> / session.guard <u>READY</u></span></div><pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/violence-district/refs/heads/main/loader.lua"))()</pre>
           <button class="loaderCopy" type="button" data-copy-loader="dice"><span>▣</span> COPY LOADER</button>
         </div>
         <div class="loaderToastLine">Copy the script, then paste it into your executor.</div>
@@ -1348,5 +1348,38 @@ mobile?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobile.c
 })();
 
 </script>
+
+<style id="vrilzhub-terminal-theme-final">
+/* Unified champagne terminal: compact, readable, animated; original copy/key handlers untouched. */
+:root{--term-accent:#d7c49a;--term-bright:#f0e4c8;--term-ink:#0b0e0d;--term-panel:#101511;--term-line:rgba(215,196,154,.18)}
+.gameGridMulti .gameCard{border-radius:23px!important;border-color:rgba(215,196,154,.18)!important;background:linear-gradient(145deg,#171d18,#101411)!important;box-shadow:0 18px 48px rgba(0,0,0,.30)!important;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease!important}
+.gameGridMulti .gameCard:hover{transform:translateY(-3px)!important;border-color:rgba(215,196,154,.38)!important;box-shadow:0 24px 55px rgba(0,0,0,.38)!important}
+.gameGridMulti .gameVisual{position:relative!important;overflow:hidden!important;isolation:isolate!important;background:#111713!important;aspect-ratio:3/2!important;min-height:0!important}
+.gameGridMulti .gameVisual .rideLogo,.gameGridMulti .gameVisual .gameArtwork{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center!important;transform:none!important;filter:saturate(1.03) contrast(1.02)!important}
+.gameGridMulti .gameVisual:after{background:linear-gradient(0deg,rgba(8,12,9,.62),transparent 58%)!important;pointer-events:none!important}
+.gameGridMulti .gameTag{border-radius:999px!important;background:rgba(12,16,13,.82)!important;border:1px solid rgba(215,196,154,.25)!important;color:#eadcbd!important;font-size:7px!important;letter-spacing:.85px!important;padding:7px 9px!important;backdrop-filter:blur(10px)!important}
+.gameGridMulti .coverLabel{left:12px!important;right:12px!important;bottom:11px!important;padding:9px 11px!important;border-radius:13px!important;background:rgba(11,15,12,.72)!important;border:1px solid rgba(255,255,255,.10)!important;backdrop-filter:blur(10px)!important}
+.gameGridMulti .coverLabel span{font-size:7px!important;letter-spacing:1.1px!important;color:#dfcfaa!important}.gameGridMulti .coverLabel strong{font-size:clamp(19px,2.1vw,26px)!important;line-height:1!important;letter-spacing:-.6px!important}.gameGridMulti .coverLabel small{font-size:9px!important;letter-spacing:.35px!important;margin-top:5px!important}
+.gameGridMulti .gameBody{padding:20px!important;min-width:0!important}.gameGridMulti .gameTop{padding-bottom:12px!important;margin-bottom:11px!important}.gameGridMulti .gameTop h3{font-size:clamp(21px,2.3vw,28px)!important;line-height:1.05!important;letter-spacing:-.8px!important}.gameGridMulti .gameStatus{font-size:8px!important;letter-spacing:1px!important;color:#d7c49a!important}.gameGridMulti .gameVersion{font-size:8px!important;padding:6px 9px!important}.gameGridMulti .gameBody>p{font-size:11px!important;line-height:1.65!important;color:#b9c0b8!important;margin:10px 0 12px!important}.gameGridMulti .gameFeatures{gap:6px!important}.gameGridMulti .gameFeatures span{font-size:8px!important;letter-spacing:.15px!important;padding:6px 8px!important}
+.gameGridMulti .loaderBox{position:relative!important;isolation:isolate!important;overflow:hidden!important;margin-top:13px!important;padding:0!important;border:1px solid rgba(215,196,154,.19)!important;border-radius:15px!important;background:linear-gradient(145deg,#0d120f,#090d0b)!important;box-shadow:inset 0 1px rgba(255,255,255,.035),0 8px 22px rgba(0,0,0,.16)!important}
+.gameGridMulti .loaderBox:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(215,196,154,.025) 6px 7px)!important;opacity:.8!important}
+.gameGridMulti .loaderBox:after{content:"";position:absolute;z-index:2;pointer-events:none;left:0;right:0;top:-35%;height:24%;background:linear-gradient(180deg,transparent,rgba(215,196,154,.075),transparent);animation:vrTerminalSweep 5.5s linear infinite}
+@keyframes vrTerminalSweep{to{top:120%}}
+.gameGridMulti .loaderHead{position:relative!important;display:flex!important;align-items:center!important;gap:8px!important;min-height:0!important;padding:9px 11px!important;background:rgba(215,196,154,.055)!important;color:#e1d2af!important;border:0!important;border-bottom:1px solid rgba(215,196,154,.12)!important;font-size:8px!important;letter-spacing:.75px!important;font-weight:850!important}
+.gameGridMulti .loaderHead:after{content:"SYSTEM READY"!important;margin-left:auto!important;color:#a9b3a6!important;font:600 7px ui-monospace,SFMono-Regular,Menlo,monospace!important;letter-spacing:.5px!important;animation:none!important;white-space:nowrap!important}
+.gameGridMulti .loaderDots{display:flex!important;gap:4px!important}.gameGridMulti .loaderDots i{width:5px!important;height:5px!important;border-radius:50%!important;background:#c8b995!important;box-shadow:0 0 6px rgba(200,185,149,.22)!important}
+.gameGridMulti .terminalFeed{display:grid!important;gap:3px!important;padding:8px 11px 7px!important;background:rgba(0,0,0,.16)!important;border-bottom:1px solid rgba(255,255,255,.055)!important;font:8px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace!important;color:#aab4aa!important;overflow:hidden!important}
+.gameGridMulti .terminalFeed span{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;animation:vrFeedIn .45s both!important}.gameGridMulti .terminalFeed span:nth-child(2){animation-delay:.12s!important}.gameGridMulti .terminalFeed span:nth-child(3){animation-delay:.24s!important}.gameGridMulti .terminalFeed i{font-style:normal!important;color:#737d73!important;margin-right:5px!important}.gameGridMulti .terminalFeed b{font-weight:800!important;color:#d8c7a1!important}.gameGridMulti .terminalFeed em{font-style:normal!important;color:#c2b4e3!important}.gameGridMulti .terminalFeed u{color:#c9d9c6!important;text-decoration:none!important;margin-left:4px!important}
+@keyframes vrFeedIn{from{opacity:.25;transform:translateX(-3px)}to{opacity:1;transform:translateX(0)}}
+.gameGridMulti .loaderCode{position:relative!important;display:block!important;min-height:0!important;max-height:49px!important;margin:0!important;padding:9px 11px!important;overflow:auto!important;border:0!important;border-radius:0!important;background:rgba(3,6,5,.5)!important;color:#e0e3d9!important;font:8px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;user-select:all!important}
+.gameGridMulti .loaderCopy{position:relative!important;isolation:isolate!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;width:calc(100% - 18px)!important;min-height:35px!important;margin:8px 9px 9px!important;padding:8px 11px!important;overflow:hidden!important;border:1px solid rgba(215,196,154,.30)!important;border-radius:999px!important;background:linear-gradient(115deg,#e9dec4,#c8b995 58%,#a9946c)!important;color:#171912!important;box-shadow:0 5px 15px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.45)!important;font-size:8px!important;font-weight:900!important;letter-spacing:.8px!important;transition:transform .2s ease,filter .2s ease,box-shadow .2s ease!important}
+.gameGridMulti .loaderCopy:before{content:"";position:absolute;z-index:-1;top:-65%;left:-40%;width:25%;height:230%;transform:rotate(22deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);transition:left .55s ease!important}.gameGridMulti .loaderCopy:hover{transform:translateY(-1px)!important;filter:brightness(1.04)!important;box-shadow:0 8px 20px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.5)!important}.gameGridMulti .loaderCopy:hover:before{left:130%}.gameGridMulti .loaderCopy:active{transform:scale(.985)!important}.gameGridMulti .loaderCopy span{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:17px!important;height:17px!important;margin:0!important;border-radius:50%!important;background:rgba(20,22,17,.08)!important;font-size:11px!important}
+.gameGridMulti .loaderCopy.copying{animation:vrCopySuccess .7s ease!important;background:linear-gradient(110deg,#f4ead3,#d7c49a)!important;box-shadow:0 0 0 3px rgba(215,196,154,.12),0 0 18px rgba(215,196,154,.17)!important}@keyframes vrCopySuccess{0%{transform:scale(1)}35%{transform:scale(.975);filter:brightness(1.1)}70%{transform:scale(1.015)}100%{transform:scale(1)}}
+.gameGridMulti .loaderToastLine{margin:7px 1px 0!important;color:#899087!important;font-size:8px!important;line-height:1.45!important;letter-spacing:.05px!important;text-transform:none!important}
+@media(min-width:701px){.gameGridMulti .gameCard{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)!important}.gameGridMulti .gameVisual{align-self:stretch!important;aspect-ratio:auto!important;min-height:250px!important}.gameGridMulti .gameBody{padding:19px!important}.gameGridMulti .loaderCode{font-size:8px!important;max-height:48px!important}}
+@media(max-width:700px){.gameGridMulti{max-width:420px!important;gap:15px!important}.gameGridMulti .gameCard{display:flex!important;flex-direction:column!important;border-radius:21px!important}.gameGridMulti .gameVisual{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;flex:none!important}.gameGridMulti .gameBody{padding:15px!important}.gameGridMulti .gameTop h3{font-size:22px!important}.gameGridMulti .gameBody>p{font-size:10.5px!important;line-height:1.62!important}.gameGridMulti .coverLabel strong{font-size:20px!important}.gameGridMulti .loaderCode{font-size:8px!important;line-height:1.5!important;max-height:45px!important;padding:8px 10px!important}.gameGridMulti .terminalFeed{font-size:7px!important;padding:7px 10px 6px!important}.gameGridMulti .loaderHead{font-size:7px!important;padding:8px 10px!important}.gameGridMulti .loaderHead:after{font-size:6px!important}.gameGridMulti .loaderCopy{min-height:34px!important;font-size:8px!important}}
+@media(prefers-reduced-motion:reduce){.gameGridMulti .loaderBox:after,.gameGridMulti .terminalFeed span,.gameGridMulti .loaderCopy.copying{animation:none!important}.gameGridMulti .loaderCopy,.gameGridMulti .loaderCopy:before{transition:none!important}}
+</style>
+
 </body>
 </html>
