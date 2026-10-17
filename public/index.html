@@ -908,6 +908,78 @@ body{background:#080a08!important;color:#f5f7ef;background-image:radial-gradient
 @media(max-width:720px){.gameGridMulti{gap:24px!important}.gameGridMulti .gameVisual{height:300px!important;min-height:300px!important}.gameGridMulti .gameBody{padding:20px!important}.gameGridMulti .gameTop h3{font-size:30px!important}.gameGridMulti .loaderCode{font-size:10px!important;padding:15px!important;min-height:86px!important}.gameGridMulti .loaderCopy{padding:16px!important}.gameGridMulti .coverLabel strong{font-size:44px!important}}
 @media(min-width:721px){.gameGridMulti .gameVisual{height:clamp(360px,40vw,500px)!important}}
 
+
+
+/* ===== PREMIUM ROUND REFINEMENT — layout only, key logic untouched ===== */
+:root{--black:#0b0e0d;--black-2:#101513;--black-3:#151c18;--panel:#141a17;--panel-2:#19211c;--gold:#c8b995;--gold-hi:#f1e7d2;--gold-deep:#8d7d5e;--platinum:#f6f3eb;--silver:#b9c0b8;--muted:#858e86;--line:rgba(225,232,218,.12);--line-gold:rgba(200,185,149,.28);--radius:22px}
+body{background:radial-gradient(850px 480px at 50% -8%,rgba(178,155,105,.10),transparent 65%),#0b0e0d;color:#f6f3eb}
+body:before{opacity:.025;background-size:64px 64px}
+.announcement{background:#0c100e;border-bottom:1px solid rgba(200,185,149,.12)}
+.nav{background:rgba(11,14,13,.86);border-bottom-color:rgba(225,232,218,.09);backdrop-filter:blur(18px)}
+.nav:after{background:linear-gradient(90deg,transparent,#c8b995,#f1e7d2,transparent)}
+.mark{border-radius:17px;color:#f4ecdb;background:linear-gradient(145deg,#252a24,#111511);border:1px solid rgba(200,185,149,.48);box-shadow:inset 0 1px #ffffff12,0 8px 28px #0004}
+.navbtn,.hamb{border-radius:999px;background:#151a16;border-color:rgba(225,232,218,.14)}
+.hero:before{background:radial-gradient(ellipse at 65% 30%,rgba(200,185,149,.09),transparent 64%)}
+.hero h1{letter-spacing:-.045em;line-height:.98}
+.shine{background:linear-gradient(105deg,#fffdf7 0%,#e8d9b8 43%,#b6a174 75%,#f7efdc 100%);background-size:180% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.eyebrow{border-radius:999px;color:#e0d2b2;background:rgba(200,185,149,.07);border-color:rgba(200,185,149,.22)}
+.btn{border-radius:999px;font-size:11px;letter-spacing:.35px}
+.btn.primary,.gameButton,.loaderCopy{background:linear-gradient(120deg,#e8dcc0,#c8b995 58%,#a99367)!important;color:#171912!important;border:1px solid #e5d7b5!important;box-shadow:0 10px 28px rgba(0,0,0,.22),inset 0 1px #ffffff55!important;border-radius:999px!important}
+.btn.secondary{border-radius:999px;background:rgba(255,255,255,.025);border-color:rgba(225,232,218,.16)}
+.heroShowcase{max-width:470px;width:100%;gap:12px}
+.showcaseImage{aspect-ratio:16/9!important;min-height:0!important;border:1px solid rgba(200,185,149,.32);border-radius:24px!important;background:#101511;box-shadow:0 24px 65px #0005;isolation:isolate}
+.showcaseImage img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.showcaseImage:after{background:linear-gradient(0deg,rgba(6,9,7,.84),transparent 58%),linear-gradient(110deg,rgba(200,185,149,.08),transparent 60%)}
+.showcaseFlag{border-radius:999px;background:rgba(12,16,13,.8);border:1px solid rgba(238,225,194,.32);color:#eee2c5;box-shadow:none;backdrop-filter:blur(10px)}
+.showcaseCaption{left:20px;bottom:17px}.showcaseCaption span{color:#d9c9a3}.showcaseCaption strong{font-size:clamp(23px,2.4vw,32px);letter-spacing:-1px}
+.discordPromo,.creatorStamp{border-radius:18px;background:rgba(17,22,18,.9);border-color:rgba(225,232,218,.12);box-shadow:0 12px 35px #0003}
+.discordGlyph{border-radius:14px}.discordArrow{border-radius:50%;background:#c8b995;color:#171912}
+.creatorMark{border-radius:12px;background:linear-gradient(145deg,#d9c8a1,#8e7b53);color:#171912}
+.trust,.generator,.plan,.step,.guide,.faqItem,.support{border-radius:24px!important;border-color:rgba(225,232,218,.11)!important;background:linear-gradient(145deg,rgba(24,31,26,.95),rgba(13,17,14,.98))!important;box-shadow:0 16px 45px #0002}
+.inputWrap input,.keyout,.loaderBox,.loaderCode{border-radius:15px!important}
+.copy{border-radius:999px!important;background:linear-gradient(120deg,#e8dcc0,#c8b995)!important;color:#171912!important}
+.gamesSection{background:radial-gradient(ellipse at 10% 0,rgba(200,185,149,.055),transparent 45%),#0b0e0d}
+.gameGridMulti{max-width:920px!important;gap:20px!important}
+.gameGridMulti .gameCard{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);align-items:stretch;min-height:0!important;overflow:hidden;border:1px solid rgba(200,185,149,.22)!important;border-radius:26px!important;background:linear-gradient(145deg,#171d18,#101411)!important;box-shadow:0 22px 60px #0004}
+.gameGridMulti .gameVisual{position:relative;min-height:0!important;height:auto!important;aspect-ratio:3/2!important;align-self:center;overflow:hidden;border:0!important;border-radius:0!important;background:#101511}
+.gameGridMulti .rideLogo{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important;object-position:center!important;border-radius:0!important;filter:none!important;transform:none!important}
+.gameGridMulti .gameVisual:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,12,9,.55),transparent 55%);pointer-events:none}
+.gameGridMulti .gameTag{top:14px!important;left:14px!important;padding:8px 11px!important;border-radius:999px!important;background:rgba(12,16,13,.78)!important;border:1px solid rgba(238,225,194,.28)!important;color:#e8dcc0!important;font-size:8px!important;letter-spacing:1px!important;backdrop-filter:blur(10px);box-shadow:none!important}
+.gameGridMulti .coverLabel{left:15px!important;right:15px!important;bottom:14px!important;padding:12px 14px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:16px!important;background:rgba(11,15,12,.72)!important;backdrop-filter:blur(12px)}
+.gameGridMulti .coverLabel span{color:#d8c7a1!important;letter-spacing:1.4px}
+.gameGridMulti .coverLabel strong{font-size:clamp(19px,2.2vw,27px)!important;letter-spacing:-.7px!important}
+.gameGridMulti .coverLabel small{font-size:10px!important}
+.gameGridMulti .gameBody{padding:clamp(19px,2.5vw,29px)!important;background:transparent!important;min-width:0}
+.gameGridMulti .gameTop h3{font-size:clamp(23px,2.5vw,31px)!important;letter-spacing:-1px!important}
+.gameGridMulti .gameStatus{color:#d7c49a!important;letter-spacing:1.5px}
+.gameGridMulti .gameVersion{border-radius:999px!important;border-color:rgba(200,185,149,.3)!important;color:#e5d8b9!important;background:rgba(200,185,149,.06)!important}
+.gameGridMulti .gameBody>p{color:#b9c0b8!important;line-height:1.75}
+.gameGridMulti .gameFeatures span{border-radius:999px!important;background:rgba(255,255,255,.025)!important;border-color:rgba(225,232,218,.1)!important;color:#d8ded6!important}
+.loaderBox{margin-top:16px!important;padding:13px!important;border:1px solid rgba(200,185,149,.18)!important;border-radius:17px!important;background:rgba(7,10,8,.55)!important;box-shadow:none!important}
+.loaderHead{color:#d8c7a1!important;border-bottom-color:rgba(225,232,218,.1)!important}
+.loaderCode{background:#090d0a!important;border:1px solid rgba(225,232,218,.09)!important;color:#d9e3d7!important;border-radius:12px!important;font-size:10px!important;max-height:105px!important}
+.gameGridMulti .gameButton,.gameGridMulti .loaderCopy{min-height:43px!important;border-radius:999px!important;letter-spacing:.8px}
+.discordPromo:hover,.gameCard:hover,.plan:hover{transform:translateY(-3px);transition:transform .25s,border-color .25s}
+/* Responsive artwork: a compact featured thumbnail, never a tall poster */
+@media(max-width:700px){
+ .hero{padding-top:44px!important;padding-bottom:54px!important;gap:24px!important}
+ .heroShowcase{max-width:390px!important;width:100%!important;margin-inline:auto!important;gap:10px!important}
+ .showcaseImage{width:100%!important;aspect-ratio:16/9!important;min-height:0!important;border-radius:20px!important}
+ .showcaseCaption{left:14px!important;right:14px!important;bottom:12px!important}.showcaseCaption strong{font-size:23px!important}.showcaseCaption small{font-size:9px!important}
+ .creatorStamp{align-self:center!important}
+ .gameGridMulti{max-width:440px!important;margin-inline:auto!important;gap:17px!important}
+ .gameGridMulti .gameCard{display:flex!important;flex-direction:column!important;border-radius:23px!important;min-height:0!important}
+ .gameGridMulti .gameVisual{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;flex:none!important;border:0!important;border-bottom:1px solid rgba(225,232,218,.1)!important}
+ .gameGridMulti .rideLogo{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+ .gameGridMulti .gameBody{padding:19px 17px 18px!important}
+ .gameGridMulti .gameTop h3{font-size:25px!important}.gameGridMulti .gameBody>p{font-size:12px!important;margin:12px 0!important}
+ .gameGridMulti .gameTag{top:11px!important;left:11px!important;font-size:7px!important;padding:7px 9px!important}
+ .gameGridMulti .coverLabel{left:11px!important;right:11px!important;bottom:10px!important;padding:9px 11px!important;border-radius:13px!important}
+ .gameGridMulti .coverLabel strong{font-size:21px!important}.gameGridMulti .coverLabel small{font-size:9px!important}
+ .loaderBox{padding:11px!important}.loaderCode{font-size:9px!important;max-height:90px!important}
+}
+@media(max-width:380px){.heroShowcase{max-width:100%!important}.gameGridMulti .gameBody{padding:16px 14px!important}.gameGridMulti .gameTop h3{font-size:23px!important}}
+
 </style>
 <section class="section" id="create"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
