@@ -674,6 +674,80 @@ body{background:radial-gradient(ellipse at 50% 0%,rgba(94,57,130,.20),transparen
 }
 @media(prefers-reduced-motion:reduce){.hero .shine{animation:none}.gameGridMulti .gameCard,.btn{transition:none}}
 
+
+/* =========================================================
+   VRILZHUB REFINED PREMIUM — responsive image + balanced layout
+   Visual-only overrides; key system / loader handlers untouched.
+   ========================================================= */
+:root{
+  --black:#070910;--black-2:#0a0d16;--black-3:#101522;
+  --panel:#111725;--panel-2:#151d2d;
+  --gold:#9aaeff;--gold-hi:#d9e2ff;--gold-deep:#667fc9;
+  --platinum:#f2f5ff;--silver:#aab4ca;--muted:#77829b;
+  --line:rgba(202,215,255,.13);--line-gold:rgba(145,169,255,.28);
+  --radius:18px;
+}
+body{background:radial-gradient(900px 500px at 50% -8%,rgba(94,125,255,.15),transparent 62%),radial-gradient(650px 480px at 100% 35%,rgba(35,202,225,.055),transparent 65%),#070910}
+body:before{opacity:.07;background-size:54px 54px}
+body:after{opacity:.008}
+.announcement{background:#080b13;border-bottom-color:rgba(145,169,255,.18)}
+.nav{background:rgba(7,9,16,.86);border-bottom-color:rgba(202,215,255,.1)}
+.nav:after{background:linear-gradient(90deg,transparent,#839bff,#4bd8e8,transparent)}
+.mark{color:#e3e9ff;background:linear-gradient(145deg,#1b2440,#090d18);border-color:rgba(157,178,255,.42);box-shadow:inset 0 1px rgba(255,255,255,.1),0 0 25px rgba(89,119,255,.12)}
+.navbtn,.hamb{background:#0d1220;border-color:rgba(202,215,255,.16)}
+.hero:before{background:radial-gradient(ellipse,rgba(91,122,255,.14),transparent 67%)}
+.btn.primary,.gameButton,.loaderCopy{background:linear-gradient(110deg,#dfe7ff,#9eafff 60%,#a2e9f2)!important;color:#080c18!important;border-color:transparent!important;box-shadow:0 8px 24px rgba(96,124,255,.17)!important}
+.btn.primary:hover,.gameButton:hover,.loaderCopy:hover{filter:brightness(1.06);transform:translateY(-2px)}
+/* Desktop game cards: landscape art with sensible proportions */
+.gameGridMulti{max-width:1060px;gap:22px}
+.gameGridMulti .gameCard{grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);border:1px solid rgba(163,181,255,.19);border-radius:20px;overflow:hidden;background:linear-gradient(145deg,#111827,#090c14);box-shadow:0 22px 65px rgba(0,0,0,.22)}
+.gameGridMulti .gameVisual{position:relative;min-height:0!important;height:auto;aspect-ratio:1.02/1;align-self:stretch;overflow:hidden;border-right:1px solid rgba(202,215,255,.1);background:#0b1220}
+.gameGridMulti .gameVisual:before{opacity:.12;background-image:linear-gradient(120deg,transparent 48%,#9eb0ff 49%,transparent 50%),linear-gradient(300deg,transparent 47%,#7fe4f1 48%,transparent 49%)}
+.gameGridMulti .rideLogo{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center center;filter:none;transform:none;border-radius:0}
+.gameGridMulti .gameCard:hover .rideLogo{transform:scale(1.025)}
+.gameGridMulti .gameTag{top:16px;left:16px;padding:10px 13px;border-radius:8px;background:rgba(7,11,21,.88);border:1px solid rgba(170,190,255,.5);color:#e5ebff;font-size:9px;letter-spacing:1.5px;box-shadow:0 8px 28px #0005}
+.gameGridMulti .coverLabel{left:16px;right:16px;bottom:16px;padding:15px 16px;border:1px solid rgba(202,215,255,.18);border-radius:12px;background:linear-gradient(180deg,rgba(7,10,18,.2),rgba(7,10,18,.94));backdrop-filter:blur(8px)}
+.gameGridMulti .coverLabel strong{font-size:clamp(22px,2.7vw,34px);letter-spacing:-1px}
+.gameGridMulti .gameBody{padding:clamp(20px,3vw,34px);background:linear-gradient(155deg,rgba(20,28,45,.94),rgba(9,12,20,.98));min-width:0}
+.gameGridMulti .gameTop h3{font-size:clamp(25px,2.7vw,34px);letter-spacing:-1.2px}
+.gameGridMulti .gameStatus{color:#a9baff}
+.gameGridMulti .gameVersion{border-color:rgba(161,180,255,.32);color:#d5deff;background:rgba(112,140,255,.07)}
+.gameGridMulti .gameBody>p{color:#aeb8ce;line-height:1.75}
+.gameGridMulti .gameFeatures span{background:rgba(255,255,255,.025);border-color:rgba(202,215,255,.12);color:#c9d3eb}
+.loaderBox{border:1px solid rgba(149,173,255,.22);border-radius:13px;background:linear-gradient(145deg,#0a1020,#080b13);padding:14px;box-shadow:inset 0 1px #ffffff08,0 12px 30px #0002}
+.loaderHead{color:#b5c4ff;border-bottom-color:rgba(202,215,255,.13);font-size:10px;letter-spacing:1px}
+.loaderCode{background:#060912;border:1px solid rgba(202,215,255,.1);border-radius:9px;color:#d2e5ff;font-size:11px;line-height:1.7;max-height:130px;overflow:auto}
+.gameGridMulti .gameButton{width:100%;min-height:46px;border-radius:10px;font-weight:900;letter-spacing:.7px}
+.discordPromo,.plan,.support,.guideCard{border-color:rgba(157,178,255,.17)}
+/* Mobile: compact landscape image, no giant/tall crop or empty side strip */
+@media(max-width:700px){
+ .hero{min-height:0;padding:70px 18px 75px}
+ .gameGridMulti{width:100%;max-width:520px;gap:18px}
+ .gameGridMulti .gameCard{display:flex;flex-direction:column;min-height:0;border-radius:16px}
+ .gameGridMulti .gameVisual{width:100%;height:auto;min-height:0!important;aspect-ratio:16/9;flex:none;border-right:0;border-bottom:1px solid rgba(202,215,255,.12)}
+ .gameGridMulti .rideLogo{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center center}
+ .gameGridMulti .gameTag{top:11px;left:11px;padding:8px 10px;font-size:8px;letter-spacing:1px}
+ .gameGridMulti .coverLabel{left:11px;right:11px;bottom:10px;padding:10px 12px;border-radius:9px}
+ .gameGridMulti .coverLabel strong{font-size:23px;line-height:1.05}
+ .gameGridMulti .coverLabel small{font-size:10px}
+ .gameGridMulti .gameBody{padding:19px 16px 17px}
+ .gameGridMulti .gameTop{gap:10px;align-items:flex-start}
+ .gameGridMulti .gameTop h3{font-size:27px;line-height:1.1}
+ .gameGridMulti .gameVersion{font-size:9px;padding:8px 9px;white-space:nowrap}
+ .gameGridMulti .gameBody>p{font-size:13px;line-height:1.7;margin:13px 0}
+ .gameGridMulti .gameFeatures{gap:7px}
+ .gameGridMulti .gameFeatures span{font-size:9px;padding:8px 9px}
+ .loaderBox{margin-top:17px;padding:12px}
+ .loaderCode{font-size:10px;padding:11px;max-height:112px}
+ .gameGridMulti .gameButton{min-height:45px}
+}
+@media(max-width:380px){
+ .gameGridMulti .coverLabel strong{font-size:20px}
+ .gameGridMulti .gameBody{padding:16px 13px}
+ .gameGridMulti .gameTop h3{font-size:24px}
+ .gameGridMulti .gameVersion{font-size:8px;padding:7px}
+}
+
 </style>
 </head>
 <body>
