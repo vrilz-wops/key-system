@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>VRILZZHUB — Roblox Lua & Premium Key System</title>
-<meta name="description" content="VRILZZHUB official Roblox Lua key system, premium access, Discord community, and Ride a Pet game.">
+<meta name="description" content="VRILZZHUB official Roblox Lua key system, premium access, Discord community, Ride A Pet, Ride A Fish, and Anime Dice loaders.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
@@ -526,6 +526,76 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 .heroIn{position:relative !important;z-index:5 !important;}
 .heroShowcase{position:relative !important;z-index:5 !important;}
 .hero h1,.hero p,.hero .eyebrow,.hero .actions,.heroBadges{position:relative;z-index:6;}
+
+/* ===== VRILZ Game Hub refresh: individual game identities + copy loaders ===== */
+.gameHeadingAccent{background:linear-gradient(100deg,#4de8f4,#638cff 55%,#d6a4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gameGridMulti{grid-template-columns:1fr;gap:24px;max-width:1000px;margin-inline:auto}
+.gameGridMulti .gameCard{grid-template-columns:.78fr 1.22fr;min-height:0;border-color:rgba(255,255,255,.1);background:linear-gradient(140deg,#11131b,#07080d)}
+.gameGridMulti .gameVisual{min-height:100%;min-height:410px;border-right-color:rgba(255,255,255,.09)}
+.gameGridMulti .gameBody{padding:clamp(18px,3vw,34px);min-width:0}
+.gameGridMulti .gameTop h3{font-size:clamp(25px,3vw,34px);letter-spacing:-1.2px}
+.gameGridMulti .gameBody>p{font-size:13px;line-height:1.8}
+.gameGridMulti .gameFeatures span{font-size:10px;border-radius:9px}
+.gameGridMulti .gameTag{top:18px;left:18px;z-index:3;font-size:9px;letter-spacing:1.2px}
+.gameGridMulti .rideLogo{width:min(78%,280px);height:auto;max-height:245px;object-fit:contain;filter:drop-shadow(0 20px 30px #0009);z-index:2}
+.gameVisualPet{background:radial-gradient(ellipse at 50% 35%,#17495b 0,transparent 50%),linear-gradient(145deg,#071c2c,#071018 75%)}
+.gameCardPet{--accent:#37d8ee;--accent2:#2379ff}
+.gameCardFish{--accent:#4cf4cf;--accent2:#1689d8}
+.gameCardDice{--accent:#e0a2ff;--accent2:#8b5cf6}
+.gameVisualFish{background:radial-gradient(ellipse at 50% 45%,#075d72 0,transparent 48%),linear-gradient(145deg,#041e2d,#050d1a 78%)}
+.gameVisualDice{background:radial-gradient(ellipse at 50% 45%,#56218b 0,transparent 48%),linear-gradient(145deg,#190d31,#090713 78%)}
+.gameGridMulti .gameGlow{background:color-mix(in srgb,var(--accent) 38%,transparent);width:230px;height:230px}
+.gameGridMulti .gameStatus{color:var(--accent);font-size:9px}
+.gameGridMulti .gameVersion{font-size:9px;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+.gameGridMulti .gameButton{max-width:none;background:linear-gradient(110deg,var(--accent),var(--accent2));color:#071018;font-size:11px}
+.coverLabel{position:absolute;z-index:2;left:18px;right:18px;bottom:19px;display:flex;flex-direction:column;align-items:center;text-align:center;text-shadow:0 2px 18px #000}
+.coverLabel span{font-size:8px;letter-spacing:2px;font-weight:900;color:var(--accent,#55dff0)}
+.coverLabel strong{font:800 clamp(22px,3vw,34px) Manrope;letter-spacing:1px;color:#fff;margin:4px 0}
+.coverLabel small{font-size:10px;color:#b8c5d5;letter-spacing:.5px}
+.gameVisualPet .coverLabel{display:none}
+.artFish{position:absolute;inset:0;display:grid;place-items:center}
+.fishShape{position:absolute;font-size:145px;line-height:1;color:#5fffe0;text-shadow:0 0 20px #30d8ff,0 0 60px #007cbe;transform:rotate(-30deg) scaleX(1.25);font-family:Arial;filter:drop-shadow(0 16px 25px #0008)}
+.fishTail{position:absolute;font-size:94px;color:#20bce9;transform:translate(78px,12px) rotate(180deg);text-shadow:0 0 25px #1cc9ff}
+.fishStar{position:absolute;font-size:28px;color:#d8fff9;transform:translate(-88px,-70px);text-shadow:0 0 25px #53f4ff}
+.fishBubble{position:absolute;border:1px solid #8ff8ff88;border-radius:50%;width:15px;height:15px;box-shadow:0 0 16px #2ccfff66}
+.bubbleOne{transform:translate(-90px,45px)}.bubbleTwo{width:8px;height:8px;transform:translate(100px,-65px)}
+.diceArt{position:absolute;inset:0;display:grid;place-items:center}
+.diceCube{z-index:1;width:145px;height:145px;display:grid;place-items:center;transform:rotate(-12deg);border-radius:28px;background:linear-gradient(145deg,#e8c6ff,#9855f5 55%,#4b1c98);border:2px solid #f5dcff;box-shadow:inset 0 2px 18px #fff7,0 0 60px #a855f788,0 25px 55px #0008}
+.diceCube span{font-size:90px;color:#fff;text-shadow:0 3px 10px #5d218a}
+.diceGlowOrb{position:absolute;width:190px;height:190px;border-radius:50%;background:#9d4edd55;filter:blur(35px)}
+.diceSpark{position:absolute;color:#f5dcff;text-shadow:0 0 18px #df9aff;font-size:32px}
+.diceSparkA{transform:translate(105px,-85px)}.diceSparkB{transform:translate(-115px,70px)}
+.loaderBox{margin-top:22px;padding:15px;border-radius:16px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:linear-gradient(145deg,#090d17,#080910);box-shadow:inset 0 1px #ffffff08,0 12px 35px #0003;min-width:0}
+.loaderHead{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #ffffff12;color:var(--accent);font:800 10px Manrope;letter-spacing:.7px}
+.loaderDots{display:flex;gap:4px}.loaderDots i{width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.95}.loaderDots i:nth-child(2){opacity:.65}.loaderDots i:nth-child(3){opacity:.35}
+.loaderCode{display:block;margin:12px 0;padding:13px;border-radius:10px;background:#04060c;border:1px solid #ffffff0d;color:#c7d9ee;font:11px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;user-select:all}
+.loaderCopy{width:100%;border:0;border-radius:10px;padding:13px 12px;background:linear-gradient(105deg,var(--accent),var(--accent2));color:#06111a;font-size:11px;font-weight:1000;letter-spacing:1px;box-shadow:0 8px 25px color-mix(in srgb,var(--accent) 18%,transparent);transition:transform .2s,filter .2s}
+.loaderCopy:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.loaderCopy:active{transform:scale(.99)}
+.loaderCopy span{font-size:16px;vertical-align:-1px;margin-right:7px}
+.loaderToastLine{margin-top:10px;text-align:center;color:#777d8b;font-size:10px;letter-spacing:.2px}
+.loaderFish .loaderCode{color:#c6fff4}.loaderDice .loaderCode{color:#e9d5ff}
+@media(max-width:720px){
+ .gameGridMulti{gap:18px}
+ .gameGridMulti .gameCard{grid-template-columns:1fr}
+ .gameGridMulti .gameVisual{min-height:265px;height:265px;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+ .gameGridMulti .gameBody{padding:19px}
+ .gameGridMulti .gameTop h3{font-size:27px}
+ .gameGridMulti .gameBody>p{font-size:12px}
+ .gameGridMulti .gameTag{font-size:8px}
+ .gameGridMulti .rideLogo{max-height:160px;width:auto;max-width:72%}
+ .coverLabel{bottom:13px}
+ .coverLabel strong{font-size:25px}
+ .fishShape{font-size:110px}.fishTail{font-size:70px;transform:translate(62px,8px) rotate(180deg)}
+ .diceCube{width:112px;height:112px;border-radius:23px}.diceCube span{font-size:70px}
+ .loaderBox{padding:12px;margin-top:18px}.loaderCode{font-size:10px;padding:11px}
+}
+@media(min-width:721px) and (max-width:980px){
+ .gameGridMulti .gameCard{grid-template-columns:.7fr 1.3fr}
+ .gameGridMulti .gameVisual{min-height:390px}
+ .gameGridMulti .gameBody{padding:22px}
+}
+
 </style>
 </head>
 <body>
@@ -589,32 +659,67 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
 
 <section class="section gamesSection" id="games"><div class="wrap">
   <div class="head reveal" data-reveal>
-    <div class="kicker">03 — Roblox Lua Games</div>
-    <h2>Play. Ride. Explore.</h2>
-    <p>Roblox Lua game experience by VRILZ. Mulai dari <b>Ride A Pet</b> dan ikuti update game berikutnya.</p>
+    <div class="kicker">03 — VRILZ GAME HUB</div>
+    <h2>Choose Your <span class="gameHeadingAccent">Adventure.</span></h2>
+    <p>Pilih game favoritmu, salin loader, lalu jalankan melalui executor Roblox yang kamu gunakan.</p>
   </div>
-  <div class="gameGrid stagger" data-reveal>
-    <article class="gameCard">
-      <div class="gameVisual">
+
+  <div class="gameGrid gameGridMulti stagger" data-reveal>
+    <article class="gameCard gameCardPet">
+      <div class="gameVisual gameVisualPet">
         <div class="gameGlow"></div>
-        <img class="rideLogo" src="./ride-a-pet.png" alt="Ride a Pet game logo" loading="lazy">
-        <span class="gameTag">✦ FEATURED ROBLOX GAME</span>
+        <img class="rideLogo" src="./ride-a-pet.png" alt="Ride A Pet artwork" loading="lazy">
+        <span class="gameTag">✦ VRILZ FEATURED</span>
+        <div class="coverLabel"><span>ROBLOX EXPERIENCE</span><strong>RIDE A PET</strong><small>Collect • Ride • Explore</small></div>
       </div>
       <div class="gameBody">
-        <div class="gameTop">
-          <div>
-            <span class="gameStatus"><i></i> AVAILABLE</span>
-            <h3>Ride A Pet</h3>
-          </div>
-          <span class="gameVersion">VRILZ</span>
+        <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Ride A Pet</h3></div><span class="gameVersion">RAP / 01</span></div>
+        <p>Loader VRILZ untuk Ride A Pet dengan tampilan cyan-biru yang clean dan mudah disalin dari HP maupun desktop.</p>
+        <div class="gameFeatures"><span>✦ Pet Adventure</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <div class="loaderBox loaderPet">
+          <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A PET · LOADER</b></div>
+          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-bot-exploit/vrilzhub/main/loader_universal.lua"))()</pre>
+          <button class="loaderCopy" type="button" data-copy-loader="pet"><span>▣</span> COPY LOADER</button>
         </div>
-        <p>Naik, koleksi, dan eksplorasi bersama pet kamu. Dibangun dengan Roblox Lua dengan fokus gameplay ringan, responsif, dan seru dimainkan.</p>
-        <div class="gameFeatures">
-          <span>🐾 Pet System</span>
-          <span>⚡ Lua Powered</span>
-          <span>🎮 Roblox</span>
+        <div class="loaderToastLine">Copy script • Paste into your executor</div>
+      </div>
+    </article>
+
+    <article class="gameCard gameCardFish">
+      <div class="gameVisual gameVisualFish">
+        <div class="artFish" aria-hidden="true"><span class="fishBubble bubbleOne"></span><span class="fishBubble bubbleTwo"></span><span class="fishShape">◢</span><span class="fishTail">‹</span><span class="fishStar">✦</span></div>
+        <span class="gameTag">✦ FISHING ADVENTURE</span>
+        <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>RIDE A FISH</strong><small>Deep sea • Discover • Ride</small></div>
+      </div>
+      <div class="gameBody">
+        <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Ride A Fish</h3></div><span class="gameVersion">RAF / 02</span></div>
+        <p>Siap menjelajahi Ride A Fish? Salin loader khusus game ini dengan aksen aqua dan ocean-blue.</p>
+        <div class="gameFeatures"><span>〰 Ocean Theme</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <div class="loaderBox loaderFish">
+          <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>RIDE A FISH · LOADER</b></div>
+          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/rideafish/main/loader.lua"))()</pre>
+          <button class="loaderCopy" type="button" data-copy-loader="fish"><span>▣</span> COPY LOADER</button>
         </div>
-        <a class="gameButton" href="#guide">VIEW GAME INFO <b>↗</b></a>
+        <div class="loaderToastLine">Copy script • Paste into your executor</div>
+      </div>
+    </article>
+
+    <article class="gameCard gameCardDice">
+      <div class="gameVisual gameVisualDice">
+        <div class="diceArt" aria-hidden="true"><div class="diceCube"><span>⚄</span></div><div class="diceGlowOrb"></div><span class="diceSpark diceSparkA">✦</span><span class="diceSpark diceSparkB">✧</span></div>
+        <span class="gameTag">✦ DICE & ANIME</span>
+        <div class="coverLabel"><span>VRILZ GAME LOADER</span><strong>ANIME DICE</strong><small>Roll • Power up • Ascend</small></div>
+      </div>
+      <div class="gameBody">
+        <div class="gameTop"><div><span class="gameStatus"><i></i> LOADER AVAILABLE</span><h3>Anime Dice</h3></div><span class="gameVersion">AD / 03</span></div>
+        <p>Loader Anime Dice dengan gaya violet-magenta yang berbeda, lengkap dengan tombol salin sekali tekan.</p>
+        <div class="gameFeatures"><span>✧ Anime Style</span><span>⚡ Fast Loader</span><span>◈ VRILZ</span></div>
+        <div class="loaderBox loaderDice">
+          <div class="loaderHead"><span class="loaderDots"><i></i><i></i><i></i></span><b>ANIME DICE · LOADER</b></div>
+          <pre class="loaderCode">loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/violence-district/refs/heads/main/loader.lua"))()</pre>
+          <button class="loaderCopy" type="button" data-copy-loader="dice"><span>▣</span> COPY LOADER</button>
+        </div>
+        <div class="loaderToastLine">Copy script • Paste into your executor</div>
       </div>
     </article>
   </div>
@@ -703,6 +808,26 @@ create.addEventListener("click",async()=>{
   await checkMission();refreshKeys();setTimeout(()=>out.classList.remove("pulse"),600);
  }catch(e){out.textContent="Key creation failed.";showToast(e.message||"Unable to create key.");await checkMission();}
  finally{create.textContent="✦ CREATE KEY";create.disabled=false;}
+});
+const gameLoaders={
+ pet:'loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-bot-exploit/vrilzhub/main/loader_universal.lua"))()',
+ fish:'loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/rideafish/main/loader.lua"))()',
+ dice:'loadstring(game:HttpGet("https://raw.githubusercontent.com/vrilz-vd/violence-district/refs/heads/main/loader.lua"))()'
+};
+document.querySelectorAll("[data-copy-loader]").forEach(button=>{
+ button.addEventListener("click",async()=>{
+  const script=gameLoaders[button.dataset.copyLoader];
+  if(!script)return;
+  try{
+   if(navigator.clipboard&&window.isSecureContext) await navigator.clipboard.writeText(script);
+   else{
+    const field=document.createElement("textarea");field.value=script;field.style.position="fixed";field.style.opacity="0";document.body.appendChild(field);field.select();
+    const copied=document.execCommand("copy");field.remove();if(!copied)throw new Error("copy unavailable");
+   }
+   const old=button.innerHTML;button.innerHTML="✓ COPIED TO CLIPBOARD";showToast("Loader berhasil disalin!");
+   setTimeout(()=>button.innerHTML=old,1600);
+  }catch(e){showToast("Gagal menyalin. Tekan lama kode loader untuk menyalin.");}
+ });
 });
 checkMission();refreshKeys();
 copy.addEventListener("click",async()=>{
