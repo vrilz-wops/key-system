@@ -596,6 +596,84 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
  .gameGridMulti .gameBody{padding:22px}
 }
 
+
+/* ===== PREMIUM LOADER-FIRST REDESIGN ===== */
+:root{
+ --gold:#f1ce79;--gold-hi:#fff0bc;--cyan:#65f5ff;--violet:#b89aff;
+ --line:rgba(255,255,255,.105);
+}
+body{background:radial-gradient(ellipse at 50% 0%,rgba(94,57,130,.20),transparent 42%),radial-gradient(ellipse at 10% 35%,rgba(26,151,171,.09),transparent 36%),#06070b}
+.announcement{height:32px;color:#a9aab7;letter-spacing:1.8px;font-size:9px;background:#06070b}
+.nav{height:74px;background:rgba(6,7,11,.82);border-bottom-color:rgba(255,255,255,.08)}
+.mark{border-radius:13px;background:linear-gradient(145deg,#27202d,#0b0c12);border-color:rgba(241,206,121,.42);box-shadow:0 0 30px #f1ce7914}
+.hero{min-height:610px;padding-top:88px;padding-bottom:90px}
+.hero:before{opacity:.23!important}
+.heroIn .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border:1px solid #f1ce7938;border-radius:999px;background:#f1ce790b;letter-spacing:1.7px}
+.hero h1{font-size:clamp(42px,6.5vw,84px);line-height:.99;letter-spacing:-.065em;text-wrap:balance}
+.hero .shine{background:linear-gradient(105deg,#fff4cb 0%,#f1ce79 36%,#fff 54%,#b9954d 76%,#fff0bc);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:goldSweep 7s linear infinite}
+@keyframes goldSweep{to{background-position:220% center}}
+.heroIn p{font-size:clamp(14px,1.4vw,17px);line-height:1.9;color:#b3b4c0}
+.btn{border-radius:13px!important;padding:15px 20px!important;letter-spacing:.7px;transition:transform .25s,box-shadow .25s}
+.btn.primary{box-shadow:0 8px 34px #d9b76c20}
+.btn:hover{transform:translateY(-3px)}
+.section.gamesSection{position:relative;padding-top:72px;padding-bottom:88px;background:linear-gradient(180deg,#0a0b11,#08090d 75%,transparent);border-top:1px solid #ffffff0c;border-bottom:1px solid #ffffff0c}
+.gamesSection:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,#6c57b51b,transparent 55%)}
+.gamesSection .wrap{position:relative;z-index:1}
+.gamesSection .head{max-width:760px;margin:0 auto 34px;text-align:center}
+.gamesSection .kicker{display:inline-flex;padding:8px 12px;border:1px solid #8d8bff40;border-radius:999px;background:#8d8bff0d;color:#c5b7ff;font-size:10px;letter-spacing:2px;font-weight:900}
+.gamesSection .head h2{font-size:clamp(34px,5vw,58px);letter-spacing:-.055em;line-height:1.05;margin:18px 0}
+.gameHeadingAccent{background:linear-gradient(100deg,#65f5ff,#8ea6ff 48%,#d8a4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gamesSection .head p{max-width:590px;margin:0 auto;color:#a4a6b5;font-size:14px;line-height:1.8}
+.gameGridMulti{max-width:1080px;gap:22px}
+.gameGridMulti .gameCard{position:relative;overflow:hidden;border-radius:25px;border:1px solid #ffffff14;background:linear-gradient(125deg,#12141e 0%,#0b0c12 62%,#101018);box-shadow:0 22px 70px #0005;transition:transform .3s,border-color .3s,box-shadow .3s}
+.gameGridMulti .gameCard:hover{transform:translateY(-4px);border-color:#b5a5ff55;box-shadow:0 28px 85px #0008,0 0 36px #8f7bff0b}
+.gameGridMulti .gameVisual{position:relative;min-height:390px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#213448,#0a0c14 70%);border-right:1px solid #ffffff12}
+.gameGridMulti .gameVisual:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,transparent 55%,#0c0d13a6),linear-gradient(0deg,#090a10 0%,transparent 60%)}
+.gameGridMulti .gameVisual .rideLogo{transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.gameGridMulti .gameCard:hover .rideLogo{transform:scale(1.045)}
+.gameGridMulti .gameTag{z-index:3;border:1px solid #ffffff22;background:#080a11c9;color:#e4e7f3;backdrop-filter:blur(12px);font-size:9px;letter-spacing:1.2px}
+.gameGridMulti .coverLabel{z-index:3}
+.gameGridMulti .coverLabel strong{font-size:clamp(26px,3vw,38px);letter-spacing:-1.5px}
+.gameGridMulti .gameBody{padding:clamp(22px,3vw,36px)}
+.gameGridMulti .gameTop h3{font-size:clamp(26px,3vw,35px);letter-spacing:-1.3px}
+.gameStatus{color:#8fffd3!important;letter-spacing:1.1px!important;font-size:9px!important}
+.gameStatus i{box-shadow:0 0 12px #62ffc4}
+.gameVersion{border:1px solid #ffffff16!important;border-radius:9px!important;padding:8px 10px!important;background:#ffffff05;color:#b8b9ca!important}
+.gameGridMulti .gameBody>p{color:#a8abba;font-size:13px;line-height:1.85}
+.gameFeatures{gap:7px!important}
+.gameFeatures span{border:1px solid #ffffff12!important;background:#ffffff05!important;color:#c3c6d5!important;padding:8px 10px!important}
+.loaderBox{margin-top:22px!important;padding:16px!important;border-radius:17px!important;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)!important;background:linear-gradient(145deg,#111522,#090a10)!important;box-shadow:inset 0 1px #ffffff0c,0 16px 38px #0003!important}
+.loaderHead{padding-bottom:13px!important;font-size:10px!important;letter-spacing:1.2px!important}
+.loaderDots{gap:5px!important}
+.loaderDots i{width:6px!important;height:6px!important;box-shadow:0 0 10px color-mix(in srgb,var(--accent) 50%,transparent)}
+.loaderCode{margin:14px 0!important;padding:15px!important;border-radius:12px!important;background:#05070c!important;border:1px solid #ffffff13!important;color:#e0e8f7!important;font-size:11px!important;line-height:1.9!important;overflow-wrap:anywhere!important;user-select:all}
+.loaderCopy{border-radius:12px!important;padding:14px!important;letter-spacing:1px!important;box-shadow:0 8px 25px color-mix(in srgb,var(--accent) 15%,transparent);transition:filter .2s,transform .2s!important}
+.loaderCopy:hover{filter:brightness(1.12);transform:translateY(-2px)}
+.loaderToastLine{margin-top:11px!important;color:#777d90!important;font-size:10px!important;letter-spacing:.35px}
+@media(max-width:900px){
+ .hero{min-height:0;padding:75px 20px 80px}
+ .gameGridMulti .gameCard{grid-template-columns:1fr}
+ .gameGridMulti .gameVisual{min-height:0;min-height:280px;border-right:0;border-bottom:1px solid #ffffff12}
+ .gameGridMulti .gameVisual .rideLogo{object-fit:cover}
+}
+@media(max-width:520px){
+ .announcement{font-size:7px;letter-spacing:1px}
+ .nav{height:66px;padding:0 16px}
+ .brand{font-size:15px}
+ .mark{width:34px;height:34px}
+ .hero{padding:62px 18px 65px}
+ .hero h1{font-size:clamp(39px,12vw,58px)}
+ .heroIn .eyebrow{font-size:8px;letter-spacing:1px}
+ .hero .actions{gap:10px}
+ .btn{width:100%;justify-content:center}
+ .section.gamesSection{padding:55px 0 62px}
+ .gameGridMulti{gap:18px}
+ .gameGridMulti .gameVisual{min-height:230px}
+ .gameGridMulti .gameBody{padding:19px}
+ .loaderCode{font-size:10px!important;padding:12px!important}
+}
+@media(prefers-reduced-motion:reduce){.hero .shine{animation:none}.gameGridMulti .gameCard,.btn{transition:none}}
+
 </style>
 </head>
 <body>
@@ -625,37 +703,6 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
   </a>
   <div class="creatorStamp"><span class="creatorMark">VH</span><span><small>CREATED BY</small><b>VRILZ</b></span><span class="creatorDiscord"><svg viewBox="0 0 127.14 96.36" aria-hidden="true" focusable="false"><path fill="currentColor" d="M107.7 8.07A105.15 105.15 0 0 0 81.5 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.1 0A72.37 72.37 0 0 0 45.68 0a105.89 105.89 0 0 0-26.22 8.09C2.86 32.55-1.62 56.4.62 79.91a105.73 105.73 0 0 0 32.12 16.25 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.17c.91-.67 1.8-1.37 2.66-2.08 20.92 9.8 43.6 9.8 64.27 0 .87.71 1.76 1.41 2.66 2.08a68.68 68.68 0 0 1-10.87 5.18 77.2 77.2 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.14-16.24c2.63-27.26-4.5-50.89-18.83-71.85ZM42.45 65.65c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Zm42.24 0c-6.28 0-11.45-5.76-11.45-12.82s5.06-12.82 11.45-12.82 11.56 5.81 11.45 12.82c0 7.06-5.06 12.82-11.45 12.82Z"/></svg></span></div>
 </div></section>
-
-<div class="trust reveal" data-reveal><div class="trustItem"><strong>Instant</strong><span>Free key generation</span></div><div class="trustItem"><strong>3 Premium Plans</strong><span>Flexible access options</span></div><div class="trustItem"><strong>24 / 7</strong><span>Discord support</span></div></div>
-
-
-<style>
-.keyTableWrap th,.keyTableWrap td{border-bottom:1px solid rgba(255,255,255,.10);text-align:left;padding:10px;white-space:nowrap}.keyTableWrap .keyAction{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:8px;padding:7px 10px;cursor:pointer}.keyTableWrap .keyStatus{font-weight:800;letter-spacing:.6px}.keyTableWrap .status-active{color:#8ff0b0}.keyTableWrap .status-expired{color:#ff9c9c}.keyTableWrap .status-ready{color:#ffd889}
-.keyTableWrap{box-shadow:0 18px 50px rgba(0,0,0,.18)}.keyTableWrap table{table-layout:auto}.keyTableWrap code{display:inline-block;max-width:300px;overflow-wrap:anywhere;white-space:normal;color:#ffe0a0;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.18);padding:7px 9px;border-radius:8px}.keyTableWrap .keyAction{font-weight:800;font-size:10px;letter-spacing:.5px}.keyTableWrap .renewAction{border:1px solid rgba(255,72,82,.55);background:linear-gradient(135deg,rgba(255,55,70,.20),rgba(120,20,30,.24));color:#ff737d;margin-left:5px;transition:background .2s,border-color .2s,color .2s,box-shadow .2s}.keyTableWrap .renewAction:disabled{opacity:.8;cursor:not-allowed;filter:saturate(.8)}.keyTableWrap .renewAction.renew-ready{border-color:rgba(80,255,155,.6);background:linear-gradient(135deg,rgba(58,235,133,.24),rgba(255,70,90,.2));color:#b8ffd0;box-shadow:0 0 12px rgba(75,255,155,.12);cursor:pointer}.keyTableWrap .renewAction.renew-ready:hover{border-color:rgba(80,255,155,.9);box-shadow:0 0 16px rgba(75,255,155,.22)}
-/* Key table stays a compact PC-style table on phones (no stacked cards). */
-.keyTableWrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
-.keyTableWrap table{width:100%;min-width:0!important;table-layout:fixed}
-.keyTableWrap th,.keyTableWrap td{overflow-wrap:anywhere}
-@media(max-width:650px){.keyTableWrap{padding:10px!important;margin-left:-2px;margin-right:-2px}.keyTableWrap table{font-size:10px!important}.keyTableWrap th,.keyTableWrap td{padding:7px 4px!important;white-space:normal!important}.keyTableWrap th:nth-child(1),.keyTableWrap td:nth-child(1){width:39%}.keyTableWrap th:nth-child(2),.keyTableWrap td:nth-child(2){width:20%}.keyTableWrap th:nth-child(3),.keyTableWrap td:nth-child(3){width:17%}.keyTableWrap th:nth-child(4),.keyTableWrap td:nth-child(4){width:24%}.keyTableWrap code{font-size:9px!important;padding:5px 4px!important;max-width:100%;word-break:break-all}.keyTableWrap .keyAction{font-size:8px!important;padding:5px 5px!important;letter-spacing:0!important;margin:2px 0!important}.keyTableWrap .renewAction{margin-left:0!important}.genBtns{flex-wrap:wrap}.genBtns .btn{flex:1 1 140px}}
-</style>
-<section class="section" id="create"><div class="wrap">
-<div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
-<div class="generator reveal" data-reveal>
-<div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> Tidak perlu memasukkan username di website. Selesaikan misi LootLabs terlebih dahulu. <b>EN:</b> Complete the LootLabs mission to unlock key creation.</p>
-<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" aria-disabled="true" hidden style="display:none">CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: misi belum dimulai.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
-<div class="genSide"><div class="resultLabel">YOUR KEY</div><div class="keyout" id="keyOut">Your key will appear here after verification.</div><button class="copy" id="copyBtn">COPY KEY</button><div class="hint">Key berlaku 24 jam setelah di-redeem. Key expired tetap tercatat dan dapat diperbarui setelah misi baru terverifikasi.</div></div>
-<div class="keyTableWrap" style="grid-column:1/-1;margin-top:22px;overflow-x:auto;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:14px;padding:16px;background:rgba(0,0,0,.15)"><div style="font-size:12px;font-weight:900;letter-spacing:1.5px;margin-bottom:12px">YOUR KEYS</div><table style="width:100%;border-collapse:collapse;min-width:580px;font-size:12px"><thead><tr style="text-align:left;opacity:.7"><th style="padding:10px">YOUR KEY</th><th style="padding:10px">TIME LEFT</th><th style="padding:10px">STATUS</th><th style="padding:10px">ACTIONS</th></tr></thead><tbody id="keysTableBody"><tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet.</td></tr></tbody></table></div>
-</div>
-</div></section>
-
-<section class="section premium" id="premium"><div class="wrap">
-<div class="head reveal" data-reveal><div class="kicker">02 — Premium</div><h2>Premium, without the clutter.</h2><p>Pilih paket premium lalu lanjutkan melalui Discord resmi VRILZ.</p></div>
-<div class="plans stagger" data-reveal>
-<div class="plan" data-scroll="#guide"><div class="planIcon">◈</div><h3>30 Days</h3><div class="price">$2 <small>/ 30 days</small></div><div class="desc">Premium access for one month.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>30-day access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
-<div class="plan featured" data-scroll="#guide"><span class="badge">MOST POPULAR</span><div class="planIcon">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="desc">Extended access for regular users.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2-month access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
-<div class="plan" data-scroll="#guide"><div class="planIcon">♛</div><h3>Permanent</h3><div class="price">$20 <small>/ lifetime</small></div><div class="desc">One-time premium access with no expiry.</div><div class="features"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
-</div></div></section>
-
 
 <section class="section gamesSection" id="games"><div class="wrap">
   <div class="head reveal" data-reveal>
@@ -724,6 +771,40 @@ body:before{opacity:.10;background-image:linear-gradient(90deg,rgba(255,35,55,.0
     </article>
   </div>
 </div></section>
+
+
+<div class="trust reveal" data-reveal><div class="trustItem"><strong>Instant</strong><span>Free key generation</span></div><div class="trustItem"><strong>3 Premium Plans</strong><span>Flexible access options</span></div><div class="trustItem"><strong>24 / 7</strong><span>Discord support</span></div></div>
+
+
+<style>
+.keyTableWrap th,.keyTableWrap td{border-bottom:1px solid rgba(255,255,255,.10);text-align:left;padding:10px;white-space:nowrap}.keyTableWrap .keyAction{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:inherit;border-radius:8px;padding:7px 10px;cursor:pointer}.keyTableWrap .keyStatus{font-weight:800;letter-spacing:.6px}.keyTableWrap .status-active{color:#8ff0b0}.keyTableWrap .status-expired{color:#ff9c9c}.keyTableWrap .status-ready{color:#ffd889}
+.keyTableWrap{box-shadow:0 18px 50px rgba(0,0,0,.18)}.keyTableWrap table{table-layout:auto}.keyTableWrap code{display:inline-block;max-width:300px;overflow-wrap:anywhere;white-space:normal;color:#ffe0a0;background:rgba(255,180,60,.08);border:1px solid rgba(255,180,60,.18);padding:7px 9px;border-radius:8px}.keyTableWrap .keyAction{font-weight:800;font-size:10px;letter-spacing:.5px}.keyTableWrap .renewAction{border:1px solid rgba(255,72,82,.55);background:linear-gradient(135deg,rgba(255,55,70,.20),rgba(120,20,30,.24));color:#ff737d;margin-left:5px;transition:background .2s,border-color .2s,color .2s,box-shadow .2s}.keyTableWrap .renewAction:disabled{opacity:.8;cursor:not-allowed;filter:saturate(.8)}.keyTableWrap .renewAction.renew-ready{border-color:rgba(80,255,155,.6);background:linear-gradient(135deg,rgba(58,235,133,.24),rgba(255,70,90,.2));color:#b8ffd0;box-shadow:0 0 12px rgba(75,255,155,.12);cursor:pointer}.keyTableWrap .renewAction.renew-ready:hover{border-color:rgba(80,255,155,.9);box-shadow:0 0 16px rgba(75,255,155,.22)}
+/* Key table stays a compact PC-style table on phones (no stacked cards). */
+.keyTableWrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+.keyTableWrap table{width:100%;min-width:0!important;table-layout:fixed}
+.keyTableWrap th,.keyTableWrap td{overflow-wrap:anywhere}
+@media(max-width:650px){.keyTableWrap{padding:10px!important;margin-left:-2px;margin-right:-2px}.keyTableWrap table{font-size:10px!important}.keyTableWrap th,.keyTableWrap td{padding:7px 4px!important;white-space:normal!important}.keyTableWrap th:nth-child(1),.keyTableWrap td:nth-child(1){width:39%}.keyTableWrap th:nth-child(2),.keyTableWrap td:nth-child(2){width:20%}.keyTableWrap th:nth-child(3),.keyTableWrap td:nth-child(3){width:17%}.keyTableWrap th:nth-child(4),.keyTableWrap td:nth-child(4){width:24%}.keyTableWrap code{font-size:9px!important;padding:5px 4px!important;max-width:100%;word-break:break-all}.keyTableWrap .keyAction{font-size:8px!important;padding:5px 5px!important;letter-spacing:0!important;margin:2px 0!important}.keyTableWrap .renewAction{margin-left:0!important}.genBtns{flex-wrap:wrap}.genBtns .btn{flex:1 1 140px}}
+</style>
+<section class="section" id="create"><div class="wrap">
+<div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
+<div class="generator reveal" data-reveal>
+<div class="genMain"><h3>Free Key Generator</h3><p><b>ID:</b> Tidak perlu memasukkan username di website. Selesaikan misi LootLabs terlebih dahulu. <b>EN:</b> Complete the LootLabs mission to unlock key creation.</p>
+<div class="genBtns"><button class="btn primary" id="startMissionBtn">✦ START MISSION</button><button class="btn secondary" id="createBtn" aria-disabled="true" hidden style="display:none">CREATE KEY</button><a class="btn secondary" href="#premium">View Premium</a></div><p id="missionStatus" role="status" style="margin-top:14px;color:var(--muted)">Status: misi belum dimulai.</p><p style="font-size:12px;color:var(--muted)">Create Key maksimal 3 kali per bulan per sesi browser. Key yang expired bisa diperbarui setelah menyelesaikan misi baru.</p></div>
+<div class="genSide"><div class="resultLabel">YOUR KEY</div><div class="keyout" id="keyOut">Your key will appear here after verification.</div><button class="copy" id="copyBtn">COPY KEY</button><div class="hint">Key berlaku 24 jam setelah di-redeem. Key expired tetap tercatat dan dapat diperbarui setelah misi baru terverifikasi.</div></div>
+<div class="keyTableWrap" style="grid-column:1/-1;margin-top:22px;overflow-x:auto;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:14px;padding:16px;background:rgba(0,0,0,.15)"><div style="font-size:12px;font-weight:900;letter-spacing:1.5px;margin-bottom:12px">YOUR KEYS</div><table style="width:100%;border-collapse:collapse;min-width:580px;font-size:12px"><thead><tr style="text-align:left;opacity:.7"><th style="padding:10px">YOUR KEY</th><th style="padding:10px">TIME LEFT</th><th style="padding:10px">STATUS</th><th style="padding:10px">ACTIONS</th></tr></thead><tbody id="keysTableBody"><tr><td colspan="4" style="padding:14px;opacity:.65">No keys yet.</td></tr></tbody></table></div>
+</div>
+</div></section>
+
+<section class="section premium" id="premium"><div class="wrap">
+<div class="head reveal" data-reveal><div class="kicker">02 — Premium</div><h2>Premium, without the clutter.</h2><p>Pilih paket premium lalu lanjutkan melalui Discord resmi VRILZ.</p></div>
+<div class="plans stagger" data-reveal>
+<div class="plan" data-scroll="#guide"><div class="planIcon">◈</div><h3>30 Days</h3><div class="price">$2 <small>/ 30 days</small></div><div class="desc">Premium access for one month.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>30-day access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
+<div class="plan featured" data-scroll="#guide"><span class="badge">MOST POPULAR</span><div class="planIcon">✦</div><h3>2 Months</h3><div class="price">$5 <small>/ 2 months</small></div><div class="desc">Extended access for regular users.</div><div class="features"><div><span class="check">✓</span>Premium Lua access</div><div><span class="check">✓</span>2-month access</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
+<div class="plan" data-scroll="#guide"><div class="planIcon">♛</div><h3>Permanent</h3><div class="price">$20 <small>/ lifetime</small></div><div class="desc">One-time premium access with no expiry.</div><div class="features"><div><span class="check">✓</span>Permanent Lua access</div><div><span class="check">✓</span>No expiry</div><div><span class="check">✓</span>Discord support</div></div><a class="order" href="https://discord.gg/sWGKFdPdR" target="_blank" rel="noopener">ORDER ON DISCORD ↗</a></div>
+</div></div></section>
+
+
+
 
 <section class="section" id="guide"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">03 — How To</div><h2>Everything, step by step.</h2><p>Panduan Bahasa Indonesia + English. Tidak ada redeem key di website.</p></div>
