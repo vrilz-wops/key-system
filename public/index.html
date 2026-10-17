@@ -784,6 +784,56 @@ body{background:radial-gradient(ellipse at 50% 0%,rgba(94,57,130,.20),transparen
 .keyTableWrap table{width:100%;min-width:0!important;table-layout:fixed}
 .keyTableWrap th,.keyTableWrap td{overflow-wrap:anywhere}
 @media(max-width:650px){.keyTableWrap{padding:10px!important;margin-left:-2px;margin-right:-2px}.keyTableWrap table{font-size:10px!important}.keyTableWrap th,.keyTableWrap td{padding:7px 4px!important;white-space:normal!important}.keyTableWrap th:nth-child(1),.keyTableWrap td:nth-child(1){width:39%}.keyTableWrap th:nth-child(2),.keyTableWrap td:nth-child(2){width:20%}.keyTableWrap th:nth-child(3),.keyTableWrap td:nth-child(3){width:17%}.keyTableWrap th:nth-child(4),.keyTableWrap td:nth-child(4){width:24%}.keyTableWrap code{font-size:9px!important;padding:5px 4px!important;max-width:100%;word-break:break-all}.keyTableWrap .keyAction{font-size:8px!important;padding:5px 5px!important;letter-spacing:0!important;margin:2px 0!important}.keyTableWrap .renewAction{margin-left:0!important}.genBtns{flex-wrap:wrap}.genBtns .btn{flex:1 1 140px}}
+
+/* ===== VRILZHUB BRUTAL / FULL-COVER LOADER REDESIGN ===== */
+:root{--black:#080a08;--black-2:#0b0e0b;--black-3:#111511;--panel:#111511;--panel-2:#171c16;--gold:#c7ff35;--gold-hi:#e3ff9b;--gold-deep:#78a900;--platinum:#f5f7ef;--silver:#b4b9ad;--muted:#858d7d;--line:rgba(245,247,239,.16);--line-gold:rgba(199,255,53,.48);--radius:4px}
+body{background:#080a08!important;color:#f5f7ef;background-image:radial-gradient(ellipse at 50% -12%,rgba(199,255,53,.13),transparent 42%),linear-gradient(180deg,#080a08,#0d100c 50%,#080a08)!important}
+::selection{background:#c7ff35;color:#080a08}
+.announc{border-bottom:1px solid #c7ff35!important}
+.nav,.navbar{backdrop-filter:blur(18px)}
+.hero{background:linear-gradient(135deg,#10150c 0%,#080a08 60%,#141b0d 100%)!important}
+.hero h1,.hero h2{letter-spacing:-.065em!important;text-transform:uppercase!important;font-weight:1000!important}
+.hero .shine{background:linear-gradient(100deg,#f5f7ef 0%,#c7ff35 45%,#f5f7ef 90%)!important;-webkit-background-clip:text!important;background-clip:text!important}
+.btn,.gameButton{border-radius:3px!important;text-transform:uppercase;letter-spacing:1px;font-weight:900!important}
+.section .head h2{text-transform:uppercase;letter-spacing:-.055em;font-weight:1000}
+.gameGridMulti{max-width:1120px!important;gap:30px!important}
+.gameGridMulti .gameCard{display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important;border:1px solid #333b2c!important;border-radius:5px!important;background:#0d100c!important;box-shadow:10px 10px 0 rgba(199,255,53,.09),0 28px 80px #0009!important;transition:transform .22s,border-color .22s,box-shadow .22s!important}
+.gameGridMulti .gameCard:hover{transform:translateY(-5px)!important;border-color:#c7ff35!important;box-shadow:12px 14px 0 rgba(199,255,53,.16),0 30px 90px #000c!important}
+.gameGridMulti .gameVisual{position:relative!important;width:100%!important;height:clamp(300px,42vw,470px)!important;min-height:0!important;flex:none!important;border:0!important;border-bottom:2px solid #c7ff35!important;overflow:hidden!important;isolation:isolate}
+.gameGridMulti .gameVisual:before{z-index:1!important;opacity:.23!important;background-image:linear-gradient(90deg,rgba(199,255,53,.2) 1px,transparent 1px),linear-gradient(rgba(199,255,53,.2) 1px,transparent 1px)!important;background-size:34px 34px!important;mask-image:linear-gradient(to bottom,#000,transparent 90%)}
+.gameGridMulti .gameVisual:after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 35%,rgba(0,0,0,.88) 100%);pointer-events:none}
+.gameGridMulti .gameVisualPet{background:linear-gradient(135deg,#17331a,#070a07 75%)!important}
+.gameGridMulti .gameVisualFish{background:linear-gradient(135deg,#073e3b,#06100f 75%)!important}
+.gameGridMulti .gameVisualDice{background:linear-gradient(135deg,#372009,#0b0906 75%)!important}
+.gameGridMulti .gameVisual .rideLogo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:cover!important;object-position:center!important;z-index:0!important;filter:saturate(1.12) contrast(1.06)!important;transform:scale(1.015)}
+.gameGridMulti .gameVisual .gameGlow{width:55%!important;height:55%!important;filter:blur(75px)!important;opacity:.32}
+.gameGridMulti .gameTag{position:absolute!important;z-index:3!important;top:18px!important;left:18px!important;padding:10px 12px!important;background:#c7ff35!important;color:#080a08!important;border:1px solid #080a08!important;border-radius:2px!important;font-size:9px!important;font-weight:1000!important;letter-spacing:1.4px!important}
+.gameGridMulti .coverLabel{z-index:3!important;left:clamp(20px,4vw,42px)!important;right:20px!important;bottom:26px!important;align-items:flex-start!important;text-align:left!important}
+.gameGridMulti .coverLabel span{color:#c7ff35!important;font-size:10px!important;letter-spacing:2.8px!important;font-weight:900!important}
+.gameGridMulti .coverLabel strong{font-size:clamp(36px,7vw,76px)!important;line-height:.9!important;letter-spacing:-.07em!important;font-weight:1000!important;color:#fff!important;text-transform:uppercase!important}
+.gameGridMulti .coverLabel small{margin-top:12px!important;font-size:11px!important;letter-spacing:1.8px!important;text-transform:uppercase;color:#d4d9cc!important}
+.gameGridMulti .gameBody{padding:clamp(20px,4vw,38px)!important;display:flex!important;flex-direction:column!important;min-width:0!important}
+.gameGridMulti .gameTop{align-items:flex-start!important;border-bottom:1px solid #293023;padding-bottom:17px;margin-bottom:15px}
+.gameGridMulti .gameTop h3{font-size:clamp(30px,4vw,44px)!important;line-height:.95!important;letter-spacing:-.065em!important;text-transform:uppercase!important;font-weight:1000!important;color:#f5f7ef!important}
+.gameGridMulti .gameStatus{display:inline-flex!important;align-items:center;gap:8px;color:#c7ff35!important;font-size:9px!important;letter-spacing:1.8px!important;font-weight:1000!important}
+.gameGridMulti .gameStatus i{background:#c7ff35!important;box-shadow:0 0 12px #c7ff3580}
+.gameGridMulti .gameVersion{border:1px solid #c7ff35!important;border-radius:2px!important;color:#c7ff35!important;padding:8px 10px!important;font-size:9px!important;letter-spacing:1px}
+.gameGridMulti .gameBody>p{color:#aeb6a4!important;font-size:13px!important;line-height:1.85!important;max-width:68ch}
+.gameGridMulti .gameFeatures{gap:8px!important}
+.gameGridMulti .gameFeatures span{border:1px solid #30382a!important;background:#121710!important;color:#dfe5d6!important;border-radius:2px!important;padding:8px 10px!important;font-size:9px!important;letter-spacing:.7px!important;text-transform:uppercase;font-weight:800}
+.gameGridMulti .loaderBox{position:relative!important;margin-top:22px!important;padding:0!important;border:1px solid #3a452f!important;border-radius:4px!important;background:#080a08!important;box-shadow:none!important;overflow:hidden!important}
+.gameGridMulti .loaderHead{display:flex!important;align-items:center!important;gap:10px!important;padding:15px 16px!important;background:#c7ff35!important;color:#080a08!important;border:0!important;font-size:10px!important;letter-spacing:1.5px!important;font-weight:1000!important}
+.gameGridMulti .loaderDots{gap:4px!important}.gameGridMulti .loaderDots i{width:7px!important;height:7px!important;background:#080a08!important;opacity:1!important;border-radius:0!important;box-shadow:none!important}
+.gameGridMulti .loaderCode{margin:0!important;padding:20px!important;min-height:94px!important;display:flex!important;align-items:center!important;border:0!important;border-bottom:1px solid #2a3324!important;border-radius:0!important;background:#0b0e0a!important;color:#d9ff9a!important;font:500 12px/1.9 ui-monospace,SFMono-Regular,Menlo,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;user-select:all!important}
+.gameGridMulti .loaderCopy{position:relative!important;width:calc(100% - 24px)!important;margin:12px!important;padding:17px 18px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;border:1px solid #c7ff35!important;border-radius:3px!important;background:#c7ff35!important;color:#080a08!important;box-shadow:5px 5px 0 #4b6517!important;font-size:12px!important;font-weight:1000!important;letter-spacing:2px!important;transition:transform .15s,box-shadow .15s,background .15s!important}
+.gameGridMulti .loaderCopy:hover{background:#e3ff9b!important;filter:none!important;transform:translate(2px,2px)!important;box-shadow:3px 3px 0 #4b6517!important}
+.gameGridMulti .loaderCopy:active{transform:translate(5px,5px)!important;box-shadow:0 0 0 #4b6517!important}
+.gameGridMulti .loaderCopy span{font-size:17px!important;margin:0!important}
+.gameGridMulti .loaderToastLine{margin:12px 0 0!important;color:#78816e!important;text-align:left!important;font-size:10px!important;letter-spacing:.8px!important;text-transform:uppercase}
+.gameGridMulti .loaderFish .loaderCode,.gameGridMulti .loaderDice .loaderCode{color:#d9ff9a!important}
+@media(max-width:720px){.gameGridMulti{gap:24px!important}.gameGridMulti .gameVisual{height:300px!important;min-height:300px!important}.gameGridMulti .gameBody{padding:20px!important}.gameGridMulti .gameTop h3{font-size:30px!important}.gameGridMulti .loaderCode{font-size:10px!important;padding:15px!important;min-height:86px!important}.gameGridMulti .loaderCopy{padding:16px!important}.gameGridMulti .coverLabel strong{font-size:44px!important}}
+@media(min-width:721px){.gameGridMulti .gameVisual{height:clamp(360px,40vw,500px)!important}}
+
 </style>
 <section class="section" id="create"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Mulai misi LootLabs, selesaikan langkah yang diminta, lalu buat key setelah verifikasi server berhasil.</p></div>
