@@ -1121,6 +1121,67 @@ body:before{opacity:.025;background-size:64px 64px}
 }
 @media(max-width:380px){.heroShowcase{max-width:100%!important}.gameGridMulti .gameBody{padding:16px 14px!important}.gameGridMulti .gameTop h3{font-size:23px!important}}
 
+
+
+/* ===== PREMIUM CYBER TERMINAL — compact, cool-toned, animated ===== */
+:root{--terminal-accent:#8b9dff;--terminal-cyan:#72e5f5;--terminal-violet:#b8a1ff}
+.gameGridMulti .loaderBox{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  border:1px solid rgba(126,151,255,.26)!important;border-radius:13px!important;
+  background:linear-gradient(145deg,rgba(12,17,32,.98),rgba(8,12,23,.98))!important;
+  box-shadow:0 8px 22px rgba(3,6,20,.22),inset 0 1px rgba(255,255,255,.035)!important
+}
+.gameGridMulti .loaderBox:before{
+  content:""!important;position:absolute!important;inset:0!important;z-index:-1!important;pointer-events:none!important;opacity:1!important;
+  background:linear-gradient(110deg,transparent 0%,rgba(100,130,255,.035) 45%,transparent 70%),repeating-linear-gradient(0deg,transparent 0 5px,rgba(120,150,255,.025) 6px 7px)!important
+}
+.gameGridMulti .loaderBox:after{
+  content:""!important;position:absolute!important;z-index:2!important;left:0!important;right:0!important;top:-35%!important;height:25%!important;pointer-events:none!important;
+  background:linear-gradient(180deg,transparent,rgba(100,204,255,.105),rgba(151,125,255,.055),transparent)!important;
+  opacity:.9!important;animation:vrCyberScan 5s linear infinite!important
+}
+@keyframes vrCyberScan{0%{top:-35%}100%{top:130%}}
+.gameGridMulti .loaderHead{
+  position:relative!important;display:flex!important;align-items:center!important;gap:8px!important;min-height:0!important;
+  padding:9px 11px!important;background:linear-gradient(90deg,rgba(80,103,190,.12),rgba(255,255,255,.012))!important;
+  color:#d4ddff!important;border-bottom:1px solid rgba(132,153,255,.15)!important;
+  font:700 8px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace!important;letter-spacing:.65px!important
+}
+.gameGridMulti .loaderHead:after{content:"SYS:// ACTIVE"!important;margin-left:auto!important;color:#7fe3f4!important;font:700 7px/1 ui-monospace,monospace!important;letter-spacing:.65px!important;animation:vrSysBlink 1.7s steps(2,end) infinite!important}
+@keyframes vrSysBlink{50%{opacity:.42}}
+.gameGridMulti .loaderDots{display:flex!important;gap:4px!important}
+.gameGridMulti .loaderDots i{width:5px!important;height:5px!important;border-radius:50%!important;background:#8b9dff!important;box-shadow:0 0 7px rgba(139,157,255,.48)!important;animation:vrDotPulse 1.5s ease-in-out infinite!important}
+.gameGridMulti .loaderDots i:nth-child(2){background:#72e5f5!important;animation-delay:.2s!important}.gameGridMulti .loaderDots i:nth-child(3){background:#b8a1ff!important;animation-delay:.4s!important}
+@keyframes vrDotPulse{0%,100%{opacity:.45;transform:scale(.82)}50%{opacity:1;transform:scale(1.12)}}
+.gameGridMulti .loaderCode{
+  position:relative!important;display:block!important;min-height:0!important;max-height:58px!important;overflow:auto!important;
+  margin:0!important;padding:10px 12px!important;border:0!important;border-radius:0!important;border-bottom:1px solid rgba(126,151,255,.12)!important;
+  background:rgba(3,6,14,.42)!important;color:#b9d7ff!important;
+  font:9px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word!important;
+  text-shadow:0 0 12px rgba(110,159,255,.12)!important
+}
+.gameGridMulti .loaderCode:after{content:"▍"!important;display:inline-block!important;margin-left:3px!important;color:#72e5f5!important;text-shadow:0 0 8px rgba(114,229,245,.65)!important;animation:vrCodeCursor .9s steps(2,end) infinite!important}
+@keyframes vrCodeCursor{50%{opacity:0}}
+.gameGridMulti .loaderCopy{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  width:calc(100% - 20px)!important;min-height:36px!important;margin:8px 10px 9px!important;padding:9px 12px!important;
+  border:1px solid rgba(142,164,255,.44)!important;border-radius:999px!important;
+  background:linear-gradient(105deg,#6479e8 0%,#8171e8 48%,#4d9ed7 100%)!important;color:#fff!important;
+  box-shadow:0 5px 16px rgba(76,95,204,.22),inset 0 1px rgba(255,255,255,.22)!important;
+  font:800 8px/1.2 system-ui,sans-serif!important;letter-spacing:1.15px!important;
+  transition:transform .2s ease,filter .2s ease,box-shadow .2s ease!important
+}
+.gameGridMulti .loaderCopy:before{content:""!important;position:absolute!important;z-index:-1!important;top:-70%!important;left:-45%!important;width:35%!important;height:240%!important;transform:rotate(22deg)!important;background:linear-gradient(90deg,transparent,rgba(255,255,255,.34),transparent)!important;transition:left .55s ease!important}
+.gameGridMulti .loaderCopy:hover{transform:translateY(-1px)!important;filter:brightness(1.08)!important;box-shadow:0 8px 21px rgba(76,95,204,.3),inset 0 1px rgba(255,255,255,.25)!important}
+.gameGridMulti .loaderCopy:hover:before{left:120%!important}
+.gameGridMulti .loaderCopy:active{transform:scale(.985)!important}
+.gameGridMulti .loaderCopy span{font-size:12px!important;color:#fff!important}
+.gameGridMulti .loaderCopy.copying{animation:vrCyberCopied .7s ease-out!important;background:linear-gradient(100deg,#3e9bc4,#6c79e8,#8b73d9)!important}
+@keyframes vrCyberCopied{0%{box-shadow:0 0 0 0 rgba(114,229,245,0),0 5px 16px rgba(76,95,204,.22)}45%{box-shadow:0 0 0 4px rgba(114,229,245,.17),0 0 24px rgba(114,156,255,.48)}100%{box-shadow:0 0 0 0 rgba(114,229,245,0),0 5px 16px rgba(76,95,204,.22)}}
+.gameGridMulti .loaderToastLine{margin-top:6px!important;color:#8995b5!important;font-size:8px!important;letter-spacing:.1px!important}
+@media(max-width:700px){.gameGridMulti .loaderHead{padding:8px 10px!important}.gameGridMulti .loaderCode{font-size:8px!important;padding:9px 10px!important;max-height:54px!important}.gameGridMulti .loaderCopy{min-height:34px!important;margin:7px 9px 8px!important;width:calc(100% - 18px)!important;font-size:8px!important}}
+@media(prefers-reduced-motion:reduce){.gameGridMulti .loaderBox:after,.gameGridMulti .loaderHead:after,.gameGridMulti .loaderDots i,.gameGridMulti .loaderCode:after,.gameGridMulti .loaderCopy.copying{animation:none!important}}
+
 </style>
 <section class="section" id="create"><div class="wrap">
 <div class="head reveal" data-reveal><div class="kicker">01 — Key System</div><h2>Create your VRILZ key</h2><p>Complete the LootLabs mission and create your key after server verification succeeds.</p></div>
