@@ -3,50 +3,674 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VRILZ • Admin</title>
+<title>VRILZ • Premium Admin</title>
 <style>
-*{box-sizing:border-box} :root{color-scheme:dark;--orange:#ff7a00;--gold:#ffb547;--bg:#08090d;--panel:#11131a;--line:#252833;--muted:#9398a7;--text:#f7f8fb;--green:#55e69a}
-body{margin:0;min-height:100vh;color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 12% 0%,#492006 0,transparent 32%),radial-gradient(ellipse at 100% 18%,#25142b 0,transparent 28%),var(--bg);overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.15;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
-.container{position:relative;z-index:1;width:min(1180px,100%);margin:auto;padding:clamp(14px,3vw,32px)}.hidden{display:none!important}
-.brand{display:flex;align-items:center;gap:12px;font-weight:950;font-size:21px;letter-spacing:1.2px}.mark{width:46px;height:46px;flex:0 0 46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe09a,var(--gold),var(--orange));box-shadow:0 8px 30px #ff7a0035;color:#14100a;font-size:27px;font-style:italic;font-weight:1000}.brand small{display:block;color:#9ba0af;font-size:10px;letter-spacing:2.2px;margin-top:1px}
-.card{background:linear-gradient(145deg,#151720f5,#101117f5);border:1px solid #292c37;border-radius:22px;padding:clamp(18px,2.6vw,28px);margin-top:18px;box-shadow:0 20px 65px #0005;backdrop-filter:blur(16px)}
-.login{width:min(460px,100%);margin:clamp(34px,10vh,100px) auto 0;text-align:center;padding:clamp(24px,5vw,38px)}.login h1{font-size:clamp(27px,5vw,34px);letter-spacing:-1px;margin:25px 0 7px}.login p,.muted{color:var(--muted);font-size:13px;line-height:1.7}.login .brand{justify-content:center}
-input,select{font:inherit;width:100%;padding:14px 15px;border-radius:13px;border:1px solid #333744;background:#0a0b10;color:#fff;margin:7px 0;outline:none;min-height:49px}input:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a0020}input::placeholder{color:#717687}
-button{font:inherit;border:0;border-radius:13px;min-height:46px;padding:12px 17px;color:#15100a;background:linear-gradient(135deg,#ffd078,var(--orange));font-weight:900;cursor:pointer;box-shadow:0 7px 22px #ff730018;transition:transform .16s,filter .16s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:active{transform:translateY(0)}button:disabled{opacity:.55;cursor:wait;transform:none}.login button{width:100%;margin-top:12px;min-height:51px;letter-spacing:.6px}.danger{background:linear-gradient(135deg,#ff6b6b,#d62d43);color:white}.ghost{background:#1a1c25;color:#f5f6fa;border:1px solid #343744;box-shadow:none}
-.error{color:#ff8b94;min-height:20px;margin-top:12px;font-size:13px}.success{color:var(--green)}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.actions{display:flex;gap:8px;flex-wrap:wrap}.title{margin:0;font-size:clamp(18px,2vw,22px);letter-spacing:-.3px}.sub{margin:6px 0 18px;color:var(--muted);font-size:13px;line-height:1.6}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr);gap:18px}.wide{grid-column:1/-1}
-.table-wrap{overflow:auto;border:1px solid #282b35;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:820px}th,td{padding:14px 12px;text-align:left;border-bottom:1px solid #252832;font-size:12px;vertical-align:middle}th{color:#9ca1b1;font-size:10px;letter-spacing:1.1px;background:#0d0f15;position:sticky;top:0}tbody tr:hover{background:#ffffff04}tbody tr:last-child td{border-bottom:0}td strong{color:#fff}.badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.4px}.active{background:#103a2a;color:#6af2ac}.inactive{background:#421d26;color:#ff9ba6}.premium{color:#ffc66f}.free{color:#aaaeb9}.key{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.3px;word-break:break-all}
-.notice{border:1px solid #594022;background:#21180d;color:#ffce89;padding:13px 14px;border-radius:13px;font-size:12px;line-height:1.6;margin-top:16px}.key-result{display:none;margin-top:15px;padding:16px;border:1px solid #a95b16;background:linear-gradient(180deg,#2a1a0d,#15100c);border-radius:15px}.key-result.show{display:block}.key-result-label{font-size:10px;color:#ffbd69;font-weight:950;letter-spacing:1.2px}.generated-key{margin-top:9px;padding:13px;background:#090a0e;border:1px solid #403326;border-radius:11px;color:#fff;font:900 14px ui-monospace,monospace;word-break:break-all}.copy-key{margin-top:10px;width:100%}.create-status{min-height:20px;margin-top:10px;font-size:12px;color:#ffbd69}.brandbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:4px 0 20px}.status{font-size:12px;color:#a2a6b3;margin-top:10px}.status b{color:var(--green)}.eyebrow{font-size:10px;letter-spacing:1.8px;color:#ffb45c;font-weight:900;margin-bottom:9px}.admin-head{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:18px}.admin-head p{margin:7px 0 0;color:var(--muted);font-size:13px}.field-label{display:block;font-size:12px;color:#c7cad4;font-weight:750;margin:13px 0 4px}.duration-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.duration-row select,.duration-row input{margin:0}.primary-wide{width:100%;margin-top:14px}.stat-icon{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#302010;color:#ffb65d;margin-bottom:14px;font-size:19px}.pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #2c303a;background:#151821;border-radius:999px;color:#c5c8d2;font-size:11px}
-@media(max-width:760px){.container{padding:14px}.grid{grid-template-columns:1fr;gap:0}.wide{grid-column:auto}.brandbar,.admin-head{align-items:flex-start;flex-direction:column}.brandbar .actions{width:100%}.brandbar .actions button{flex:1}.card{border-radius:18px}.login{margin-top:5vh}.table-wrap{margin-inline:-2px}th,td{padding:12px 10px}}
-@media(min-width:1100px){.container{padding-top:34px}.login{margin-top:12vh}}
+  /* === RESET & BASE === */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --orange: #ff7a00;
+    --gold: #ffb547;
+    --amber: #ffd078;
+    --bg: #08090d;
+    --panel: #11131a;
+    --line: #252833;
+    --muted: #9398a7;
+    --text: #f7f8fb;
+    --green: #55e69a;
+    --red: #ff5e6e;
+    --radius-card: 24px;
+    --radius-input: 14px;
+    --shadow-card: 0 25px 80px rgba(0, 0, 0, 0.6);
+    --glass: rgba(17, 19, 26, 0.75);
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font: 15px/1.6 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background:
+      radial-gradient(ellipse 80% 50% at 12% 0%, rgba(255, 122, 0, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 18%, rgba(180, 80, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255, 122, 0, 0.06) 0%, transparent 50%),
+      var(--bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: min(1240px, 100%);
+    margin: auto;
+    padding: clamp(16px, 3.5vw, 36px);
+  }
+
+  .hidden { display: none !important; }
+
+  /* === BRAND === */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 950;
+    font-size: 22px;
+    letter-spacing: 1.4px;
+    color: #fff;
+  }
+
+  .mark {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #ffe6a8, var(--gold) 40%, var(--orange) 90%);
+    box-shadow: 0 8px 32px rgba(255, 122, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    color: #14100a;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: 1000;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+
+  .mark:hover { transform: scale(1.04) rotate(-3deg); }
+
+  .brand small {
+    display: block;
+    color: #8b90a0;
+    font-size: 10px;
+    letter-spacing: 2.6px;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* === LOGIN === */
+  .login {
+    width: min(460px, 100%);
+    margin: clamp(30px, 10vh, 120px) auto 0;
+    text-align: center;
+    padding: clamp(28px, 5vw, 44px);
+    background: linear-gradient(160deg, rgba(21, 23, 32, 0.95), rgba(12, 13, 19, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .login .brand { justify-content: center; margin-bottom: 8px; }
+
+  .login h1 {
+    font-size: clamp(28px, 5vw, 36px);
+    letter-spacing: -1.2px;
+    margin: 28px 0 8px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff 30%, #ffce7a 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .login p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  /* === INPUTS === */
+  input, select {
+    font: inherit;
+    width: 100%;
+    padding: 15px 16px;
+    border-radius: var(--radius-input);
+    border: 1px solid #2d303c;
+    background: #0a0b10;
+    color: #fff;
+    margin: 7px 0;
+    outline: none;
+    min-height: 52px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    font-size: 14px;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.12);
+    background: #0c0d13;
+  }
+
+  input::placeholder { color: #5f6373; font-weight: 400; }
+
+  /* === BUTTONS === */
+  button {
+    font: inherit;
+    border: 0;
+    border-radius: var(--radius-input);
+    min-height: 48px;
+    padding: 13px 20px;
+    color: #15100a;
+    background: linear-gradient(135deg, #ffd078, #ffb547 40%, var(--orange));
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(255, 115, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: transform 0.18s, filter 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+  }
+
+  button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 34px rgba(255, 115, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  button:active { transform: translateY(0); }
+  button:disabled { opacity: 0.5; cursor: wait; transform: none; filter: grayscale(0.4); }
+
+  .login button {
+    width: 100%;
+    margin-top: 16px;
+    min-height: 54px;
+    letter-spacing: 0.8px;
+    font-size: 14px;
+  }
+
+  .danger {
+    background: linear-gradient(135deg, #ff6b7a, #d62d43);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(214, 45, 67, 0.25);
+  }
+
+  .danger:hover { box-shadow: 0 10px 28px rgba(214, 45, 67, 0.35); }
+
+  .ghost {
+    background: rgba(26, 28, 37, 0.9);
+    color: #eef0f6;
+    border: 1px solid #343744;
+    box-shadow: none;
+    font-weight: 700;
+  }
+
+  .ghost:hover { background: #232631; border-color: #454956; }
+
+  /* === ERROR & STATUS === */
+  .error {
+    color: #ff8b94;
+    min-height: 22px;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .success { color: var(--green); }
+
+  /* === TOP BAR === */
+  .brandbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin: 4px 0 24px;
+    flex-wrap: wrap;
+  }
+
+  .brandbar .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .admin-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+
+  .admin-head p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 540px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #ffb45c;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .title {
+    margin: 0;
+    font-size: clamp(20px, 2.2vw, 24px);
+    letter-spacing: -0.4px;
+    font-weight: 900;
+  }
+
+  .sub {
+    margin: 8px 0 20px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(21, 24, 33, 0.8);
+    border-radius: 999px;
+    color: #c5c8d2;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+  }
+
+  .pill span { color: #65efa6; font-weight: 900; }
+
+  /* === CARDS & GRID === */
+  .card {
+    background: linear-gradient(160deg, rgba(21, 23, 32, 0.92), rgba(13, 14, 20, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-card);
+    padding: clamp(20px, 2.8vw, 32px);
+    margin-top: 0;
+    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: border-color 0.25s, box-shadow 0.25s;
+    height: 100%;
+  }
+
+  .card:hover {
+    border-color: rgba(255, 180, 85, 0.15);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .grid > .card { margin-top: 0; }
+
+  .wide { grid-column: 1 / -1; }
+
+  /* === STAT ICON === */
+  .stat-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #302010, #1f140a);
+    color: #ffb65d;
+    margin-bottom: 16px;
+    font-size: 21px;
+    border: 1px solid rgba(255, 180, 85, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  /* === FORM ELEMENTS === */
+  .field-label {
+    display: block;
+    font-size: 11px;
+    color: #c7cad4;
+    font-weight: 800;
+    margin: 16px 0 6px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  .duration-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .duration-row select,
+  .duration-row input { margin: 0; }
+
+  .primary-wide {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* === KEY RESULT === */
+  .notice {
+    border: 1px solid rgba(255, 190, 100, 0.18);
+    background: linear-gradient(180deg, rgba(255, 180, 70, 0.06), rgba(255, 180, 70, 0.02));
+    color: #ffce89;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1.65;
+    margin-top: 18px;
+  }
+
+  .key-result {
+    display: none;
+    margin-top: 18px;
+    padding: 20px;
+    border: 1px solid rgba(255, 160, 50, 0.35);
+    background: linear-gradient(180deg, rgba(42, 26, 13, 0.9), rgba(18, 13, 9, 0.95));
+    border-radius: 18px;
+    animation: fadeUp 0.4s ease;
+  }
+
+  .key-result.show { display: block; }
+
+  .key-result-label {
+    font-size: 10px;
+    color: #ffbd69;
+    font-weight: 950;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  .generated-key {
+    margin-top: 12px;
+    padding: 15px 16px;
+    background: #07080c;
+    border: 1px solid #3a2e20;
+    border-radius: 12px;
+    color: #fff;
+    font: 900 15px ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+    word-break: break-all;
+    letter-spacing: 0.4px;
+    line-height: 1.5;
+  }
+
+  .copy-key {
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  .create-status {
+    min-height: 22px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #ffbd69;
+    font-weight: 500;
+  }
+
+  .status {
+    font-size: 12px;
+    color: #a2a6b3;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .status b { color: var(--green); font-weight: 800; letter-spacing: 0.3px; }
+
+  /* === TABLE === */
+  .table-wrap {
+    overflow: auto;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    margin-top: 14px;
+    background: rgba(10, 11, 15, 0.6);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+  }
+
+  th, td {
+    padding: 15px 14px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 12px;
+    vertical-align: middle;
+  }
+
+  th {
+    color: #9ca1b1;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    background: #0d0f15;
+    position: sticky;
+    top: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    z-index: 2;
+    backdrop-filter: blur(8px);
+  }
+
+  tbody tr { transition: background 0.2s; }
+  tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td strong { color: #fff; font-weight: 800; }
+
+  .badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .active {
+    background: rgba(30, 120, 80, 0.25);
+    color: #6af2ac;
+    border: 1px solid rgba(106, 242, 172, 0.2);
+  }
+
+  .inactive {
+    background: rgba(180, 40, 60, 0.2);
+    color: #ff9ba6;
+    border: 1px solid rgba(255, 155, 166, 0.15);
+  }
+
+  .premium { color: #ffc66f; font-weight: 800; }
+  .free { color: #aaaeb9; font-weight: 600; }
+
+  .key {
+    font-family: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+    letter-spacing: 0.4px;
+    word-break: break-all;
+    font-size: 11.5px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .actions button {
+    min-height: 34px;
+    padding: 7px 12px;
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    border-radius: 10px;
+    font-weight: 800;
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .wide { grid-column: auto; }
+
+    .brandbar,
+    .admin-head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .brandbar .actions {
+      width: 100%;
+    }
+
+    .brandbar .actions button {
+      flex: 1;
+    }
+
+    .admin-head {
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 14px; }
+
+    .brand { font-size: 19px; gap: 11px; }
+    .mark { width: 44px; height: 44px; flex: 0 0 44px; font-size: 26px; border-radius: 13px; }
+    .brand small { font-size: 9px; letter-spacing: 2px; }
+
+    .login { margin-top: 6vh; padding: 24px 20px; }
+    .login h1 { font-size: 28px; margin-top: 22px; }
+
+    .card { padding: 18px; border-radius: 20px; }
+
+    .title { font-size: 19px; }
+
+    .table-wrap {
+      margin-inline: -4px;
+      border-radius: 12px;
+    }
+
+    th, td { padding: 11px 10px; }
+
+    .duration-row { grid-template-columns: 1fr; }
+
+    .actions button { flex: 1; justify-content: center; }
+  }
+
+  @media (max-width: 380px) {
+    .container { padding: 10px; }
+    .card { padding: 15px; }
+    .login { padding: 20px 16px; }
+  }
+
+  @media (min-width: 1200px) {
+    .container { padding-top: 40px; }
+    .login { margin-top: 12vh; }
+  }
+
+  /* === SCROLLBAR === */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2d38; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3c4050; }
+
+  /* === SELECTION === */
+  ::selection { background: rgba(255, 122, 0, 0.35); color: #fff; }
 </style>
 </head>
 <body>
 <div class="container">
+  <!-- LOGIN VIEW -->
   <section id="loginView" class="card login">
-    <div class="brand" style="justify-content:center"><div class="mark">V</div><div>VRILZ<small>SECURE ADMIN</small></div></div>
+    <div class="brand" style="justify-content:center">
+      <div class="mark">V</div>
+      <div>VRILZ<small>SECURE ADMIN</small></div>
+    </div>
     <h1>Admin Login</h1>
-    <p>Admin Byypass.</p>
+    <p>Masukkan kredensial admin untuk mengakses panel kontrol.</p>
     <input id="username" autocomplete="username" placeholder="Admin username">
     <input id="password" type="password" autocomplete="current-password" placeholder="Admin password">
     <button id="loginBtn" type="button">MASUK KE DASHBOARD <span aria-hidden="true">→</span></button>
     <div id="loginError" class="error"></div>
   </section>
 
+  <!-- ADMIN VIEW -->
   <section id="adminView" class="hidden">
     <div class="brandbar">
-      <div class="brand"><div class="mark">V</div><div>VRILZ<small>KEY SYSTEM ADMIN</small></div></div>
-      <div class="actions"><button id="refreshBtn" class="ghost" type="button">↻ REFRESH</button><button id="logoutBtn" class="danger" type="button">LOGOUT</button></div>
+      <div class="brand">
+        <div class="mark">V</div>
+        <div>VRILZ<small>KEY SYSTEM ADMIN</small></div>
+      </div>
+      <div class="actions">
+        <button id="refreshBtn" class="ghost" type="button">↻ REFRESH</button>
+        <button id="logoutBtn" class="danger" type="button">LOGOUT</button>
+      </div>
     </div>
 
-    <div class="admin-head"><div><div class="eyebrow">CONTROL CENTER / KEY MANAGEMENT</div><h1 class="title" style="font-size:clamp(25px,4vw,34px)">Admin Dashboard</h1><p>Kelola akses premium dan buat key sesuai durasi yang kamu butuhkan.</p></div><span class="pill">● <span style="color:#65efa6">System online</span></span></div>
+    <div class="admin-head">
+      <div>
+        <div class="eyebrow">CONTROL CENTER / KEY MANAGEMENT</div>
+        <h1 class="title" style="font-size:clamp(25px,4vw,34px)">Admin Dashboard</h1>
+        <p>Kelola akses premium dan buat key sesuai durasi yang kamu butuhkan.</p>
+      </div>
+      <span class="pill">● <span>System online</span></span>
+    </div>
+
     <div class="grid">
+      <!-- GENERATE KEY CARD -->
       <div class="card">
-        <div class="stat-icon">✦</div><h2 class="title">Generate Premium Key</h2>
+        <div class="stat-icon">✦</div>
+        <h2 class="title">Generate Premium Key</h2>
         <p class="sub">Pilih durasi siap pakai atau tentukan jumlah hari sendiri.</p>
         <label class="field-label" for="duration">PILIH DURASI</label>
-        <select id="duration"><option value="1">1 Hari</option><option value="3">3 Hari</option><option value="7" selected>7 Hari</option><option value="30">30 Hari</option><option value="60">60 Hari</option><option value="90">90 Hari</option><option value="365">365 Hari</option><option value="custom">Custom — isi sendiri</option><option value="permanent">Permanent / Selamanya</option></select>
-        <div id="customDurationWrap" class="hidden"><label class="field-label" for="customDuration">JUMLAH HARI (1–36500)</label><input id="customDuration" type="number" inputmode="numeric" min="1" max="36500" placeholder="Contoh: 120"></div>
+        <select id="duration">
+          <option value="1">1 Hari</option>
+          <option value="3">3 Hari</option>
+          <option value="7" selected>7 Hari</option>
+          <option value="30">30 Hari</option>
+          <option value="60">60 Hari</option>
+          <option value="90">90 Hari</option>
+          <option value="365">365 Hari</option>
+          <option value="custom">Custom — isi sendiri</option>
+          <option value="permanent">Permanent / Selamanya</option>
+        </select>
+        <div id="customDurationWrap" class="hidden">
+          <label class="field-label" for="customDuration">JUMLAH HARI (1–36500)</label>
+          <input id="customDuration" type="number" inputmode="numeric" min="1" max="36500" placeholder="Contoh: 120">
+        </div>
         <button id="generateBtn" class="primary-wide" type="button">✦ &nbsp; GENERATE PREMIUM KEY</button>
         <div id="createStatus" class="create-status"></div>
         <div id="keyResult" class="key-result">
@@ -56,114 +680,300 @@ button{font:inherit;border:0;border-radius:13px;min-height:46px;padding:12px 17p
         </div>
         <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
       </div>
+
+      <!-- ADMIN STATUS CARD -->
       <div class="card">
-        <div class="stat-icon">⌘</div><h2 class="title">Admin Status</h2>
+        <div class="stat-icon">⌘</div>
+        <h2 class="title">Admin Status</h2>
         <p class="sub">Informasi sesi dan koneksi panel admin.</p>
-        <div class="status">STATUS: <b>AUTHENTICATED</b></div><div class="status">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
+        <div class="status">STATUS: <b>AUTHENTICATED</b></div>
+        <div class="status">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
         <div class="notice">Simpan key yang baru dibuat. Key hanya bisa digunakan sesuai kebijakan aktivasi dan masa berlaku sistem.</div>
       </div>
+
+      <!-- KEY DATABASE TABLE -->
       <div class="card wide">
         <h2 class="title">Key Database</h2>
         <p class="sub">Kolom USER menampilkan username Roblox yang dipakai saat FREE key dibuat.</p>
-        <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>ID</th><th>KEY</th><th>TYPE</th><th>USER</th><th>STATUS</th><th>EXPIRED</th><th>ACTION</th></tr></thead><tbody id="keys"><tr><td colspan="7">Loading...</td></tr></tbody></table></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>KEY</th>
+                <th>TYPE</th>
+                <th>USER</th>
+                <th>STATUS</th>
+                <th>EXPIRED</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="keys">
+              <tr><td colspan="7">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
 </div>
+
 <script>
-const API_BASE = window.location.origin;
-let adminToken = sessionStorage.getItem("vrilz_admin_session") || "";
+  const API_BASE = window.location.origin;
+  let adminToken = sessionStorage.getItem("vrilz_admin_session") || "";
 
-function authHeaders(){return {"Content-Type":"application/json","Authorization":"Bearer "+adminToken};}
-function showAdmin(){document.getElementById("loginView").classList.add("hidden");document.getElementById("adminView").classList.remove("hidden");loadKeys();}
-function showLogin(msg=""){document.getElementById("loginView").classList.remove("hidden");document.getElementById("adminView").classList.add("hidden");document.getElementById("loginError").textContent=msg;}
+  function authHeaders() {
+    return {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + adminToken
+    };
+  }
 
-async function login(){
-  const btn=document.getElementById("loginBtn"), username=document.getElementById("username").value.trim(), password=document.getElementById("password").value;
-  const err=document.getElementById("loginError"); err.textContent="";
-  if(!username||!password){err.textContent="Username dan password wajib diisi.";return;}
-  btn.disabled=true; btn.textContent="CHECKING...";
-  try{
-    const r=await fetch(API_BASE+"/api/admin/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});
-    const d=await r.json();
-    if(!r.ok||!d.success){err.textContent=d.message||"Login gagal.";return;}
-    adminToken=d.token; sessionStorage.setItem("vrilz_admin_session",adminToken); showAdmin();
-  }catch(e){err.textContent="Server tidak dapat dihubungi.";}
-  finally{btn.disabled=false;btn.textContent="LOGIN ADMIN";}
-}
+  function showAdmin() {
+    document.getElementById("loginView").classList.add("hidden");
+    document.getElementById("adminView").classList.remove("hidden");
+    loadKeys();
+  }
 
-function logout(){adminToken="";sessionStorage.removeItem("vrilz_admin_session");showLogin();}
+  function showLogin(msg = "") {
+    document.getElementById("loginView").classList.remove("hidden");
+    document.getElementById("adminView").classList.add("hidden");
+    document.getElementById("loginError").textContent = msg;
+  }
 
-async function api(path, options={}){
-  const r=await fetch(API_BASE+path,{...options,headers:{...(options.headers||{}),...authHeaders()}});
-  let d={}; try{d=await r.json()}catch{}
-  if(r.status===401){logout();throw new Error("Unauthorized");}
-  return {r,d};
-}
+  async function login() {
+    const btn = document.getElementById("loginBtn");
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const err = document.getElementById("loginError");
+    err.textContent = "";
 
-async function createKey(){
-  const selected=document.getElementById("duration").value;
-  const custom=document.getElementById("customDuration");
-  const duration=selected==="permanent"?0:(selected==="custom"?Number(custom.value):Number(selected));
-  const btn=document.getElementById("generateBtn");
-  const status=document.getElementById("createStatus");
-  const result=document.getElementById("keyResult");
-  const keyBox=document.getElementById("generatedKey");
-  status.textContent=""; result.classList.remove("show");
-  if(selected==="custom"&&(!Number.isInteger(duration)||duration<1||duration>36500)){status.textContent="Masukkan durasi 1 sampai 36500 hari.";custom.focus();return;}
-  btn.disabled=true; btn.textContent="MEMBUAT KEY...";
-  try{
-    const {r,d}=await api("/api/admin/create",{method:"POST",body:JSON.stringify({duration_days:duration,permanent:selected==="permanent"})});
-    if(!r.ok||!d.success){status.textContent=d.message||"Gagal membuat key.";return;}
-    keyBox.textContent=d.key; result.classList.add("show"); status.textContent="Premium key berhasil dibuat."; loadKeys();
-  }catch(e){status.textContent="Server tidak dapat dihubungi.";}
-  finally{btn.disabled=false;btn.textContent="✦   GENERATE PREMIUM KEY";}
-}
+    if (!username || !password) {
+      err.textContent = "Username dan password wajib diisi.";
+      return;
+    }
 
-async function copyGeneratedKey(){
-  const key=document.getElementById("generatedKey").textContent.trim();
-  if(!key)return;
-  try{await navigator.clipboard.writeText(key); const b=document.querySelector(".copy-key"); const old=b.textContent; b.textContent="COPIED ✓"; setTimeout(()=>b.textContent=old,1400);}
-  catch(e){statusCopyFallback(key);}
-}
+    btn.disabled = true;
+    btn.textContent = "CHECKING...";
 
-function statusCopyFallback(key){
-  const ta=document.createElement("textarea"); ta.value=key; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
-  const b=document.querySelector(".copy-key"); const old=b.textContent; b.textContent="COPIED ✓"; setTimeout(()=>b.textContent=old,1400);
-}
+    try {
+      const r = await fetch(API_BASE + "/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+      const d = await r.json();
 
-async function loadKeys(){
-  if(!adminToken)return;
-  try{
-    const {r,d}=await api("/api/admin/keys");
-    if(!r.ok||!d.success){alert(d.message||"Gagal mengambil data.");return;}
-    const tbody=document.getElementById("keys"); tbody.innerHTML="";
-    if(!d.keys.length){tbody.innerHTML='<tr><td colspan="7">Belum ada key.</td></tr>';return;}
-    d.keys.forEach(key=>{
-      const tr=document.createElement("tr");
-      const active=Number(key.active)===1;
-      const expired=Number(key.duration_seconds)===0&&key.type==="PREMIUM"?"PERMANENT":(key.expires_at?new Date(Number(key.expires_at)).toLocaleString("id-ID"):"Belum diaktifkan");
-      tr.innerHTML=`<td>${key.id}</td><td class="key"><strong>${escapeHtml(key.key)}</strong></td><td class="${key.type==="PREMIUM"?"premium":"free"}">${escapeHtml(key.type)}</td><td>${escapeHtml(key.username||"-")}</td><td><span class="badge ${active?"active":"inactive"}">${active?"ACTIVE":"INACTIVE"}</span></td><td>${escapeHtml(expired)}</td><td><div class="actions"><button class="danger" onclick="revokeKey(${key.id})">REVOKE</button><button class="danger" onclick="deleteKey(${key.id})">DELETE</button></div></td>`;
-      tbody.appendChild(tr);
+      if (!r.ok || !d.success) {
+        err.textContent = d.message || "Login gagal.";
+        return;
+      }
+
+      adminToken = d.token;
+      sessionStorage.setItem("vrilz_admin_session", adminToken);
+      showAdmin();
+    } catch (e) {
+      err.textContent = "Server tidak dapat dihubungi.";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "LOGIN ADMIN";
+    }
+  }
+
+  function logout() {
+    adminToken = "";
+    sessionStorage.removeItem("vrilz_admin_session");
+    showLogin();
+  }
+
+  async function api(path, options = {}) {
+    const r = await fetch(API_BASE + path, {
+      ...options,
+      headers: { ...(options.headers || {}), ...authHeaders() }
     });
-  }catch(e){}
-}
+    let d = {};
+    try { d = await r.json(); } catch (e) {}
+    if (r.status === 401) {
+      logout();
+      throw new Error("Unauthorized");
+    }
+    return { r, d };
+  }
 
-async function revokeKey(id){if(!confirm("Revoke key ini?"))return;try{const {d}=await api("/api/admin/revoke",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
-async function deleteKey(id){if(!confirm("Hapus key secara permanen?"))return;try{const {d}=await api("/api/admin/delete",{method:"POST",body:JSON.stringify({id})});alert(d.message||"Selesai");loadKeys();}catch(e){}}
-function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+  async function createKey() {
+    const selected = document.getElementById("duration").value;
+    const custom = document.getElementById("customDuration");
+    const duration = selected === "permanent" ? 0 :
+                     (selected === "custom" ? Number(custom.value) : Number(selected));
+    const btn = document.getElementById("generateBtn");
+    const status = document.getElementById("createStatus");
+    const result = document.getElementById("keyResult");
+    const keyBox = document.getElementById("generatedKey");
 
+    status.textContent = "";
+    result.classList.remove("show");
 
-// Bind actions explicitly so login works even when inline event handlers are restricted.
-document.getElementById("loginBtn").addEventListener("click", login);
-document.getElementById("password").addEventListener("keydown", e=>{if(e.key==="Enter")login();});
-document.getElementById("username").addEventListener("keydown", e=>{if(e.key==="Enter")document.getElementById("password").focus();});
-document.getElementById("generateBtn").addEventListener("click", createKey);
-document.getElementById("copyBtn").addEventListener("click", copyGeneratedKey);
-document.getElementById("refreshBtn").addEventListener("click", loadKeys);
-document.getElementById("logoutBtn").addEventListener("click", logout);
-document.getElementById("duration").addEventListener("change", e=>{document.getElementById("customDurationWrap").classList.toggle("hidden",e.target.value!=="custom");});
-if(adminToken){showAdmin();}
+    if (selected === "custom" && (!Number.isInteger(duration) || duration < 1 || duration > 36500)) {
+      status.textContent = "Masukkan durasi 1 sampai 36500 hari.";
+      custom.focus();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "MEMBUAT KEY...";
+
+    try {
+      const { r, d } = await api("/api/admin/create", {
+        method: "POST",
+        body: JSON.stringify({
+          duration_days: duration,
+          permanent: selected === "permanent"
+        })
+      });
+
+      if (!r.ok || !d.success) {
+        status.textContent = d.message || "Gagal membuat key.";
+        return;
+      }
+
+      keyBox.textContent = d.key;
+      result.classList.add("show");
+      status.textContent = "Premium key berhasil dibuat.";
+      loadKeys();
+    } catch (e) {
+      status.textContent = "Server tidak dapat dihubungi.";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "✦   GENERATE PREMIUM KEY";
+    }
+  }
+
+  async function copyGeneratedKey() {
+    const key = document.getElementById("generatedKey").textContent.trim();
+    if (!key) return;
+
+    try {
+      await navigator.clipboard.writeText(key);
+      const b = document.querySelector(".copy-key");
+      const old = b.textContent;
+      b.textContent = "COPIED ✓";
+      setTimeout(() => b.textContent = old, 1400);
+    } catch (e) {
+      statusCopyFallback(key);
+    }
+  }
+
+  function statusCopyFallback(key) {
+    const ta = document.createElement("textarea");
+    ta.value = key;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+
+    const b = document.querySelector(".copy-key");
+    const old = b.textContent;
+    b.textContent = "COPIED ✓";
+    setTimeout(() => b.textContent = old, 1400);
+  }
+
+  async function loadKeys() {
+    if (!adminToken) return;
+
+    try {
+      const { r, d } = await api("/api/admin/keys");
+      if (!r.ok || !d.success) {
+        alert(d.message || "Gagal mengambil data.");
+        return;
+      }
+
+      const tbody = document.getElementById("keys");
+      tbody.innerHTML = "";
+
+      if (!d.keys.length) {
+        tbody.innerHTML = '<tr><td colspan="7">Belum ada key.</td></tr>';
+        return;
+      }
+
+      d.keys.forEach(key => {
+        const tr = document.createElement("tr");
+        const active = Number(key.active) === 1;
+        const expired = Number(key.duration_seconds) === 0 && key.type === "PREMIUM" ?
+          "PERMANENT" :
+          (key.expires_at ? new Date(Number(key.expires_at)).toLocaleString("id-ID") : "Belum diaktifkan");
+
+        tr.innerHTML = `
+          <td>${key.id}</td>
+          <td class="key"><strong>${escapeHtml(key.key)}</strong></td>
+          <td class="${key.type === "PREMIUM" ? "premium" : "free"}">${escapeHtml(key.type)}</td>
+          <td>${escapeHtml(key.username || "-")}</td>
+          <td><span class="badge ${active ? "active" : "inactive"}">${active ? "ACTIVE" : "INACTIVE"}</span></td>
+          <td>${escapeHtml(expired)}</td>
+          <td>
+            <div class="actions">
+              <button class="danger" onclick="revokeKey(${key.id})">REVOKE</button>
+              <button class="danger" onclick="deleteKey(${key.id})">DELETE</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } catch (e) {}
+  }
+
+  async function revokeKey(id) {
+    if (!confirm("Revoke key ini?")) return;
+    try {
+      const { d } = await api("/api/admin/revoke", {
+        method: "POST",
+        body: JSON.stringify({ id })
+      });
+      alert(d.message || "Selesai");
+      loadKeys();
+    } catch (e) {}
+  }
+
+  async function deleteKey(id) {
+    if (!confirm("Hapus key secara permanen?")) return;
+    try {
+      const { d } = await api("/api/admin/delete", {
+        method: "POST",
+        body: JSON.stringify({ id })
+      });
+      alert(d.message || "Selesai");
+      loadKeys();
+    } catch (e) {}
+  }
+
+  function escapeHtml(v) {
+    return String(v)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  // === EVENT BINDINGS ===
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("password").addEventListener("keydown", e => {
+    if (e.key === "Enter") login();
+  });
+  document.getElementById("username").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("password").focus();
+  });
+  document.getElementById("generateBtn").addEventListener("click", createKey);
+  document.getElementById("copyBtn").addEventListener("click", copyGeneratedKey);
+  document.getElementById("refreshBtn").addEventListener("click", loadKeys);
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+  document.getElementById("duration").addEventListener("change", e => {
+    document.getElementById("customDurationWrap").classList.toggle("hidden", e.target.value !== "custom");
+  });
+
+  // auto login if token exists
+  if (adminToken) {
+    showAdmin();
+  }
 </script>
 </body>
 </html>
