@@ -5,616 +5,282 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VRILZ • Premium Admin</title>
 <style>
-  /* === RESET & BASE === */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  /* ============ RESET & BASE ============ */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --orange:#ff7a00;
+    --gold:#ffb547;
+    --amber:#ffd078;
+    --bg:#07080c;
+    --panel:#0f1118;
+    --panel2:#14161f;
+    --line:rgba(255,255,255,0.07);
+    --muted:#8e93a3;
+    --text:#f6f7fb;
+    --green:#55e69a;
+    --red:#ff5e6e;
+    --purple:#a86bff;
+    --radius:22px;
+    color-scheme:dark;
   }
-
-  :root {
-    --orange: #ff7a00;
-    --gold: #ffb547;
-    --amber: #ffd078;
-    --bg: #08090d;
-    --panel: #11131a;
-    --line: #252833;
-    --muted: #9398a7;
-    --text: #f7f8fb;
-    --green: #55e69a;
-    --red: #ff5e6e;
-    --radius-card: 24px;
-    --radius-input: 14px;
-    --shadow-card: 0 25px 80px rgba(0, 0, 0, 0.6);
-    --glass: rgba(17, 19, 26, 0.75);
-    color-scheme: dark;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    color: var(--text);
-    font: 15px/1.6 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  body{
+    margin:0; min-height:100vh; color:var(--text);
+    font:15px/1.55 'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
     background:
-      radial-gradient(ellipse 80% 50% at 12% 0%, rgba(255, 122, 0, 0.15) 0%, transparent 55%),
-      radial-gradient(ellipse 60% 40% at 100% 18%, rgba(180, 80, 255, 0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255, 122, 0, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 45% at 8% -5%, rgba(255,122,0,.18), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 100% 8%, rgba(168,107,255,.12), transparent 55%),
+      radial-gradient(ellipse 60% 45% at 50% 110%, rgba(255,122,0,.08), transparent 60%),
       var(--bg);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.10;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at 50% 25%,#000 25%,transparent 70%);
+    -webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000 25%,transparent 70%);
+  }
+  .hidden{ display:none !important; }
+  ::-webkit-scrollbar{ width:9px; height:9px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{ background:#262a36; border-radius:99px; }
+  ::-webkit-scrollbar-thumb:hover{ background:#3a3f52; }
+  ::selection{ background:rgba(255,122,0,.35); color:#fff; }
+
+  /* ============ BRAND ============ */
+  .brand{ display:flex; align-items:center; gap:12px; font-weight:950; font-size:20px; letter-spacing:1.2px; color:#fff; }
+  .mark{
+    width:46px; height:46px; flex:0 0 46px; border-radius:14px; display:grid; place-items:center;
+    background:linear-gradient(145deg,#ffe6a8,var(--gold) 40%,var(--orange) 90%);
+    box-shadow:0 8px 26px rgba(255,122,0,.35), inset 0 1px 0 rgba(255,255,255,.45);
+    color:#14100a; font-size:27px; font-style:italic; font-weight:1000; line-height:1;
+  }
+  .brand small{ display:block; color:#8b90a0; font-size:9px; letter-spacing:2.4px; margin-top:2px; font-weight:600; }
+
+  /* ============ BUTTONS ============ */
+  button{
+    font:inherit; border:0; border-radius:13px; min-height:46px; padding:12px 18px;
+    color:#15100a; background:linear-gradient(135deg,#ffd078,#ffb547 40%,var(--orange));
+    font-weight:900; cursor:pointer;
+    box-shadow:0 8px 26px rgba(255,115,0,.22), inset 0 1px 0 rgba(255,255,255,.3);
+    transition:transform .16s,filter .16s,box-shadow .16s; letter-spacing:.3px; white-space:nowrap;
+  }
+  button:hover{ filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,115,0,.3); }
+  button:active{ transform:translateY(0); }
+  button:disabled{ opacity:.5; cursor:wait; transform:none; filter:grayscale(.4); }
+  .ghost{ background:rgba(26,28,37,.9); color:#eef0f6; border:1px solid #343744; box-shadow:none; font-weight:700; }
+  .ghost:hover{ background:#232631; border-color:#454956; }
+  .danger{ background:linear-gradient(135deg,#ff6b7a,#d62d43); color:#fff; box-shadow:0 6px 20px rgba(214,45,67,.25); }
+  .danger:hover{ box-shadow:0 10px 28px rgba(214,45,67,.35); }
+
+  /* ============ INPUTS ============ */
+  input,select{
+    font:inherit; width:100%; padding:14px 15px; border-radius:13px;
+    border:1px solid #2d303c; background:#0a0b10; color:#fff; margin:6px 0; outline:none;
+    min-height:50px; font-size:14px; transition:border-color .2s,box-shadow .2s,background .2s;
+  }
+  input:focus,select:focus{ border-color:var(--orange); box-shadow:0 0 0 4px rgba(255,122,0,.13); background:#0c0d13; }
+  input::placeholder{ color:#5f6373; }
+
+  /* ============ LOGIN ============ */
+  .container{ position:relative; z-index:1; width:min(1240px,100%); margin:auto; padding:clamp(16px,3.5vw,36px); }
+  .login{
+    width:min(450px,100%); margin:clamp(30px,10vh,110px) auto 0; text-align:center;
+    padding:clamp(28px,5vw,44px);
+    background:linear-gradient(160deg,rgba(21,23,32,.96),rgba(11,12,18,.98));
+    border:1px solid rgba(255,255,255,.07); border-radius:26px;
+    box-shadow:0 30px 90px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.05);
+    backdrop-filter:blur(20px); animation:fadeUp .5s ease;
+  }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+  .login .brand{ justify-content:center; margin-bottom:6px; }
+  .login h1{
+    font-size:clamp(27px,5vw,34px); letter-spacing:-1.2px; margin:26px 0 8px; font-weight:900;
+    background:linear-gradient(135deg,#fff 30%,#ffce7a 85%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .login p{ color:var(--muted); font-size:13px; line-height:1.7; margin-bottom:16px; }
+  .login button{ width:100%; margin-top:14px; min-height:52px; letter-spacing:.7px; }
+  .error{ color:#ff8b94; min-height:22px; margin-top:12px; font-size:13px; font-weight:500; }
+
+  /* ============ APP SHELL (sidebar layout) ============ */
+  .app{ display:grid; grid-template-columns:250px minmax(0,1fr); gap:22px; align-items:start; }
+
+  /* ---- Sidebar ---- */
+  .sidebar{
+    position:sticky; top:24px;
+    background:linear-gradient(170deg,rgba(20,22,31,.95),rgba(11,12,18,.97));
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 18px; box-shadow:0 20px 60px rgba(0,0,0,.5);
+    backdrop-filter:blur(18px); display:flex; flex-direction:column; gap:6px;
+  }
+  .sidebar .brand{ margin-bottom:22px; padding:0 4px; }
+  .nav-label{ font-size:9px; letter-spacing:1.8px; color:#6b7080; font-weight:800; margin:16px 8px 8px; text-transform:uppercase; }
+  .nav-item{
+    display:flex; align-items:center; gap:11px; padding:11px 13px; border-radius:12px;
+    color:#b9bdca; font-size:13.5px; font-weight:600; cursor:pointer;
+    transition:background .18s,color .18s; border:1px solid transparent;
+  }
+  .nav-item .ico{ font-size:15px; width:20px; text-align:center; opacity:.85; }
+  .nav-item:hover{ background:rgba(255,255,255,.04); color:#fff; }
+  .nav-item.active{
+    background:linear-gradient(120deg,rgba(255,122,0,.18),rgba(255,181,71,.06));
+    color:#fff; border-color:rgba(255,180,85,.25);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .nav-item.active .ico{ opacity:1; }
+  .side-status{
+    margin-top:auto; padding:14px 15px; border-radius:14px;
+    background:rgba(255,255,255,.03); border:1px solid var(--line); font-size:11px; color:#9aa0b0;
+  }
+  .side-status b{ color:var(--green); font-weight:800; display:block; margin-top:3px; letter-spacing:.3px; }
+  .side-status .dot{ display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green); margin-right:6px; vertical-align:middle; }
+
+  /* ---- Main content ---- */
+  .main{ min-width:0; display:flex; flex-direction:column; gap:20px; }
+
+  .topbar{
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+    background:linear-gradient(150deg,rgba(20,22,31,.9),rgba(11,12,18,.95));
+    border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px;
+    box-shadow:0 16px 50px rgba(0,0,0,.4); backdrop-filter:blur(16px);
+  }
+  .topbar .eyebrow{ font-size:10px; letter-spacing:2px; color:#ffb45c; font-weight:900; text-transform:uppercase; margin-bottom:6px; }
+  .topbar h1{ font-size:clamp(20px,2.6vw,26px); letter-spacing:-.5px; font-weight:900; margin:0; }
+  .topbar .actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  /* ---- Stat cards ---- */
+  .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .stat{
+    background:linear-gradient(160deg,rgba(21,23,32,.92),rgba(12,13,19,.96));
+    border:1px solid var(--line); border-radius:18px; padding:20px;
+    box-shadow:0 14px 40px rgba(0,0,0,.4); position:relative; overflow:hidden;
+    transition:border-color .22s, transform .22s;
+  }
+  .stat:hover{ border-color:rgba(255,180,85,.22); transform:translateY(-2px); }
+  .stat .ico{
+    width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-size:19px;
+    background:linear-gradient(145deg,#302010,#1f140a); color:#ffb65d; margin-bottom:14px;
+    border:1px solid rgba(255,180,85,.14);
+  }
+  .stat .label{ font-size:10px; letter-spacing:1.4px; color:#8e93a3; font-weight:800; text-transform:uppercase; }
+  .stat .value{ font-size:26px; font-weight:950; letter-spacing:-.6px; margin-top:4px; }
+  .stat .value small{ font-size:12px; font-weight:600; color:#8e93a3; letter-spacing:0; }
+  .stat.green .ico{ background:linear-gradient(145deg,#10352a,#0b1f18); color:#6af2ac; border-color:rgba(106,242,172,.16); }
+  .stat.purple .ico{ background:linear-gradient(145deg,#221436,#150d22); color:#c79bff; border-color:rgba(199,155,255,.16); }
+
+  /* ---- Panels ---- */
+  .panel{
+    background:linear-gradient(160deg,rgba(21,23,32,.92),rgba(12,13,19,.96));
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:clamp(20px,2.6vw,28px); box-shadow:0 20px 60px rgba(0,0,0,.45);
+    backdrop-filter:blur(16px);
+  }
+  .panel-head{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:6px; flex-wrap:wrap; }
+  .panel-head .h{ display:flex; align-items:center; gap:12px; }
+  .panel-head .ico{
+    width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:18px;
+    background:linear-gradient(145deg,#302010,#1f140a); color:#ffb65d; border:1px solid rgba(255,180,85,.14); flex:0 0 40px;
+  }
+  .panel-head h2{ font-size:18px; font-weight:900; letter-spacing:-.3px; margin:0; }
+  .panel .sub{ color:var(--muted); font-size:12.5px; line-height:1.6; margin:8px 0 16px; }
+
+  /* ---- Generator form ---- */
+  .gen-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field-label{ display:block; font-size:10.5px; color:#c7cad4; font-weight:800; margin:0 0 6px; letter-spacing:.6px; text-transform:uppercase; }
+  .primary-wide{ width:100%; margin-top:16px; min-height:52px; letter-spacing:.5px; }
+  .create-status{ min-height:22px; margin-top:12px; font-size:13px; color:#ffbd69; font-weight:500; }
+
+  .key-result{
+    display:none; margin-top:18px; padding:20px; border-radius:16px;
+    border:1px solid rgba(255,160,50,.35);
+    background:linear-gradient(180deg,rgba(42,26,13,.9),rgba(18,13,9,.96));
+    animation:fadeUp .4s ease;
+  }
+  .key-result.show{ display:block; }
+  .key-result-label{ font-size:10px; color:#ffbd69; font-weight:950; letter-spacing:1.4px; text-transform:uppercase; }
+  .generated-key{
+    margin-top:12px; padding:15px 16px; background:#07080c; border:1px solid #3a2e20; border-radius:12px;
+    color:#fff; font:900 15px ui-monospace,'SF Mono',monospace; word-break:break-all; letter-spacing:.4px; line-height:1.5;
+  }
+  .copy-key{ margin-top:12px; width:100%; }
+
+  .notice{
+    border:1px solid rgba(255,190,100,.18);
+    background:linear-gradient(180deg,rgba(255,180,70,.06),rgba(255,180,70,.02));
+    color:#ffce89; padding:14px 16px; border-radius:14px; font-size:12px; line-height:1.65; margin-top:16px;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.12;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 30%, transparent 75%);
+  /* ---- Table ---- */
+  .table-wrap{
+    overflow:auto; border:1px solid var(--line); border-radius:16px; margin-top:14px;
+    background:rgba(10,11,15,.55); -webkit-overflow-scrolling:touch;
   }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    width: min(1240px, 100%);
-    margin: auto;
-    padding: clamp(16px, 3.5vw, 36px);
+  table{ width:100%; border-collapse:collapse; min-width:860px; }
+  th,td{ padding:14px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.04); font-size:12px; vertical-align:middle; }
+  th{
+    color:#9ca1b1; font-size:10px; letter-spacing:1.2px; background:#0d0f15; position:sticky; top:0;
+    font-weight:800; text-transform:uppercase; z-index:2; backdrop-filter:blur(8px);
   }
-
-  .hidden { display: none !important; }
-
-  /* === BRAND === */
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-weight: 950;
-    font-size: 22px;
-    letter-spacing: 1.4px;
-    color: #fff;
-  }
-
-  .mark {
-    width: 50px;
-    height: 50px;
-    flex: 0 0 50px;
-    border-radius: 16px;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(145deg, #ffe6a8, var(--gold) 40%, var(--orange) 90%);
-    box-shadow: 0 8px 32px rgba(255, 122, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    color: #14100a;
-    font-size: 30px;
-    font-style: italic;
-    font-weight: 1000;
-    line-height: 1;
-    transition: transform 0.2s;
-  }
-
-  .mark:hover { transform: scale(1.04) rotate(-3deg); }
-
-  .brand small {
-    display: block;
-    color: #8b90a0;
-    font-size: 10px;
-    letter-spacing: 2.6px;
-    margin-top: 2px;
-    font-weight: 600;
-  }
-
-  /* === LOGIN === */
-  .login {
-    width: min(460px, 100%);
-    margin: clamp(30px, 10vh, 120px) auto 0;
-    text-align: center;
-    padding: clamp(28px, 5vw, 44px);
-    background: linear-gradient(160deg, rgba(21, 23, 32, 0.95), rgba(12, 13, 19, 0.98));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    animation: fadeUp 0.5s ease;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .login .brand { justify-content: center; margin-bottom: 8px; }
-
-  .login h1 {
-    font-size: clamp(28px, 5vw, 36px);
-    letter-spacing: -1.2px;
-    margin: 28px 0 8px;
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff 30%, #ffce7a 80%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .login p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.7;
-    margin-bottom: 18px;
-  }
-
-  /* === INPUTS === */
-  input, select {
-    font: inherit;
-    width: 100%;
-    padding: 15px 16px;
-    border-radius: var(--radius-input);
-    border: 1px solid #2d303c;
-    background: #0a0b10;
-    color: #fff;
-    margin: 7px 0;
-    outline: none;
-    min-height: 52px;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-    font-size: 14px;
-  }
-
-  input:focus, select:focus {
-    border-color: var(--orange);
-    box-shadow: 0 0 0 4px rgba(255, 122, 0, 0.12);
-    background: #0c0d13;
-  }
-
-  input::placeholder { color: #5f6373; font-weight: 400; }
-
-  /* === BUTTONS === */
-  button {
-    font: inherit;
-    border: 0;
-    border-radius: var(--radius-input);
-    min-height: 48px;
-    padding: 13px 20px;
-    color: #15100a;
-    background: linear-gradient(135deg, #ffd078, #ffb547 40%, var(--orange));
-    font-weight: 900;
-    cursor: pointer;
-    box-shadow: 0 8px 28px rgba(255, 115, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    transition: transform 0.18s, filter 0.18s, box-shadow 0.18s;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-  }
-
-  button:hover {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 34px rgba(255, 115, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  button:active { transform: translateY(0); }
-  button:disabled { opacity: 0.5; cursor: wait; transform: none; filter: grayscale(0.4); }
-
-  .login button {
-    width: 100%;
-    margin-top: 16px;
-    min-height: 54px;
-    letter-spacing: 0.8px;
-    font-size: 14px;
-  }
-
-  .danger {
-    background: linear-gradient(135deg, #ff6b7a, #d62d43);
-    color: #fff;
-    box-shadow: 0 6px 20px rgba(214, 45, 67, 0.25);
-  }
-
-  .danger:hover { box-shadow: 0 10px 28px rgba(214, 45, 67, 0.35); }
-
-  .ghost {
-    background: rgba(26, 28, 37, 0.9);
-    color: #eef0f6;
-    border: 1px solid #343744;
-    box-shadow: none;
-    font-weight: 700;
-  }
-
-  .ghost:hover { background: #232631; border-color: #454956; }
-
-  /* === ERROR & STATUS === */
-  .error {
-    color: #ff8b94;
-    min-height: 22px;
-    margin-top: 14px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .success { color: var(--green); }
-
-  /* === TOP BAR === */
-  .brandbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    margin: 4px 0 24px;
-    flex-wrap: wrap;
-  }
-
-  .brandbar .actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .admin-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 22px;
-    flex-wrap: wrap;
-  }
-
-  .admin-head p {
-    margin: 8px 0 0;
-    color: var(--muted);
-    font-size: 13px;
-    max-width: 540px;
-  }
-
-  .eyebrow {
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: #ffb45c;
-    font-weight: 900;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-
-  .title {
-    margin: 0;
-    font-size: clamp(20px, 2.2vw, 24px);
-    letter-spacing: -0.4px;
-    font-weight: 900;
-  }
-
-  .sub {
-    margin: 8px 0 20px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.65;
-  }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(21, 24, 33, 0.8);
-    border-radius: 999px;
-    color: #c5c8d2;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-    backdrop-filter: blur(8px);
-    white-space: nowrap;
-  }
-
-  .pill span { color: #65efa6; font-weight: 900; }
-
-  /* === CARDS & GRID === */
-  .card {
-    background: linear-gradient(160deg, rgba(21, 23, 32, 0.92), rgba(13, 14, 20, 0.96));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-card);
-    padding: clamp(20px, 2.8vw, 32px);
-    margin-top: 0;
-    box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    transition: border-color 0.25s, box-shadow 0.25s;
-    height: 100%;
-  }
-
-  .card:hover {
-    border-color: rgba(255, 180, 85, 0.15);
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);
-    gap: 20px;
-    align-items: stretch;
-  }
-
-  .grid > .card { margin-top: 0; }
-
-  .wide { grid-column: 1 / -1; }
-
-  /* === STAT ICON === */
-  .stat-icon {
-    display: inline-grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: linear-gradient(145deg, #302010, #1f140a);
-    color: #ffb65d;
-    margin-bottom: 16px;
-    font-size: 21px;
-    border: 1px solid rgba(255, 180, 85, 0.12);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  }
-
-  /* === FORM ELEMENTS === */
-  .field-label {
-    display: block;
-    font-size: 11px;
-    color: #c7cad4;
-    font-weight: 800;
-    margin: 16px 0 6px;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-  }
-
-  .duration-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .duration-row select,
-  .duration-row input { margin: 0; }
-
-  .primary-wide {
-    width: 100%;
-    margin-top: 16px;
-  }
-
-  /* === KEY RESULT === */
-  .notice {
-    border: 1px solid rgba(255, 190, 100, 0.18);
-    background: linear-gradient(180deg, rgba(255, 180, 70, 0.06), rgba(255, 180, 70, 0.02));
-    color: #ffce89;
-    padding: 14px 16px;
-    border-radius: 14px;
-    font-size: 12px;
-    line-height: 1.65;
-    margin-top: 18px;
-  }
-
-  .key-result {
-    display: none;
-    margin-top: 18px;
-    padding: 20px;
-    border: 1px solid rgba(255, 160, 50, 0.35);
-    background: linear-gradient(180deg, rgba(42, 26, 13, 0.9), rgba(18, 13, 9, 0.95));
-    border-radius: 18px;
-    animation: fadeUp 0.4s ease;
-  }
-
-  .key-result.show { display: block; }
-
-  .key-result-label {
-    font-size: 10px;
-    color: #ffbd69;
-    font-weight: 950;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-  }
-
-  .generated-key {
-    margin-top: 12px;
-    padding: 15px 16px;
-    background: #07080c;
-    border: 1px solid #3a2e20;
-    border-radius: 12px;
-    color: #fff;
-    font: 900 15px ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
-    word-break: break-all;
-    letter-spacing: 0.4px;
-    line-height: 1.5;
-  }
-
-  .copy-key {
-    margin-top: 12px;
-    width: 100%;
-  }
-
-  .create-status {
-    min-height: 22px;
-    margin-top: 12px;
-    font-size: 13px;
-    color: #ffbd69;
-    font-weight: 500;
-  }
-
-  .status {
-    font-size: 12px;
-    color: #a2a6b3;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .status b { color: var(--green); font-weight: 800; letter-spacing: 0.3px; }
-
-  /* === TABLE === */
-  .table-wrap {
-    overflow: auto;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    margin-top: 14px;
-    background: rgba(10, 11, 15, 0.6);
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 860px;
-  }
-
-  th, td {
-    padding: 15px 14px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    font-size: 12px;
-    vertical-align: middle;
-  }
-
-  th {
-    color: #9ca1b1;
-    font-size: 10px;
-    letter-spacing: 1.2px;
-    background: #0d0f15;
-    position: sticky;
-    top: 0;
-    font-weight: 800;
-    text-transform: uppercase;
-    z-index: 2;
-    backdrop-filter: blur(8px);
-  }
-
-  tbody tr { transition: background 0.2s; }
-  tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
-  tbody tr:last-child td { border-bottom: 0; }
-  td strong { color: #fff; font-weight: 800; }
-
-  .badge {
-    display: inline-block;
-    padding: 6px 11px;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .active {
-    background: rgba(30, 120, 80, 0.25);
-    color: #6af2ac;
-    border: 1px solid rgba(106, 242, 172, 0.2);
-  }
-
-  .inactive {
-    background: rgba(180, 40, 60, 0.2);
-    color: #ff9ba6;
-    border: 1px solid rgba(255, 155, 166, 0.15);
-  }
-
-  .premium { color: #ffc66f; font-weight: 800; }
-  .free { color: #aaaeb9; font-weight: 600; }
-
-  .key {
-    font-family: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
-    letter-spacing: 0.4px;
-    word-break: break-all;
-    font-size: 11.5px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .actions button {
-    min-height: 34px;
-    padding: 7px 12px;
-    font-size: 10px;
-    letter-spacing: 0.4px;
-    border-radius: 10px;
-    font-weight: 800;
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 860px) {
-    .grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
+  tbody tr{ transition:background .2s; }
+  tbody tr:hover{ background:rgba(255,255,255,.025); }
+  tbody tr:last-child td{ border-bottom:0; }
+  td strong{ color:#fff; font-weight:800; }
+
+  .badge{ display:inline-block; padding:6px 11px; border-radius:999px; font-size:10px; font-weight:900; letter-spacing:.5px; text-transform:uppercase; }
+  .active{ background:rgba(30,120,80,.25); color:#6af2ac; border:1px solid rgba(106,242,172,.2); }
+  .inactive{ background:rgba(180,40,60,.2); color:#ff9ba6; border:1px solid rgba(255,155,166,.15); }
+  .premium{ color:#ffc66f; font-weight:800; }
+  .free{ color:#aaaeb9; font-weight:600; }
+  .key{ font-family:ui-monospace,'SF Mono',monospace; letter-spacing:.4px; word-break:break-all; font-size:11.5px; }
+  .row-actions{ display:flex; gap:7px; flex-wrap:wrap; }
+  .row-actions button{ min-height:34px; padding:7px 12px; font-size:10px; letter-spacing:.4px; border-radius:10px; font-weight:800; }
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:980px){
+    .app{ grid-template-columns:1fr; }
+    .sidebar{
+      position:relative; top:0; flex-direction:row; flex-wrap:wrap; align-items:center; gap:10px;
+      padding:14px 16px;
     }
-
-    .wide { grid-column: auto; }
-
-    .brandbar,
-    .admin-head {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .brandbar .actions {
-      width: 100%;
-    }
-
-    .brandbar .actions button {
-      flex: 1;
-    }
-
-    .admin-head {
-      gap: 14px;
-    }
+    .sidebar .brand{ margin-bottom:0; flex:1 1 100%; }
+    .nav-label{ display:none; }
+    .nav-item{ flex:0 0 auto; padding:9px 12px; }
+    .side-status{ display:none; }
+    .stats{ grid-template-columns:1fr 1fr; }
   }
-
-  @media (max-width: 600px) {
-    .container { padding: 14px; }
-
-    .brand { font-size: 19px; gap: 11px; }
-    .mark { width: 44px; height: 44px; flex: 0 0 44px; font-size: 26px; border-radius: 13px; }
-    .brand small { font-size: 9px; letter-spacing: 2px; }
-
-    .login { margin-top: 6vh; padding: 24px 20px; }
-    .login h1 { font-size: 28px; margin-top: 22px; }
-
-    .card { padding: 18px; border-radius: 20px; }
-
-    .title { font-size: 19px; }
-
-    .table-wrap {
-      margin-inline: -4px;
-      border-radius: 12px;
-    }
-
-    th, td { padding: 11px 10px; }
-
-    .duration-row { grid-template-columns: 1fr; }
-
-    .actions button { flex: 1; justify-content: center; }
+  @media(max-width:720px){
+    .topbar{ flex-direction:column; align-items:flex-start; }
+    .topbar .actions{ width:100%; }
+    .topbar .actions button{ flex:1; }
+    .stats{ grid-template-columns:1fr; }
+    .gen-grid{ grid-template-columns:1fr; }
   }
-
-  @media (max-width: 380px) {
-    .container { padding: 10px; }
-    .card { padding: 15px; }
-    .login { padding: 20px 16px; }
+  @media(max-width:600px){
+    .container{ padding:14px; }
+    .brand{ font-size:18px; gap:10px; }
+    .mark{ width:42px; height:42px; flex:0 0 42px; font-size:24px; border-radius:12px; }
+    .brand small{ font-size:8px; letter-spacing:2px; }
+    .login{ margin-top:5vh; padding:24px 20px; }
+    .login h1{ font-size:27px; }
+    .panel{ padding:18px; border-radius:20px; }
+    .sidebar{ border-radius:20px; }
+    .table-wrap{ margin-inline:-4px; }
+    th,td{ padding:11px 10px; }
+    .row-actions button{ flex:1; }
   }
-
-  @media (min-width: 1200px) {
-    .container { padding-top: 40px; }
-    .login { margin-top: 12vh; }
+  @media(max-width:380px){
+    .container{ padding:10px; }
+    .panel{ padding:15px; }
   }
-
-  /* === SCROLLBAR === */
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #2a2d38; border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: #3c4050; }
-
-  /* === SELECTION === */
-  ::selection { background: rgba(255, 122, 0, 0.35); color: #fff; }
 </style>
 </head>
 <body>
 <div class="container">
-  <!-- LOGIN VIEW -->
-  <section id="loginView" class="card login">
+
+  <!-- ================= LOGIN ================= -->
+  <section id="loginView" class="login">
     <div class="brand" style="justify-content:center">
       <div class="mark">V</div>
       <div>VRILZ<small>SECURE ADMIN</small></div>
@@ -627,93 +293,132 @@
     <div id="loginError" class="error"></div>
   </section>
 
-  <!-- ADMIN VIEW -->
+  <!-- ================= ADMIN APP ================= -->
   <section id="adminView" class="hidden">
-    <div class="brandbar">
-      <div class="brand">
-        <div class="mark">V</div>
-        <div>VRILZ<small>KEY SYSTEM ADMIN</small></div>
-      </div>
-      <div class="actions">
-        <button id="refreshBtn" class="ghost" type="button">↻ REFRESH</button>
-        <button id="logoutBtn" class="danger" type="button">LOGOUT</button>
-      </div>
-    </div>
+    <div class="app">
 
-    <div class="admin-head">
-      <div>
-        <div class="eyebrow">CONTROL CENTER / KEY MANAGEMENT</div>
-        <h1 class="title" style="font-size:clamp(25px,4vw,34px)">Admin Dashboard</h1>
-        <p>Kelola akses premium dan buat key sesuai durasi yang kamu butuhkan.</p>
-      </div>
-      <span class="pill">● <span>System online</span></span>
-    </div>
-
-    <div class="grid">
-      <!-- GENERATE KEY CARD -->
-      <div class="card">
-        <div class="stat-icon">✦</div>
-        <h2 class="title">Generate Premium Key</h2>
-        <p class="sub">Pilih durasi siap pakai atau tentukan jumlah hari sendiri.</p>
-        <label class="field-label" for="duration">PILIH DURASI</label>
-        <select id="duration">
-          <option value="1">1 Hari</option>
-          <option value="3">3 Hari</option>
-          <option value="7" selected>7 Hari</option>
-          <option value="30">30 Hari</option>
-          <option value="60">60 Hari</option>
-          <option value="90">90 Hari</option>
-          <option value="365">365 Hari</option>
-          <option value="custom">Custom — isi sendiri</option>
-          <option value="permanent">Permanent / Selamanya</option>
-        </select>
-        <div id="customDurationWrap" class="hidden">
-          <label class="field-label" for="customDuration">JUMLAH HARI (1–36500)</label>
-          <input id="customDuration" type="number" inputmode="numeric" min="1" max="36500" placeholder="Contoh: 120">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="mark">V</div>
+          <div>VRILZ<small>KEY SYSTEM</small></div>
         </div>
-        <button id="generateBtn" class="primary-wide" type="button">✦ &nbsp; GENERATE PREMIUM KEY</button>
-        <div id="createStatus" class="create-status"></div>
-        <div id="keyResult" class="key-result">
-          <div class="key-result-label">PREMIUM KEY BERHASIL DIBUAT</div>
-          <div id="generatedKey" class="generated-key"></div>
-          <button id="copyBtn" class="copy-key" type="button">COPY KEY</button>
-        </div>
-        <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
-      </div>
 
-      <!-- ADMIN STATUS CARD -->
-      <div class="card">
-        <div class="stat-icon">⌘</div>
-        <h2 class="title">Admin Status</h2>
-        <p class="sub">Informasi sesi dan koneksi panel admin.</p>
-        <div class="status">STATUS: <b>AUTHENTICATED</b></div>
-        <div class="status">SOURCE: <b>VRILZ KEY SYSTEM</b></div>
-        <div class="notice">Simpan key yang baru dibuat. Key hanya bisa digunakan sesuai kebijakan aktivasi dan masa berlaku sistem.</div>
-      </div>
+        <div class="nav-label">Menu</div>
+        <div class="nav-item active"><span class="ico">◈</span> Dashboard</div>
+        <div class="nav-item"><span class="ico">✦</span> Generate Key</div>
+        <div class="nav-item"><span class="ico">▤</span> Key Database</div>
+        <div class="nav-item"><span class="ico">⚙</span> Settings</div>
 
-      <!-- KEY DATABASE TABLE -->
-      <div class="card wide">
-        <h2 class="title">Key Database</h2>
-        <p class="sub">Kolom USER menampilkan username Roblox yang dipakai saat FREE key dibuat.</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>KEY</th>
-                <th>TYPE</th>
-                <th>USER</th>
-                <th>STATUS</th>
-                <th>EXPIRED</th>
-                <th>ACTION</th>
-              </tr>
-            </thead>
-            <tbody id="keys">
-              <tr><td colspan="7">Loading...</td></tr>
-            </tbody>
-          </table>
+        <div class="side-status">
+          <span class="dot"></span> SYSTEM ONLINE
+          <b>VRILZ KEY SYSTEM</b>
         </div>
-      </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">Control Center / Key Management</div>
+            <h1>Admin Dashboard</h1>
+          </div>
+          <div class="actions">
+            <button id="refreshBtn" class="ghost" type="button">↻ Refresh</button>
+            <button id="logoutBtn" class="danger" type="button">Logout</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+          <div class="stat">
+            <div class="ico">✦</div>
+            <div class="label">Total Keys</div>
+            <div class="value" id="statTotal">— <small>keys</small></div>
+          </div>
+          <div class="stat green">
+            <div class="ico">✓</div>
+            <div class="label">Active Keys</div>
+            <div class="value" id="statActive">— <small>active</small></div>
+          </div>
+          <div class="stat purple">
+            <div class="ico">◈</div>
+            <div class="label">Premium Keys</div>
+            <div class="value" id="statPremium">— <small>premium</small></div>
+          </div>
+        </div>
+
+        <!-- Generator -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="h">
+              <div class="ico">✦</div>
+              <h2>Generate Premium Key</h2>
+            </div>
+          </div>
+          <p class="sub">Pilih durasi siap pakai atau tentukan jumlah hari sendiri.</p>
+
+          <div class="gen-grid">
+            <div>
+              <label class="field-label" for="duration">Pilih Durasi</label>
+              <select id="duration">
+                <option value="1">1 Hari</option>
+                <option value="3">3 Hari</option>
+                <option value="7" selected>7 Hari</option>
+                <option value="30">30 Hari</option>
+                <option value="60">60 Hari</option>
+                <option value="90">90 Hari</option>
+                <option value="365">365 Hari</option>
+                <option value="custom">Custom — isi sendiri</option>
+                <option value="permanent">Permanent / Selamanya</option>
+              </select>
+            </div>
+            <div id="customDurationWrap" class="hidden">
+              <label class="field-label" for="customDuration">Jumlah Hari (1–36500)</label>
+              <input id="customDuration" type="number" inputmode="numeric" min="1" max="36500" placeholder="Contoh: 120">
+            </div>
+          </div>
+
+          <button id="generateBtn" class="primary-wide" type="button">✦ &nbsp; Generate Premium Key</button>
+          <div id="createStatus" class="create-status"></div>
+
+          <div id="keyResult" class="key-result">
+            <div class="key-result-label">Premium key berhasil dibuat</div>
+            <div id="generatedKey" class="generated-key"></div>
+            <button id="copyBtn" class="copy-key" type="button">Copy Key</button>
+          </div>
+
+          <div class="notice">Key yang dibuat di sini langsung masuk database D1 dan dapat dilihat pada tabel di bawah.</div>
+        </div>
+
+        <!-- Table -->
+        <div class="panel">
+          <div class="panel-head">
+            <div class="h">
+              <div class="ico">▤</div>
+              <h2>Key Database</h2>
+            </div>
+          </div>
+          <p class="sub">Kolom USER menampilkan username Roblox yang dipakai saat FREE key dibuat.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th><th>Key</th><th>Type</th><th>User</th>
+                  <th>Status</th><th>Expired</th><th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="keys">
+                <tr><td colspan="7">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
     </div>
   </section>
 </div>
@@ -722,85 +427,59 @@
   const API_BASE = window.location.origin;
   let adminToken = sessionStorage.getItem("vrilz_admin_session") || "";
 
-  function authHeaders() {
-    return {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + adminToken
-    };
+  function authHeaders(){
+    return { "Content-Type":"application/json", "Authorization":"Bearer " + adminToken };
   }
-
-  function showAdmin() {
+  function showAdmin(){
     document.getElementById("loginView").classList.add("hidden");
     document.getElementById("adminView").classList.remove("hidden");
     loadKeys();
   }
-
-  function showLogin(msg = "") {
+  function showLogin(msg=""){
     document.getElementById("loginView").classList.remove("hidden");
     document.getElementById("adminView").classList.add("hidden");
     document.getElementById("loginError").textContent = msg;
   }
 
-  async function login() {
+  async function login(){
     const btn = document.getElementById("loginBtn");
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
     const err = document.getElementById("loginError");
     err.textContent = "";
-
-    if (!username || !password) {
-      err.textContent = "Username dan password wajib diisi.";
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = "CHECKING...";
-
-    try {
+    if(!username || !password){ err.textContent = "Username dan password wajib diisi."; return; }
+    btn.disabled = true; btn.textContent = "CHECKING...";
+    try{
       const r = await fetch(API_BASE + "/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:"POST", headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({ username, password })
       });
       const d = await r.json();
-
-      if (!r.ok || !d.success) {
-        err.textContent = d.message || "Login gagal.";
-        return;
-      }
-
+      if(!r.ok || !d.success){ err.textContent = d.message || "Login gagal."; return; }
       adminToken = d.token;
       sessionStorage.setItem("vrilz_admin_session", adminToken);
       showAdmin();
-    } catch (e) {
-      err.textContent = "Server tidak dapat dihubungi.";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "LOGIN ADMIN";
-    }
+    }catch(e){ err.textContent = "Server tidak dapat dihubungi."; }
+    finally{ btn.disabled = false; btn.textContent = "LOGIN ADMIN"; }
   }
 
-  function logout() {
+  function logout(){
     adminToken = "";
     sessionStorage.removeItem("vrilz_admin_session");
     showLogin();
   }
 
-  async function api(path, options = {}) {
+  async function api(path, options={}){
     const r = await fetch(API_BASE + path, {
       ...options,
       headers: { ...(options.headers || {}), ...authHeaders() }
     });
-    let d = {};
-    try { d = await r.json(); } catch (e) {}
-    if (r.status === 401) {
-      logout();
-      throw new Error("Unauthorized");
-    }
+    let d = {}; try{ d = await r.json(); }catch(e){}
+    if(r.status === 401){ logout(); throw new Error("Unauthorized"); }
     return { r, d };
   }
 
-  async function createKey() {
+  async function createKey(){
     const selected = document.getElementById("duration").value;
     const custom = document.getElementById("customDuration");
     const duration = selected === "permanent" ? 0 :
@@ -809,99 +488,61 @@
     const status = document.getElementById("createStatus");
     const result = document.getElementById("keyResult");
     const keyBox = document.getElementById("generatedKey");
+    status.textContent = ""; result.classList.remove("show");
 
-    status.textContent = "";
-    result.classList.remove("show");
-
-    if (selected === "custom" && (!Number.isInteger(duration) || duration < 1 || duration > 36500)) {
-      status.textContent = "Masukkan durasi 1 sampai 36500 hari.";
-      custom.focus();
-      return;
+    if(selected === "custom" && (!Number.isInteger(duration) || duration < 1 || duration > 36500)){
+      status.textContent = "Masukkan durasi 1 sampai 36500 hari."; custom.focus(); return;
     }
 
-    btn.disabled = true;
-    btn.textContent = "MEMBUAT KEY...";
-
-    try {
+    btn.disabled = true; btn.textContent = "MEMBUAT KEY...";
+    try{
       const { r, d } = await api("/api/admin/create", {
-        method: "POST",
-        body: JSON.stringify({
-          duration_days: duration,
-          permanent: selected === "permanent"
-        })
+        method:"POST",
+        body: JSON.stringify({ duration_days: duration, permanent: selected === "permanent" })
       });
-
-      if (!r.ok || !d.success) {
-        status.textContent = d.message || "Gagal membuat key.";
-        return;
-      }
-
+      if(!r.ok || !d.success){ status.textContent = d.message || "Gagal membuat key."; return; }
       keyBox.textContent = d.key;
       result.classList.add("show");
       status.textContent = "Premium key berhasil dibuat.";
       loadKeys();
-    } catch (e) {
-      status.textContent = "Server tidak dapat dihubungi.";
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "✦   GENERATE PREMIUM KEY";
-    }
+    }catch(e){ status.textContent = "Server tidak dapat dihubungi."; }
+    finally{ btn.disabled = false; btn.textContent = "✦   GENERATE PREMIUM KEY"; }
   }
 
-  async function copyGeneratedKey() {
+  async function copyGeneratedKey(){
     const key = document.getElementById("generatedKey").textContent.trim();
-    if (!key) return;
-
-    try {
+    if(!key) return;
+    try{
       await navigator.clipboard.writeText(key);
-      const b = document.querySelector(".copy-key");
-      const old = b.textContent;
-      b.textContent = "COPIED ✓";
-      setTimeout(() => b.textContent = old, 1400);
-    } catch (e) {
-      statusCopyFallback(key);
-    }
+      const b = document.querySelector(".copy-key"); const old = b.textContent;
+      b.textContent = "COPIED ✓"; setTimeout(() => b.textContent = old, 1400);
+    }catch(e){ statusCopyFallback(key); }
+  }
+  function statusCopyFallback(key){
+    const ta = document.createElement("textarea"); ta.value = key;
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+    const b = document.querySelector(".copy-key"); const old = b.textContent;
+    b.textContent = "COPIED ✓"; setTimeout(() => b.textContent = old, 1400);
   }
 
-  function statusCopyFallback(key) {
-    const ta = document.createElement("textarea");
-    ta.value = key;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
-
-    const b = document.querySelector(".copy-key");
-    const old = b.textContent;
-    b.textContent = "COPIED ✓";
-    setTimeout(() => b.textContent = old, 1400);
-  }
-
-  async function loadKeys() {
-    if (!adminToken) return;
-
-    try {
+  async function loadKeys(){
+    if(!adminToken) return;
+    try{
       const { r, d } = await api("/api/admin/keys");
-      if (!r.ok || !d.success) {
-        alert(d.message || "Gagal mengambil data.");
-        return;
-      }
-
+      if(!r.ok || !d.success){ alert(d.message || "Gagal mengambil data."); return; }
       const tbody = document.getElementById("keys");
       tbody.innerHTML = "";
-
-      if (!d.keys.length) {
+      if(!d.keys.length){
         tbody.innerHTML = '<tr><td colspan="7">Belum ada key.</td></tr>';
+        updateStats([]);
         return;
       }
-
       d.keys.forEach(key => {
         const tr = document.createElement("tr");
         const active = Number(key.active) === 1;
         const expired = Number(key.duration_seconds) === 0 && key.type === "PREMIUM" ?
           "PERMANENT" :
           (key.expires_at ? new Date(Number(key.expires_at)).toLocaleString("id-ID") : "Belum diaktifkan");
-
         tr.innerHTML = `
           <td>${key.id}</td>
           <td class="key"><strong>${escapeHtml(key.key)}</strong></td>
@@ -910,58 +551,55 @@
           <td><span class="badge ${active ? "active" : "inactive"}">${active ? "ACTIVE" : "INACTIVE"}</span></td>
           <td>${escapeHtml(expired)}</td>
           <td>
-            <div class="actions">
+            <div class="row-actions">
               <button class="danger" onclick="revokeKey(${key.id})">REVOKE</button>
               <button class="danger" onclick="deleteKey(${key.id})">DELETE</button>
             </div>
-          </td>
-        `;
+          </td>`;
         tbody.appendChild(tr);
       });
-    } catch (e) {}
+      updateStats(d.keys);
+    }catch(e){}
   }
 
-  async function revokeKey(id) {
-    if (!confirm("Revoke key ini?")) return;
-    try {
-      const { d } = await api("/api/admin/revoke", {
-        method: "POST",
-        body: JSON.stringify({ id })
-      });
-      alert(d.message || "Selesai");
-      loadKeys();
-    } catch (e) {}
+  function updateStats(keys){
+    const total = keys.length;
+    const active = keys.filter(k => Number(k.active) === 1).length;
+    const premium = keys.filter(k => k.type === "PREMIUM").length;
+    const set = (id, val, label) => {
+      const el = document.getElementById(id);
+      if(el) el.innerHTML = val + ' <small>' + label + '</small>';
+    };
+    set("statTotal", total, "keys");
+    set("statActive", active, "active");
+    set("statPremium", premium, "premium");
   }
 
-  async function deleteKey(id) {
-    if (!confirm("Hapus key secara permanen?")) return;
-    try {
-      const { d } = await api("/api/admin/delete", {
-        method: "POST",
-        body: JSON.stringify({ id })
-      });
-      alert(d.message || "Selesai");
-      loadKeys();
-    } catch (e) {}
+  async function revokeKey(id){
+    if(!confirm("Revoke key ini?")) return;
+    try{
+      const { d } = await api("/api/admin/revoke", { method:"POST", body: JSON.stringify({ id }) });
+      alert(d.message || "Selesai"); loadKeys();
+    }catch(e){}
+  }
+  async function deleteKey(id){
+    if(!confirm("Hapus key secara permanen?")) return;
+    try{
+      const { d } = await api("/api/admin/delete", { method:"POST", body: JSON.stringify({ id }) });
+      alert(d.message || "Selesai"); loadKeys();
+    }catch(e){}
   }
 
-  function escapeHtml(v) {
+  function escapeHtml(v){
     return String(v)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
   }
 
-  // === EVENT BINDINGS ===
+  /* ===== EVENTS ===== */
   document.getElementById("loginBtn").addEventListener("click", login);
-  document.getElementById("password").addEventListener("keydown", e => {
-    if (e.key === "Enter") login();
-  });
-  document.getElementById("username").addEventListener("keydown", e => {
-    if (e.key === "Enter") document.getElementById("password").focus();
-  });
+  document.getElementById("password").addEventListener("keydown", e => { if(e.key === "Enter") login(); });
+  document.getElementById("username").addEventListener("keydown", e => { if(e.key === "Enter") document.getElementById("password").focus(); });
   document.getElementById("generateBtn").addEventListener("click", createKey);
   document.getElementById("copyBtn").addEventListener("click", copyGeneratedKey);
   document.getElementById("refreshBtn").addEventListener("click", loadKeys);
@@ -970,10 +608,7 @@
     document.getElementById("customDurationWrap").classList.toggle("hidden", e.target.value !== "custom");
   });
 
-  // auto login if token exists
-  if (adminToken) {
-    showAdmin();
-  }
+  if(adminToken){ showAdmin(); }
 </script>
 </body>
 </html>
