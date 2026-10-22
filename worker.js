@@ -1830,18 +1830,32 @@ export default {
         =====================================
         */
 
-        if (
-            url.pathname === "/" &&
-            env.ASSETS
-        ) {
+        if (url.pathname === "/" && env.ASSETS) {
+            // Browser navigation advertises text/html; executor HttpGet commonly sends */*.
+            // This is routing convenience only, NOT an authentication/security check.
+            const accept = (request.headers.get("Accept") || "").toLowerCase();
+            const userAgent = (request.headers.get("User-Agent") || "").toLowerCase();
+            const browserNavigation = accept.includes("text/html") &&
+                !userAgent.includes("roblox") &&
+                !userAgent.includes("luau");
+
+            if (!browserNavigation) {
+                const response = await env.ASSETS.fetch(
+                    new Request(new URL("/loader.lua", request.url), request)
+                );
+                const headers = new Headers(response.headers);
+                headers.set("Content-Type", "text/plain; charset=utf-8");
+                headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+                return new Response(response.body, {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers
+                });
+            }
 
             return env.ASSETS.fetch(
-                new Request(
-                    new URL("/index.html", request.url),
-                    request
-                )
+                new Request(new URL("/index.html", request.url), request)
             );
-
         }
 
 
