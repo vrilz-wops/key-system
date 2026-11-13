@@ -1469,6 +1469,13 @@ async function handleChatSend(request, env) {
         let text = String(body.text || "").slice(0, CHAT_MAX_LEN);
         text = text.replace(/[\n\r]/g, " ").trim();
 
+        // ⭐ Sanitasi scriptTag: uppercase, cuma A-Z 0-9 spasi, max 16 char
+        const scriptTag = String(body.scriptTag || "")
+            .toUpperCase()
+            .replace(/[^A-Z0-9 ]/g, "")
+            .slice(0, 16)
+            .trim();
+
         if (!text) return json({ success: false, message: "Empty message" }, 400);
         if (!userId || !username) return json({ success: false, message: "Missing user info" }, 400);
 
@@ -1485,9 +1492,9 @@ async function handleChatSend(request, env) {
         }
 
         await env.CHAT_DB.prepare(`
-            INSERT INTO chat_messages (user_id, username, display_name, text, created_at)
-            VALUES (?, ?, ?, ?, ?)
-        `).bind(userId, username, displayName, text, now).run();
+            INSERT INTO chat_messages (user_id, username, display_name, text, script_tag, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `).bind(userId, username, displayName, text, scriptTag, now).run();
 
         await env.CHAT_DB.prepare(`
             DELETE FROM chat_messages
@@ -1508,7 +1515,7 @@ async function handleChatPoll(request, env) {
         const since = Number(url.searchParams.get("since") || 0);
 
         const result = await env.CHAT_DB.prepare(`
-            SELECT user_id, username, display_name, text, created_at
+            SELECT user_id, username, display_name, text, script_tag, created_at
             FROM chat_messages
             WHERE created_at > ?
             ORDER BY created_at ASC
@@ -1520,6 +1527,7 @@ async function handleChatPoll(request, env) {
             u: m.username,
             d: m.display_name,
             t: m.text,
+            g: m.script_tag || "",
             ts: Number(m.created_at),
         }));
 
@@ -1528,7 +1536,6 @@ async function handleChatPoll(request, env) {
         return json({ success: false, message: "Server error", messages: [], error: String(error) }, 500);
     }
 }
-
 
 /* =========================================
    MAIN WORKER
